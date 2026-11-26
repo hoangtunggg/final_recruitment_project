@@ -79,6 +79,9 @@ services:
       DB_SYNC_FORCE: "false"
       DB_SYNC_ALTER: "false"
       DB_SKIP_SCHEMA_INIT: "true"
+      CVJD_MATCHING_ENABLED: "${CVJD_MATCHING_ENABLED:-false}"
+      CVJD_MODEL_VERSION: "${CVJD_MODEL_VERSION:-experimental-v1}"
+      ML_SERVICE_URL: http://ml-service:8000
     ports:
       - "127.0.0.1:3001:3001"
     volumes:
@@ -105,6 +108,7 @@ services:
     user: "${LOCAL_UID:-1000}:${LOCAL_GID:-1000}"
     environment:
       VITE_API_URL: http://localhost:3001
+      VITE_CVJD_MATCHING_ENABLED: "${CVJD_MATCHING_ENABLED:-false}"
     ports:
       - "127.0.0.1:5173:5173"
     volumes:
@@ -120,6 +124,21 @@ services:
       timeout: 5s
       retries: 6
       start_period: 30s
+    restart: unless-stopped
+
+  ml-service:
+    profiles: ["ml"]
+    build:
+      context: ./ml-service
+    environment:
+      MATCHER_ARTIFACTS: /app/artifacts
+    volumes:
+      - ./ml-service/artifacts:/app/artifacts:ro
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=3)"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
     restart: unless-stopped
 
 volumes:

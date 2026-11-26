@@ -1,0 +1,8 @@
+tensorflow-cpu==2.18.1
+numpy==2.0.2
+scikit-learn==1.6.1
+fastapi==0.115.6
+uvicorn==0.34.0
+pypdf==5.1.0
+python-docx==1.1.2
+pyarrow==18.1.0

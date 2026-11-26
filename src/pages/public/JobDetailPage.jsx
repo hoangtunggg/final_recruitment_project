@@ -22,6 +22,7 @@ import { useJobs } from "../../context/JobContext";
 import useAuth from "../../hooks/useAuth";
 import { jobService } from "../../services/jobService";
 import { applicationService } from "../../services/applicationService";
+import JobMatchAnalysis from "../../components/candidate/JobMatchAnalysis";
 
 const formatTimeAgo = (dateString) => {
   if (!dateString) return "Recently posted";
@@ -403,6 +404,7 @@ const JobDetailPage = () => {
         </div>
 
         {/* Hero Card */}
+        {import.meta.env.VITE_CVJD_MATCHING_ENABLED === "true" && isAuthenticated && user?.role === "jobseeker" && <JobMatchAnalysis jobId={id} />}
         <div className="bg-white dark:bg-gray-800 rounded-xl border border-slate-300 dark:border-gray-600 p-5 sm:p-6 mb-5">
           <div className="flex flex-col md:flex-row md:items-start justify-between gap-5 pb-5 border-b border-slate-200 dark:border-gray-700">
             <div className="flex items-start gap-3 sm:gap-4 min-w-0">

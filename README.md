@@ -37,6 +37,7 @@ Sau đăng nhập thông thường, Candidate được đưa về homepage `/` v
 - **Saved Jobs**: công việc đã lưu theo tài khoản trên trình duyệt.
 - **Recommended Jobs**: gợi ý dựa trên kỹ năng và dữ liệu việc làm.
 - **Resumes**: tải lên, tải xuống, đặt mặc định và xóa CV.
+- Phân tích CV–JD bằng mô hình BiGRU hiện là tính năng thử nghiệm **tắt mặc định**; dữ liệu huấn luyện tổng hợp chưa qua tiêu chí kiểm định độc lập. Xem [hướng dẫn ML](ml-service/README.md).
 - Nộp hồ sơ kèm CV và thư giới thiệu.
 - Theo dõi toàn bộ pipeline từ chờ duyệt đến nhận việc.
 - Rút hồ sơ ứng tuyển khi luồng nghiệp vụ cho phép.

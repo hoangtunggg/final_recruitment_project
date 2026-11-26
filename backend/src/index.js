@@ -27,6 +27,7 @@ const auditRoutes = require("./routes/auditRoutes");
 const resumeRoutes = require("./routes/resumeRoutes");
 const settingRoutes = require("./routes/settingRoutes");
 const notificationRoutes = require("./routes/notificationRoutes");
+const matchRoutes = require("./routes/matchRoutes");
 const Job = require("./models/Job");
 const Application = require("./models/Application");
 const User = require("./models/User");
@@ -210,6 +211,7 @@ const startServer = async () => {
   app.use("/api/users", userRoutes);
   app.use("/api/audit", auditRoutes);
   app.use("/api/resumes", resumeRoutes);
+  app.use("/api/matches", matchRoutes);
   app.use("/api/settings", settingRoutes);
   app.use("/api/notifications", notificationRoutes);
 
