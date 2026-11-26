@@ -1,0 +1,77 @@
+- generic [ref=f1e2]:
+  - main [ref=f1e266]:
+    - generic [ref=f1e1095]:
+      - link "Skip to main content" [ref=f1e1096] [cursor=pointer]:
+        - /url: "#candidate-main-content"
+      - generic [ref=f1e1099]:
+        - link "JobPortal JobPortal Candidate workspace" [ref=f1e1100] [cursor=pointer]:
+          - /url: /dashboard
+          - img "JobPortal" [ref=f1e1101]
+          - generic [ref=f1e1102]:
+            - generic [ref=f1e1103]: JobPortal
+            - generic [ref=f1e1104]: Candidate workspace
+        - tablist "Dashboard views" [ref=f1e1108]:
+          - tab "Overview" [ref=f1e1109] [cursor=pointer]
+          - tab "Applications 5" [ref=f1e1116] [cursor=pointer]:
+            - generic [ref=f1e1120]: Applications
+            - generic [ref=f1e1121]: "5"
+          - tab "Saved Jobs" [selected] [ref=f1e1122] [cursor=pointer]
+          - tab "Recommended 10" [ref=f1e1126] [cursor=pointer]:
+            - generic [ref=f1e1129]: Recommended
+            - generic [ref=f1e1130]: "10"
+          - tab "My Resumes 1" [ref=f1e1131] [cursor=pointer]:
+            - generic [ref=f1e1135]: My Resumes
+            - generic [ref=f1e1136]: "1"
+        - generic [ref=f1e1137]:
+          - generic [ref=f1e1138]:
+            - paragraph [ref=f1e1139]: Trần Hạnh 002
+            - paragraph [ref=f1e1140]: Saved Jobs
+          - button "Switch to dark mode" [ref=f1e1141] [cursor=pointer]
+          - button "Sign out" [ref=f1e1144] [cursor=pointer]
+      - main [ref=f1e1148]:
+        - generic [ref=f1e1149]:
+          - generic [ref=f1e1150]:
+            - generic [ref=f1e1152]:
+              - generic [ref=f1e1153]:
+                - generic [ref=f1e1154]: TH
+                - generic [ref=f1e1155]:
+                  - generic [ref=f1e1156]:
+                    - heading "Welcome back, Trần Hạnh 002!" [level=1] [ref=f1e1157]
+                    - generic [ref=f1e1158]: Candidate
+                  - paragraph [ref=f1e1159]:
+                    - generic [ref=f1e1160]: candidate002@scale.demo.jobportal.vn
+                    - generic [ref=f1e1161]: •
+                    - generic [ref=f1e1162]: Manage your applications, active interviews, and credentials
+              - generic [ref=f1e1163]:
+                - button "Manage Resumes" [ref=f1e1164] [cursor=pointer]
+                - button "Explore Opportunities" [ref=f1e1169] [cursor=pointer]
+            - generic [ref=f1e1174]:
+              - button "Applications 5 View all submitted" [ref=f1e1175] [cursor=pointer]:
+                - generic [ref=f1e1177]:
+                  - paragraph [ref=f1e1178]: Applications
+                  - paragraph [ref=f1e1179]: "5"
+                - generic [ref=f1e1184]: View all submitted
+              - button "Interviews 2 Active interview stage" [ref=f1e1188] [cursor=pointer]:
+                - generic [ref=f1e1190]:
+                  - paragraph [ref=f1e1191]: Interviews
+                  - paragraph [ref=f1e1192]: "2"
+                - generic [ref=f1e1196]: Active interview stage
+              - button "Job Offers 1 Received offers" [ref=f1e1200] [cursor=pointer]:
+                - generic [ref=f1e1202]:
+                  - paragraph [ref=f1e1203]: Job Offers
+                  - paragraph [ref=f1e1204]: "1"
+                - generic [ref=f1e1209]: Received offers
+              - button "Saved Jobs 0 Bookmarked listings" [ref=f1e1213] [cursor=pointer]:
+                - generic [ref=f1e1215]:
+                  - paragraph [ref=f1e1216]: Saved Jobs
+                  - paragraph [ref=f1e1217]: "0"
+                - generic [ref=f1e1221]: Bookmarked listings
+          - tabpanel "Saved jobs" [ref=f1e1225]:
+            - generic [ref=f1e1228]:
+              - heading "Saved Positions (0)" [level=2] [ref=f1e1229]
+              - paragraph [ref=f1e1230]: Bookmarked listings saved for application and follow-up
+            - generic [ref=f1e1231]:
+              - heading "No saved jobs yet" [level=3] [ref=f1e1235]
+              - paragraph [ref=f1e1236]: Bookmark interesting job postings while exploring to review or apply to them later.
+              - button "Explore Recommended Jobs" [ref=f1e1237] [cursor=pointer]
+  - button "Open Tanstack query devtools" [ref=f1e188] [cursor=pointer]

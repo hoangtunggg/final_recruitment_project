@@ -1,0 +1,17 @@
+.git
+.agents
+.playwright-cli
+node_modules
+backend/node_modules
+dist
+output
+coverage
+logs
+*.log
+.env
+.env.*
+backend/.env
+backend/.env.*
+backend/uploads
+backend/uploads/**
+*.local

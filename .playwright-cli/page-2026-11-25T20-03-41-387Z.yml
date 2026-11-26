@@ -1,0 +1,558 @@
+- generic [ref=f3e2]:
+  - generic [ref=f3e238]:
+    - navigation "Main navigation" [ref=f3e239]:
+      - generic [ref=f3e241]:
+        - link "JobPortal Logo JobPortal Careers & Talent" [ref=f3e242] [cursor=pointer]:
+          - /url: /
+          - img "JobPortal Logo" [ref=f3e243]
+          - generic [ref=f3e244]:
+            - generic [ref=f3e245]: JobPortal
+            - generic [ref=f3e246]: Careers & Talent
+        - generic [ref=f3e247]:
+          - button "Switch to light mode" [ref=f3e248] [cursor=pointer]
+          - button "Notifications" [ref=f3e256] [cursor=pointer]:
+            - generic [ref=f3e260]: "2"
+          - button "Toggle navigation menu" [ref=f3e261] [cursor=pointer]
+    - main [ref=f3e264]:
+      - generic [ref=f3e265]:
+        - generic [ref=f3e268]:
+          - generic [ref=f3e269]: 10 verified positions open right now
+          - heading "Find the right opportunity for your next career move" [level=1] [ref=f3e271]
+          - paragraph [ref=f3e272]: Search verified openings by role, company, location, and working style.
+          - generic [ref=f3e273]:
+            - generic [ref=f3e274]:
+              - textbox "Job title or keywords" [ref=f3e278]:
+                - /placeholder: Job title, skills, or company
+              - textbox "Job location" [ref=f3e282]:
+                - /placeholder: Location or 'Remote'
+              - button "Search Jobs" [ref=f3e283] [cursor=pointer]
+            - generic [ref=f3e286]:
+              - generic [ref=f3e287]: "Popular:"
+              - button "Remote" [ref=f3e288] [cursor=pointer]
+              - button "Full-time" [ref=f3e289] [cursor=pointer]
+              - button "Engineering" [ref=f3e290] [cursor=pointer]
+              - button "Design" [ref=f3e291] [cursor=pointer]
+              - button "Marketing" [ref=f3e292] [cursor=pointer]
+          - generic [ref=f3e293]:
+            - generic [ref=f3e294]:
+              - generic [ref=f3e295]:
+                - heading "Explore job categories" [level=2] [ref=f3e296]
+                - link "View all" [ref=f3e297] [cursor=pointer]:
+                  - /url: /#categories
+              - generic [ref=f3e298]:
+                - button "Software & Tech 9" [ref=f3e299] [cursor=pointer]:
+                  - generic "Software & Tech" [ref=f3e304]
+                  - generic [ref=f3e305]: "9"
+                - button "Product & Design 2" [ref=f3e306] [cursor=pointer]:
+                  - generic "Product & Design" [ref=f3e311]
+                  - generic [ref=f3e312]: "2"
+                - button "Marketing & Growth 1" [ref=f3e313] [cursor=pointer]:
+                  - generic "Marketing & Growth" [ref=f3e318]
+                  - generic [ref=f3e319]: "1"
+                - button "Sales & Business 0" [ref=f3e320] [cursor=pointer]:
+                  - generic "Sales & Business" [ref=f3e325]
+                  - generic [ref=f3e326]: "0"
+                - button "Finance & Accounting 3" [ref=f3e327] [cursor=pointer]:
+                  - generic "Finance & Accounting" [ref=f3e332]
+                  - generic [ref=f3e333]: "3"
+                - button "Healthcare & Science 0" [ref=f3e334] [cursor=pointer]:
+                  - generic "Healthcare & Science" [ref=f3e339]
+                  - generic [ref=f3e340]: "0"
+            - generic [ref=f3e345]:
+              - generic [ref=f3e346]: Verified recruitment
+              - heading "Build your shortlist from active roles" [level=2] [ref=f3e349]
+              - paragraph [ref=f3e350]: Review real openings, compare role details, and continue through the existing application workflow.
+              - button "Browse current openings" [ref=f3e351] [cursor=pointer]
+        - generic [ref=f3e355]:
+          - generic [ref=f3e356]:
+            - generic [ref=f3e357]:
+              - generic [ref=f3e358]: Current Opportunities
+              - heading "Browse open positions" [level=2] [ref=f3e362]
+              - paragraph [ref=f3e363]: Explore active roles from verified employers. Filter by type, experience, and salary right here.
+            - generic [ref=f3e364]: Showing 10 of 10 positions
+          - generic [ref=f3e366]:
+            - generic [ref=f3e367]:
+              - generic [ref=f3e368]: "Filters:"
+              - combobox "Filter by Job Type" [ref=f3e372] [cursor=pointer]:
+                - 'option "Job type: all" [selected]'
+                - option "Full-time"
+                - option "Part-time"
+                - option "Contract"
+                - option "Internship"
+                - option "Remote"
+              - combobox "Filter by Experience Level" [ref=f3e373] [cursor=pointer]:
+                - 'option "Experience: all" [selected]'
+                - option "Entry Level"
+                - option "Mid Level"
+                - option "Senior Level"
+                - option "Lead"
+                - option "Manager"
+              - combobox "Filter by Salary Range" [ref=f3e374] [cursor=pointer]:
+                - 'option "Salary: all" [selected]'
+                - option "Under $50k"
+                - option "$50k - $80k"
+                - option "$80k - $120k"
+                - option "$120k - $150k"
+                - option "$150k - $200k"
+                - option "$200k+"
+            - generic [ref=f3e375]:
+              - generic [ref=f3e378]: "Sort:"
+              - combobox "Sort positions" [ref=f3e379] [cursor=pointer]:
+                - option "Newest First" [selected]
+                - option "Highest Salary"
+                - option "Role Title (A-Z)"
+          - generic [ref=f3e380]:
+            - link "Pacific Cyber Verified Organization Cần Thơ Internship Frontend Engineer 076 25.000.000 - 45.000.000 VNĐ/tháng 4h ago Entry Level AWS Docker Actively hiring View job" [ref=f3e381] [cursor=pointer]:
+              - /url: /jobs/88
+              - generic [ref=f3e382]:
+                - generic [ref=f3e383]:
+                  - generic [ref=f3e384]:
+                    - generic [aria-hidden] [ref=f3e385]: PC
+                    - generic [ref=f3e386]:
+                      - generic [ref=f3e387]:
+                        - generic [ref=f3e388]: Pacific Cyber
+                        - img "Verified Organization" [ref=f3e389]
+                      - generic [ref=f3e391]: Cần Thơ
+                  - generic [ref=f3e395]: Internship
+                - heading "Frontend Engineer 076" [level=3] [ref=f3e397]
+                - generic [ref=f3e398]:
+                  - generic [ref=f3e399]: 25.000.000 - 45.000.000 VNĐ/tháng
+                  - generic [ref=f3e403]: 4h ago
+                - generic [ref=f3e407]:
+                  - generic [ref=f3e408]: Entry Level
+                  - generic [ref=f3e409]: AWS
+                  - generic [ref=f3e410]: Docker
+              - generic [ref=f3e411]:
+                - generic [ref=f3e412]: Actively hiring
+                - generic [ref=f3e415]: View job
+            - link "Quantum Solutions Verified Organization Hải Phòng Full-time Backend Engineer 077 26.000.000 - 46.000.000 VNĐ/tháng 1d ago Mid Level Figma Design System Actively hiring View job" [ref=f3e419] [cursor=pointer]:
+              - /url: /jobs/89
+              - generic [ref=f3e420]:
+                - generic [ref=f3e421]:
+                  - generic [ref=f3e422]:
+                    - generic [aria-hidden] [ref=f3e423]: QS
+                    - generic [ref=f3e424]:
+                      - generic [ref=f3e425]:
+                        - generic [ref=f3e426]: Quantum Solutions
+                        - img "Verified Organization" [ref=f3e427]
+                      - generic [ref=f3e429]: Hải Phòng
+                  - generic [ref=f3e433]: Full-time
+                - heading "Backend Engineer 077" [level=3] [ref=f3e435]
+                - generic [ref=f3e436]:
+                  - generic [ref=f3e437]: 26.000.000 - 46.000.000 VNĐ/tháng
+                  - generic [ref=f3e441]: 1d ago
+                - generic [ref=f3e445]:
+                  - generic [ref=f3e446]: Mid Level
+                  - generic [ref=f3e447]: Figma
+                  - generic [ref=f3e448]: Design System
+              - generic [ref=f3e449]:
+                - generic [ref=f3e450]: Actively hiring
+                - generic [ref=f3e453]: View job
+            - link "BlueRiver Finance Verified Organization Hà Nội Contract Backend Engineer 002 26.000.000 - 41.000.000 VNĐ/tháng 1d ago Mid Level Node.js Express Actively hiring View job" [ref=f3e457] [cursor=pointer]:
+              - /url: /jobs/14
+              - generic [ref=f3e458]:
+                - generic [ref=f3e459]:
+                  - generic [ref=f3e460]:
+                    - generic [aria-hidden] [ref=f3e461]: BF
+                    - generic [ref=f3e462]:
+                      - generic [ref=f3e463]:
+                        - generic [ref=f3e464]: BlueRiver Finance
+                        - img "Verified Organization" [ref=f3e465]
+                      - generic [ref=f3e467]: Hà Nội
+                  - generic [ref=f3e471]: Contract
+                - heading "Backend Engineer 002" [level=3] [ref=f3e473]
+                - generic [ref=f3e474]:
+                  - generic [ref=f3e475]: 26.000.000 - 41.000.000 VNĐ/tháng
+                  - generic [ref=f3e479]: 1d ago
+                - generic [ref=f3e483]:
+                  - generic [ref=f3e484]: Mid Level
+                  - generic [ref=f3e485]: Node.js
+                  - generic [ref=f3e486]: Express
+              - generic [ref=f3e487]:
+                - generic [ref=f3e488]: Actively hiring
+                - generic [ref=f3e491]: View job
+            - link "RedSun Media Verified Organization Remote - Việt Nam Contract Full-stack Developer 078 27.000.000 - 47.000.000 VNĐ/tháng 2d ago Senior Level Java Spring Boot Actively hiring View job" [ref=f3e495] [cursor=pointer]:
+              - /url: /jobs/90
+              - generic [ref=f3e496]:
+                - generic [ref=f3e497]:
+                  - generic [ref=f3e498]:
+                    - generic [aria-hidden] [ref=f3e499]: RM
+                    - generic [ref=f3e500]:
+                      - generic [ref=f3e501]:
+                        - generic [ref=f3e502]: RedSun Media
+                        - img "Verified Organization" [ref=f3e503]
+                      - generic [ref=f3e505]: Remote - Việt Nam
+                  - generic [ref=f3e509]: Contract
+                - heading "Full-stack Developer 078" [level=3] [ref=f3e511]
+                - generic [ref=f3e512]:
+                  - generic [ref=f3e513]: 27.000.000 - 47.000.000 VNĐ/tháng
+                  - generic [ref=f3e517]: 2d ago
+                - generic [ref=f3e521]:
+                  - generic [ref=f3e522]: Senior Level
+                  - generic [ref=f3e523]: Java
+                  - generic [ref=f3e524]: Spring Boot
+              - generic [ref=f3e525]:
+                - generic [ref=f3e526]: Actively hiring
+                - generic [ref=f3e529]: View job
+            - link "CloudNova Verified Organization Đà Nẵng Part-time Full-stack Developer 003 27.000.000 - 42.000.000 VNĐ/tháng 2d ago Senior Level Python SQL Actively hiring View job" [ref=f3e533] [cursor=pointer]:
+              - /url: /jobs/15
+              - generic [ref=f3e534]:
+                - generic [ref=f3e535]:
+                  - generic [ref=f3e536]:
+                    - generic [aria-hidden] [ref=f3e537]: CL
+                    - generic [ref=f3e538]:
+                      - generic [ref=f3e539]:
+                        - generic [ref=f3e540]: CloudNova
+                        - img "Verified Organization" [ref=f3e541]
+                      - generic [ref=f3e543]: Đà Nẵng
+                  - generic [ref=f3e547]: Part-time
+                - heading "Full-stack Developer 003" [level=3] [ref=f3e549]
+                - generic [ref=f3e550]:
+                  - generic [ref=f3e551]: 27.000.000 - 42.000.000 VNĐ/tháng
+                  - generic [ref=f3e555]: 2d ago
+                - generic [ref=f3e559]:
+                  - generic [ref=f3e560]: Senior Level
+                  - generic [ref=f3e561]: Python
+                  - generic [ref=f3e562]: SQL
+              - generic [ref=f3e563]:
+                - generic [ref=f3e564]: Actively hiring
+                - generic [ref=f3e567]: View job
+            - link "Skyline Education Verified Organization Hồ Chí Minh Part-time Data Analyst 079 28.000.000 - 48.000.000 VNĐ/tháng 3d ago Lead React TypeScript Actively hiring View job" [ref=f3e571] [cursor=pointer]:
+              - /url: /jobs/91
+              - generic [ref=f3e572]:
+                - generic [ref=f3e573]:
+                  - generic [ref=f3e574]:
+                    - generic [aria-hidden] [ref=f3e575]: SE
+                    - generic [ref=f3e576]:
+                      - generic [ref=f3e577]:
+                        - generic [ref=f3e578]: Skyline Education
+                        - img "Verified Organization" [ref=f3e579]
+                      - generic [ref=f3e581]: Hồ Chí Minh
+                  - generic [ref=f3e585]: Part-time
+                - heading "Data Analyst 079" [level=3] [ref=f3e587]
+                - generic [ref=f3e588]:
+                  - generic [ref=f3e589]: 28.000.000 - 48.000.000 VNĐ/tháng
+                  - generic [ref=f3e593]: 3d ago
+                - generic [ref=f3e597]:
+                  - generic [ref=f3e598]: Lead
+                  - generic [ref=f3e599]: React
+                  - generic [ref=f3e600]: TypeScript
+              - generic [ref=f3e601]:
+                - generic [ref=f3e602]: Actively hiring
+                - generic [ref=f3e605]: View job
+            - link "Delta Commerce Verified Organization Cần Thơ Internship Data Analyst 004 28.000.000 - 43.000.000 VNĐ/tháng 3d ago Lead AWS Docker Actively hiring View job" [ref=f3e609] [cursor=pointer]:
+              - /url: /jobs/16
+              - generic [ref=f3e610]:
+                - generic [ref=f3e611]:
+                  - generic [ref=f3e612]:
+                    - generic [aria-hidden] [ref=f3e613]: DC
+                    - generic [ref=f3e614]:
+                      - generic [ref=f3e615]:
+                        - generic [ref=f3e616]: Delta Commerce
+                        - img "Verified Organization" [ref=f3e617]
+                      - generic [ref=f3e619]: Cần Thơ
+                  - generic [ref=f3e623]: Internship
+                - heading "Data Analyst 004" [level=3] [ref=f3e625]
+                - generic [ref=f3e626]:
+                  - generic [ref=f3e627]: 28.000.000 - 43.000.000 VNĐ/tháng
+                  - generic [ref=f3e631]: 3d ago
+                - generic [ref=f3e635]:
+                  - generic [ref=f3e636]: Lead
+                  - generic [ref=f3e637]: AWS
+                  - generic [ref=f3e638]: Docker
+              - generic [ref=f3e639]:
+                - generic [ref=f3e640]: Actively hiring
+                - generic [ref=f3e643]: View job
+            - link "Terra Manufacturing Verified Organization Hà Nội Internship Data Engineer 080 29.000.000 - 49.000.000 VNĐ/tháng 4d ago Manager Node.js Express Actively hiring View job" [ref=f3e647] [cursor=pointer]:
+              - /url: /jobs/92
+              - generic [ref=f3e648]:
+                - generic [ref=f3e649]:
+                  - generic [ref=f3e650]:
+                    - generic [aria-hidden] [ref=f3e651]: TM
+                    - generic [ref=f3e652]:
+                      - generic [ref=f3e653]:
+                        - generic [ref=f3e654]: Terra Manufacturing
+                        - img "Verified Organization" [ref=f3e655]
+                      - generic [ref=f3e657]: Hà Nội
+                  - generic [ref=f3e661]: Internship
+                - heading "Data Engineer 080" [level=3] [ref=f3e663]
+                - generic [ref=f3e664]:
+                  - generic [ref=f3e665]: 29.000.000 - 49.000.000 VNĐ/tháng
+                  - generic [ref=f3e669]: 4d ago
+                - generic [ref=f3e673]:
+                  - generic [ref=f3e674]: Manager
+                  - generic [ref=f3e675]: Node.js
+                  - generic [ref=f3e676]: Express
+              - generic [ref=f3e677]:
+                - generic [ref=f3e678]: Actively hiring
+                - generic [ref=f3e681]: View job
+            - link "EverGreen Logistics Verified Organization Hải Phòng Full-time Data Engineer 005 29.000.000 - 44.000.000 VNĐ/tháng 4d ago Manager Figma Design System Actively hiring View job" [ref=f3e685] [cursor=pointer]:
+              - /url: /jobs/17
+              - generic [ref=f3e686]:
+                - generic [ref=f3e687]:
+                  - generic [ref=f3e688]:
+                    - generic [aria-hidden] [ref=f3e689]: EL
+                    - generic [ref=f3e690]:
+                      - generic [ref=f3e691]:
+                        - generic [ref=f3e692]: EverGreen Logistics
+                        - img "Verified Organization" [ref=f3e693]
+                      - generic [ref=f3e695]: Hải Phòng
+                  - generic [ref=f3e699]: Full-time
+                - heading "Data Engineer 005" [level=3] [ref=f3e701]
+                - generic [ref=f3e702]:
+                  - generic [ref=f3e703]: 29.000.000 - 44.000.000 VNĐ/tháng
+                  - generic [ref=f3e707]: 4d ago
+                - generic [ref=f3e711]:
+                  - generic [ref=f3e712]: Manager
+                  - generic [ref=f3e713]: Figma
+                  - generic [ref=f3e714]: Design System
+              - generic [ref=f3e715]:
+                - generic [ref=f3e716]: Actively hiring
+                - generic [ref=f3e719]: View job
+            - link "Aurora Digital Verified Organization Đà Nẵng Full-time DevOps Engineer 081 30.000.000 - 50.000.000 VNĐ/tháng 5d ago Entry Level Python SQL Actively hiring View job" [ref=f3e723] [cursor=pointer]:
+              - /url: /jobs/93
+              - generic [ref=f3e724]:
+                - generic [ref=f3e725]:
+                  - generic [ref=f3e726]:
+                    - generic [aria-hidden] [ref=f3e727]: AD
+                    - generic [ref=f3e728]:
+                      - generic [ref=f3e729]:
+                        - generic [ref=f3e730]: Aurora Digital
+                        - img "Verified Organization" [ref=f3e731]
+                      - generic [ref=f3e733]: Đà Nẵng
+                  - generic [ref=f3e737]: Full-time
+                - heading "DevOps Engineer 081" [level=3] [ref=f3e739]
+                - generic [ref=f3e740]:
+                  - generic [ref=f3e741]: 30.000.000 - 50.000.000 VNĐ/tháng
+                  - generic [ref=f3e745]: 5d ago
+                - generic [ref=f3e749]:
+                  - generic [ref=f3e750]: Entry Level
+                  - generic [ref=f3e751]: Python
+                  - generic [ref=f3e752]: SQL
+              - generic [ref=f3e753]:
+                - generic [ref=f3e754]: Actively hiring
+                - generic [ref=f3e757]: View job
+        - generic [ref=f3e762]:
+          - generic [ref=f3e763]:
+            - text: Targeted Discovery
+            - heading "Explore Roles by Category" [level=2] [ref=f3e764]
+            - paragraph [ref=f3e765]: Filter jobs matching your functional area of expertise with one click.
+          - generic [ref=f3e766]:
+            - button "Software & Tech 9 open roles View positions" [ref=f3e767] [cursor=pointer]:
+              - generic [ref=f3e768]:
+                - heading "Software & Tech" [level=3] [ref=f3e772]
+                - paragraph [ref=f3e773]:
+                  - generic [ref=f3e774]: 9 open roles
+              - generic [ref=f3e775]: View positions
+            - button "Product & Design 2 open roles View positions" [ref=f3e779] [cursor=pointer]:
+              - generic [ref=f3e780]:
+                - heading "Product & Design" [level=3] [ref=f3e784]
+                - paragraph [ref=f3e785]:
+                  - generic [ref=f3e786]: 2 open roles
+              - generic [ref=f3e787]: View positions
+            - button "Marketing & Growth 1 open role View positions" [ref=f3e791] [cursor=pointer]:
+              - generic [ref=f3e792]:
+                - heading "Marketing & Growth" [level=3] [ref=f3e796]
+                - paragraph [ref=f3e797]:
+                  - generic [ref=f3e798]: 1 open role
+              - generic [ref=f3e799]: View positions
+            - button "Sales & Business Explore category View positions" [ref=f3e803] [cursor=pointer]:
+              - generic [ref=f3e804]:
+                - heading "Sales & Business" [level=3] [ref=f3e808]
+                - paragraph [ref=f3e809]: Explore category
+              - generic [ref=f3e810]: View positions
+            - button "Finance & Accounting 3 open roles View positions" [ref=f3e814] [cursor=pointer]:
+              - generic [ref=f3e815]:
+                - heading "Finance & Accounting" [level=3] [ref=f3e819]
+                - paragraph [ref=f3e820]:
+                  - generic [ref=f3e821]: 3 open roles
+              - generic [ref=f3e822]: View positions
+            - button "Healthcare & Science Explore category View positions" [ref=f3e826] [cursor=pointer]:
+              - generic [ref=f3e827]:
+                - heading "Healthcare & Science" [level=3] [ref=f3e831]
+                - paragraph [ref=f3e832]: Explore category
+              - generic [ref=f3e833]: View positions
+            - button "Customer Support Explore category View positions" [ref=f3e837] [cursor=pointer]:
+              - generic [ref=f3e838]:
+                - heading "Customer Support" [level=3] [ref=f3e842]
+                - paragraph [ref=f3e843]: Explore category
+              - generic [ref=f3e844]: View positions
+            - button "Operations & HR 1 open role View positions" [ref=f3e848] [cursor=pointer]:
+              - generic [ref=f3e849]:
+                - heading "Operations & HR" [level=3] [ref=f3e853]
+                - paragraph [ref=f3e854]:
+                  - generic [ref=f3e855]: 1 open role
+              - generic [ref=f3e856]: View positions
+        - generic [ref=f3e861]:
+          - generic [ref=f3e862]:
+            - generic [ref=f3e863]:
+              - text: Employer discovery
+              - heading "Organizations hiring now" [level=2] [ref=f3e864]
+              - paragraph [ref=f3e865]: Companies represented in the current set of active listings.
+            - button "Browse all current jobs" [ref=f3e866] [cursor=pointer]
+          - generic [ref=f3e869]:
+            - link "PC Pacific Cyber Cần Thơ 1 role in current listings" [ref=f3e870] [cursor=pointer]:
+              - /url: /jobs/88
+              - generic [ref=f3e871]: PC
+              - heading "Pacific Cyber" [level=3] [ref=f3e872]
+              - paragraph [ref=f3e873]: Cần Thơ
+              - generic [ref=f3e874]: 1 role in current listings
+            - link "QS Quantum Solutions Hải Phòng 1 role in current listings" [ref=f3e875] [cursor=pointer]:
+              - /url: /jobs/89
+              - generic [ref=f3e876]: QS
+              - heading "Quantum Solutions" [level=3] [ref=f3e877]
+              - paragraph [ref=f3e878]: Hải Phòng
+              - generic [ref=f3e879]: 1 role in current listings
+            - link "BF BlueRiver Finance Hà Nội 1 role in current listings" [ref=f3e880] [cursor=pointer]:
+              - /url: /jobs/14
+              - generic [ref=f3e881]: BF
+              - heading "BlueRiver Finance" [level=3] [ref=f3e882]
+              - paragraph [ref=f3e883]: Hà Nội
+              - generic [ref=f3e884]: 1 role in current listings
+            - link "RM RedSun Media Remote - Việt Nam 1 role in current listings" [ref=f3e885] [cursor=pointer]:
+              - /url: /jobs/90
+              - generic [ref=f3e886]: RM
+              - heading "RedSun Media" [level=3] [ref=f3e887]
+              - paragraph [ref=f3e888]: Remote - Việt Nam
+              - generic [ref=f3e889]: 1 role in current listings
+            - link "C CloudNova Đà Nẵng 1 role in current listings" [ref=f3e890] [cursor=pointer]:
+              - /url: /jobs/15
+              - generic [ref=f3e891]: C
+              - heading "CloudNova" [level=3] [ref=f3e892]
+              - paragraph [ref=f3e893]: Đà Nẵng
+              - generic [ref=f3e894]: 1 role in current listings
+        - generic [ref=f3e897]:
+          - generic [ref=f3e902]:
+            - heading "Verified Openings" [level=4] [ref=f3e903]
+            - paragraph [ref=f3e904]: Direct postings from vetted hiring teams and organizations.
+          - generic [ref=f3e909]:
+            - heading "Direct Application" [level=4] [ref=f3e910]
+            - paragraph [ref=f3e911]: No middleman redirections; submit your resume straight to recruiters.
+          - generic [ref=f3e916]:
+            - heading "Real-Time Status" [level=4] [ref=f3e917]
+            - paragraph [ref=f3e918]: Track when your resume is reviewed, shortlisted, or invited.
+          - generic [ref=f3e923]:
+            - heading "Dedicated Dashboards" [level=4] [ref=f3e924]
+            - paragraph [ref=f3e925]: Tailored workspaces for candidates, hiring managers, and admins.
+        - generic [ref=f3e927]:
+          - generic [ref=f3e928]:
+            - text: Simple & Transparent
+            - heading "How the Platform Works" [level=2] [ref=f3e929]
+            - paragraph [ref=f3e930]: Designed to connect candidates and hiring managers with zero friction.
+          - generic [ref=f3e931]:
+            - generic [ref=f3e932]:
+              - generic [ref=f3e933]: For Job Seekers
+              - heading "Fast-track your job search" [level=3] [ref=f3e934]
+              - generic [ref=f3e935]:
+                - generic [ref=f3e936]:
+                  - generic [ref=f3e937]: "1"
+                  - generic [ref=f3e938]:
+                    - heading "Build Your Profile & Resume" [level=4] [ref=f3e939]
+                    - paragraph [ref=f3e940]: Create an account, upload your credentials, and maintain your primary resume in one secure hub.
+                - generic [ref=f3e941]:
+                  - generic [ref=f3e942]: "2"
+                  - generic [ref=f3e943]:
+                    - heading "Filter by Skills & Modality" [level=4] [ref=f3e944]
+                    - paragraph [ref=f3e945]: Search by remote preference, compensation range, and experience level with instant filter responses.
+                - generic [ref=f3e946]:
+                  - generic [ref=f3e947]: "3"
+                  - generic [ref=f3e948]:
+                    - heading "Apply Directly & Monitor Progress" [level=4] [ref=f3e949]
+                    - paragraph [ref=f3e950]: Submit applications with one click and track status updates through your candidate dashboard.
+              - button "Start browsing openings" [ref=f3e952] [cursor=pointer]
+            - generic [ref=f3e956]:
+              - generic [ref=f3e957]: For Employers & Recruiters
+              - heading "Hire talent efficiently" [level=3] [ref=f3e958]
+              - generic [ref=f3e959]:
+                - generic [ref=f3e960]:
+                  - generic [ref=f3e961]: "1"
+                  - generic [ref=f3e962]:
+                    - heading "Publish Vacancies" [level=4] [ref=f3e963]
+                    - paragraph [ref=f3e964]: Define responsibilities, salary ranges, and specific skill requirements using structured postings.
+                - generic [ref=f3e965]:
+                  - generic [ref=f3e966]: "2"
+                  - generic [ref=f3e967]:
+                    - heading "Screen Qualified Applicants" [level=4] [ref=f3e968]
+                    - paragraph [ref=f3e969]: Access verified applicant profiles and inspect uploaded resumes within your employer portal.
+                - generic [ref=f3e970]:
+                  - generic [ref=f3e971]: "3"
+                  - generic [ref=f3e972]:
+                    - heading "Manage Hiring Pipeline" [level=4] [ref=f3e973]
+                    - paragraph [ref=f3e974]: Shortlist top candidates, schedule interviews, and issue hiring decisions directly.
+              - link "Post your opening today" [ref=f3e976] [cursor=pointer]:
+                - /url: /register
+        - generic [ref=f3e981]:
+          - heading "Ready to Take Your Next Career Step?" [level=2] [ref=f3e982]
+          - paragraph [ref=f3e983]: Whether you are seeking your next challenge or hiring qualified professionals, start today on JobPortal.
+          - generic [ref=f3e984]:
+            - button "Browse Open Positions" [ref=f3e985] [cursor=pointer]
+            - link "Go to Dashboard" [ref=f3e986] [cursor=pointer]:
+              - /url: /dashboard
+    - contentinfo [ref=f3e987]:
+      - generic [ref=f3e988]:
+        - generic [ref=f3e989]:
+          - generic [ref=f3e990]:
+            - link "JobPortal Logo JobPortal" [ref=f3e991] [cursor=pointer]:
+              - /url: /
+              - img "JobPortal Logo" [ref=f3e992]
+              - generic [ref=f3e993]: JobPortal
+            - paragraph [ref=f3e994]: A transparent, production-ready recruitment hub connecting verified companies with exceptional talent.
+            - generic [ref=f3e995]:
+              - generic [ref=f3e996]: Verified Postings
+              - generic [ref=f3e999]: Fast Response
+          - generic [ref=f3e1002]:
+            - heading "For Job Seekers" [level=4] [ref=f3e1003]
+            - list [ref=f3e1004]:
+              - listitem [ref=f3e1005]:
+                - link "Browse All Jobs" [ref=f3e1006] [cursor=pointer]:
+                  - /url: /#browse-jobs
+              - listitem [ref=f3e1007]:
+                - link "Explore Categories" [ref=f3e1008] [cursor=pointer]:
+                  - /url: /#categories
+              - listitem [ref=f3e1009]:
+                - link "Remote Opportunities" [ref=f3e1010] [cursor=pointer]:
+                  - /url: /?type=Remote#browse-jobs
+              - listitem [ref=f3e1011]:
+                - link "Full-Time Positions" [ref=f3e1012] [cursor=pointer]:
+                  - /url: /?type=Full-time#browse-jobs
+              - listitem [ref=f3e1013]:
+                - link "Candidate Dashboard" [ref=f3e1014] [cursor=pointer]:
+                  - /url: /dashboard
+          - generic [ref=f3e1015]:
+            - heading "For Employers" [level=4] [ref=f3e1016]
+            - list [ref=f3e1017]:
+              - listitem [ref=f3e1018]:
+                - link "Post a Position" [ref=f3e1019] [cursor=pointer]:
+                  - /url: /employer/post-job
+              - listitem [ref=f3e1020]:
+                - link "Employer Dashboard" [ref=f3e1021] [cursor=pointer]:
+                  - /url: /employer
+              - listitem [ref=f3e1022]:
+                - link "Create Employer Account" [ref=f3e1023] [cursor=pointer]:
+                  - /url: /register
+              - listitem [ref=f3e1024]:
+                - link "Applicant Tracking" [ref=f3e1025] [cursor=pointer]:
+                  - /url: /employer/applicants
+          - generic [ref=f3e1026]:
+            - heading "Platform & Access" [level=4] [ref=f3e1027]
+            - list [ref=f3e1028]:
+              - listitem [ref=f3e1029]:
+                - link "Sign In" [ref=f3e1030] [cursor=pointer]:
+                  - /url: /login
+              - listitem [ref=f3e1031]:
+                - link "Register" [ref=f3e1032] [cursor=pointer]:
+                  - /url: /register
+              - listitem [ref=f3e1033]:
+                - link "Admin Portal" [ref=f3e1034] [cursor=pointer]:
+                  - /url: /admin
+              - listitem [ref=f3e1035]: Operating with direct database integration & verified role authentication.
+        - generic [ref=f3e1036]:
+          - paragraph [ref=f3e1037]: © 2026 JobPortal. All rights reserved.
+          - generic [ref=f3e1038]:
+            - link "Jobs" [ref=f3e1039] [cursor=pointer]:
+              - /url: /jobs
+            - link "Sign In" [ref=f3e1040] [cursor=pointer]:
+              - /url: /login
+            - link "Register" [ref=f3e1041] [cursor=pointer]:
+              - /url: /register
+  - button "Open Tanstack query devtools" [ref=f3e189] [cursor=pointer]

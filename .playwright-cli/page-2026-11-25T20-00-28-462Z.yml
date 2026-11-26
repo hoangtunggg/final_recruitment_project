@@ -1,0 +1,126 @@
+- generic [ref=f3e2]:
+  - generic [ref=f3e555]:
+    - navigation "Main navigation" [ref=f3e929]:
+      - generic [ref=f3e931]:
+        - link "JobPortal Logo JobPortal Careers & Talent" [ref=f3e932] [cursor=pointer]:
+          - /url: /
+          - img "JobPortal Logo" [ref=f3e933]
+          - generic [ref=f3e934]:
+            - generic [ref=f3e935]: JobPortal
+            - generic [ref=f3e936]: Careers & Talent
+        - generic [ref=f3e937]:
+          - link "Home" [ref=f3e938] [cursor=pointer]:
+            - /url: /
+          - link "Browse Jobs" [ref=f3e939] [cursor=pointer]:
+            - /url: /#browse-jobs
+          - link "Categories" [ref=f3e940] [cursor=pointer]:
+            - /url: /#categories
+          - generic [ref=f3e941]:
+            - link "Sign In" [ref=f3e942] [cursor=pointer]:
+              - /url: /login
+            - link "Create Account" [ref=f3e943] [cursor=pointer]:
+              - /url: /register
+          - button "Switch to dark mode" [ref=f3e944] [cursor=pointer]
+    - main [ref=f3e556]:
+      - generic [ref=f3e948]:
+        - generic [ref=f3e950]:
+          - heading "Welcome Back" [level=2] [ref=f3e955]
+          - paragraph [ref=f3e956]: Sign in to access your account and continue your journey
+          - paragraph [ref=f3e957]:
+            - text: New to our platform?
+            - link "Create an account" [ref=f3e958] [cursor=pointer]:
+              - /url: /register
+        - generic [ref=f3e959]:
+          - generic [ref=f3e961]:
+            - generic [ref=f3e962]:
+              - generic [ref=f3e963]: Email address
+              - textbox "Email address" [ref=f3e965]:
+                - /placeholder: you@example.com
+            - generic [ref=f3e966]:
+              - generic [ref=f3e967]: Password
+              - generic [ref=f3e968]:
+                - textbox "Password" [ref=f3e969]:
+                  - /placeholder: ••••••••
+                - button "Show password" [ref=f3e970] [cursor=pointer]
+            - generic [ref=f3e974]:
+              - generic [ref=f3e975]:
+                - checkbox "Remember me" [ref=f3e976] [cursor=pointer]
+                - generic [ref=f3e977] [cursor=pointer]: Remember me
+              - link "Forgot your password?" [ref=f3e979] [cursor=pointer]:
+                - /url: /forgot-password
+            - button "Sign in" [ref=f3e981] [cursor=pointer]
+          - generic [ref=f3e986]:
+            - generic [ref=f3e987]: Or continue with
+            - generic [ref=f3e992]:
+              - link "Sign in with Google" [ref=f3e994] [cursor=pointer]:
+                - /url: "#"
+              - link "Sign in with GitHub" [ref=f3e999] [cursor=pointer]:
+                - /url: "#"
+    - contentinfo [ref=f3e1003]:
+      - generic [ref=f3e1004]:
+        - generic [ref=f3e1005]:
+          - generic [ref=f3e1006]:
+            - link "JobPortal Logo JobPortal" [ref=f3e1007] [cursor=pointer]:
+              - /url: /
+              - img "JobPortal Logo" [ref=f3e1008]
+              - generic [ref=f3e1009]: JobPortal
+            - paragraph [ref=f3e1010]: A transparent, production-ready recruitment hub connecting verified companies with exceptional talent.
+            - generic [ref=f3e1011]:
+              - generic [ref=f3e1012]: Verified Postings
+              - generic [ref=f3e1015]: Fast Response
+          - generic [ref=f3e1018]:
+            - heading "For Job Seekers" [level=4] [ref=f3e1019]
+            - list [ref=f3e1020]:
+              - listitem [ref=f3e1021]:
+                - link "Browse All Jobs" [ref=f3e1022] [cursor=pointer]:
+                  - /url: /#browse-jobs
+              - listitem [ref=f3e1023]:
+                - link "Explore Categories" [ref=f3e1024] [cursor=pointer]:
+                  - /url: /#categories
+              - listitem [ref=f3e1025]:
+                - link "Remote Opportunities" [ref=f3e1026] [cursor=pointer]:
+                  - /url: /?type=Remote#browse-jobs
+              - listitem [ref=f3e1027]:
+                - link "Full-Time Positions" [ref=f3e1028] [cursor=pointer]:
+                  - /url: /?type=Full-time#browse-jobs
+              - listitem [ref=f3e1029]:
+                - link "Candidate Dashboard" [ref=f3e1030] [cursor=pointer]:
+                  - /url: /dashboard
+          - generic [ref=f3e1031]:
+            - heading "For Employers" [level=4] [ref=f3e1032]
+            - list [ref=f3e1033]:
+              - listitem [ref=f3e1034]:
+                - link "Post a Position" [ref=f3e1035] [cursor=pointer]:
+                  - /url: /employer/post-job
+              - listitem [ref=f3e1036]:
+                - link "Employer Dashboard" [ref=f3e1037] [cursor=pointer]:
+                  - /url: /employer
+              - listitem [ref=f3e1038]:
+                - link "Create Employer Account" [ref=f3e1039] [cursor=pointer]:
+                  - /url: /register
+              - listitem [ref=f3e1040]:
+                - link "Applicant Tracking" [ref=f3e1041] [cursor=pointer]:
+                  - /url: /employer/applicants
+          - generic [ref=f3e1042]:
+            - heading "Platform & Access" [level=4] [ref=f3e1043]
+            - list [ref=f3e1044]:
+              - listitem [ref=f3e1045]:
+                - link "Sign In" [ref=f3e1046] [cursor=pointer]:
+                  - /url: /login
+              - listitem [ref=f3e1047]:
+                - link "Register" [ref=f3e1048] [cursor=pointer]:
+                  - /url: /register
+              - listitem [ref=f3e1049]:
+                - link "Admin Portal" [ref=f3e1050] [cursor=pointer]:
+                  - /url: /admin
+              - listitem [ref=f3e1051]: Operating with direct database integration & verified role authentication.
+        - generic [ref=f3e1052]:
+          - paragraph [ref=f3e1053]: © 2026 JobPortal. All rights reserved.
+          - generic [ref=f3e1054]:
+            - link "Jobs" [ref=f3e1055] [cursor=pointer]:
+              - /url: /jobs
+            - link "Sign In" [ref=f3e1056] [cursor=pointer]:
+              - /url: /login
+            - link "Register" [ref=f3e1057] [cursor=pointer]:
+              - /url: /register
+  - button "Open Tanstack query devtools" [ref=f3e377] [cursor=pointer]

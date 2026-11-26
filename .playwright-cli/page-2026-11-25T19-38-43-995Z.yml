@@ -1,0 +1,353 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - navigation "Main navigation" [ref=e4]:
+      - generic [ref=e6]:
+        - link "JobPortal Logo JobPortal Careers & Talent" [ref=e7] [cursor=pointer]:
+          - /url: /
+          - img "JobPortal Logo" [ref=e8]
+          - generic [ref=e9]:
+            - generic [ref=e10]: JobPortal
+            - generic [ref=e11]: Careers & Talent
+        - generic [ref=e1020]:
+          - button "Switch to dark mode" [ref=e1021] [cursor=pointer]
+          - button "Toggle navigation menu" [ref=e1024] [cursor=pointer]
+    - main [ref=e22]:
+      - generic [ref=e23]:
+        - generic [ref=e26]:
+          - generic [ref=e27]: 10 verified positions open right now
+          - heading "Find the right opportunity for your next career move" [level=1] [ref=e29]
+          - paragraph [ref=e30]: Search verified openings by role, company, location, and working style.
+          - generic [ref=e31]:
+            - generic [ref=e32]:
+              - textbox "Job title or keywords" [ref=e36]:
+                - /placeholder: Job title, skills, or company
+              - textbox "Job location" [ref=e40]:
+                - /placeholder: Location or 'Remote'
+              - button "Search Jobs" [ref=e41] [cursor=pointer]
+            - generic [ref=e44]:
+              - generic [ref=e45]: "Popular:"
+              - button "Remote" [active] [ref=e46] [cursor=pointer]
+              - button "Full-time" [ref=e47] [cursor=pointer]
+              - button "Engineering" [ref=e48] [cursor=pointer]
+              - button "Design" [ref=e49] [cursor=pointer]
+              - button "Marketing" [ref=e50] [cursor=pointer]
+          - generic [ref=e51]:
+            - generic [ref=e52]:
+              - generic [ref=e53]:
+                - heading "Explore job categories" [level=2] [ref=e54]
+                - link "View all" [ref=e55] [cursor=pointer]:
+                  - /url: /#categories
+              - generic [ref=e56]:
+                - button "Software & Tech 9" [ref=e470] [cursor=pointer]:
+                  - generic [ref=e58]: Software & Tech
+                  - generic [ref=e63]: "9"
+                - button "Product & Design 2" [ref=e471] [cursor=pointer]:
+                  - generic [ref=e65]: Product & Design
+                  - generic [ref=e70]: "2"
+                - button "Marketing & Growth 1" [ref=e472] [cursor=pointer]:
+                  - generic [ref=e72]: Marketing & Growth
+                  - generic [ref=e77]: "1"
+                - button "Sales & Business 0" [ref=e78] [cursor=pointer]:
+                  - generic [ref=e79]: Sales & Business
+                  - generic [ref=e84]: "0"
+                - button "Finance & Accounting 3" [ref=e473] [cursor=pointer]:
+                  - generic [ref=e86]: Finance & Accounting
+                  - generic [ref=e91]: "3"
+                - button "Healthcare & Science 0" [ref=e92] [cursor=pointer]:
+                  - generic [ref=e93]: Healthcare & Science
+                  - generic [ref=e98]: "0"
+            - generic [ref=e102]:
+              - generic [ref=e103]:
+                - generic [ref=e104]: Verified recruitment
+                - heading "Build your shortlist from active roles" [level=2] [ref=e107]
+                - paragraph [ref=e108]: Review real openings, compare role details, and continue through the existing application workflow.
+                - button "Browse current openings" [ref=e109] [cursor=pointer]
+              - generic [ref=e474]:
+                - link [ref=e475] [cursor=pointer]:
+                  - /url: /jobs/88
+                  - generic [ref=e477]:
+                    - paragraph [ref=e478]: Frontend Engineer 076
+                    - paragraph [ref=e479]: Pacific Cyber · Cần Thơ
+                - link [ref=e482] [cursor=pointer]:
+                  - /url: /jobs/89
+                  - generic [ref=e484]:
+                    - paragraph [ref=e485]: Backend Engineer 077
+                    - paragraph [ref=e486]: Quantum Solutions · Hải Phòng
+                - link [ref=e489] [cursor=pointer]:
+                  - /url: /jobs/14
+                  - generic [ref=e491]:
+                    - paragraph [ref=e492]: Backend Engineer 002
+                    - paragraph [ref=e493]: BlueRiver Finance · Hà Nội
+        - generic [ref=e113]:
+          - generic [ref=e114]:
+            - generic [ref=e115]:
+              - generic [ref=e116]: Current Opportunities
+              - heading "Browse open positions" [level=2] [ref=e120]
+              - paragraph [ref=e121]: Explore active roles from verified employers. Filter by type, experience, and salary right here.
+            - generic [ref=e122]: Showing 0 of 10 positions
+          - generic [ref=e123]:
+            - generic [ref=e124]:
+              - generic [ref=e125]:
+                - generic [ref=e126]: "Filters:"
+                - combobox "Filter by Job Type" [ref=e130] [cursor=pointer]:
+                  - 'option "Job type: all"'
+                  - option "Full-time"
+                  - option "Part-time"
+                  - option "Contract"
+                  - option "Internship"
+                  - option "Remote" [selected]
+                - combobox "Filter by Experience Level" [ref=e131] [cursor=pointer]:
+                  - 'option "Experience: all" [selected]'
+                  - option "Entry Level"
+                  - option "Mid Level"
+                  - option "Senior Level"
+                  - option "Lead"
+                  - option "Manager"
+                - combobox "Filter by Salary Range" [ref=e132] [cursor=pointer]:
+                  - 'option "Salary: all" [selected]'
+                  - option "Under $50k"
+                  - option "$50k - $80k"
+                  - option "$80k - $120k"
+                  - option "$120k - $150k"
+                  - option "$150k - $200k"
+                  - option "$200k+"
+              - generic [ref=e133]:
+                - generic [ref=e136]: "Sort:"
+                - combobox "Sort positions" [ref=e137] [cursor=pointer]:
+                  - option "Newest First" [selected]
+                  - option "Highest Salary"
+                  - option "Role Title (A-Z)"
+            - generic [ref=e1027]:
+              - generic [ref=e1028]: "Active filters:"
+              - generic [ref=e1029]:
+                - text: "Type: Remote"
+                - button [ref=e1030] [cursor=pointer]
+              - button "Clear all" [ref=e1033] [cursor=pointer]
+          - generic [ref=e138]:
+            - heading "No positions match your selected filters" [level=3] [ref=e1037]
+            - paragraph [ref=e1038]: Try adjusting your search criteria, keywords, or clearing your active filters.
+            - button "Reset All Filters" [ref=e1040] [cursor=pointer]
+        - generic [ref=e230]:
+          - generic [ref=e231]:
+            - text: Targeted Discovery
+            - heading "Explore Roles by Category" [level=2] [ref=e232]
+            - paragraph [ref=e233]: Filter jobs matching your functional area of expertise with one click.
+          - generic [ref=e234]:
+            - button "Software & Tech 9 open roles View positions" [ref=e876] [cursor=pointer]:
+              - generic [ref=e236]:
+                - heading "Software & Tech" [level=3] [ref=e240]
+                - paragraph [ref=e241]:
+                  - generic [ref=e877]: 9 open roles
+              - generic [ref=e242]: View positions
+            - button "Product & Design 2 open roles View positions" [ref=e878] [cursor=pointer]:
+              - generic [ref=e247]:
+                - heading "Product & Design" [level=3] [ref=e251]
+                - paragraph [ref=e252]:
+                  - generic [ref=e879]: 2 open roles
+              - generic [ref=e253]: View positions
+            - button "Marketing & Growth 1 open role View positions" [ref=e880] [cursor=pointer]:
+              - generic [ref=e258]:
+                - heading "Marketing & Growth" [level=3] [ref=e262]
+                - paragraph [ref=e263]:
+                  - generic [ref=e881]: 1 open role
+              - generic [ref=e264]: View positions
+            - button "Sales & Business Explore category View positions" [ref=e268] [cursor=pointer]:
+              - generic [ref=e269]:
+                - heading "Sales & Business" [level=3] [ref=e273]
+                - paragraph [ref=e274]: Explore category
+              - generic [ref=e275]: View positions
+            - button "Finance & Accounting 3 open roles View positions" [ref=e882] [cursor=pointer]:
+              - generic [ref=e280]:
+                - heading "Finance & Accounting" [level=3] [ref=e284]
+                - paragraph [ref=e285]:
+                  - generic [ref=e883]: 3 open roles
+              - generic [ref=e286]: View positions
+            - button "Healthcare & Science Explore category View positions" [ref=e290] [cursor=pointer]:
+              - generic [ref=e291]:
+                - heading "Healthcare & Science" [level=3] [ref=e295]
+                - paragraph [ref=e296]: Explore category
+              - generic [ref=e297]: View positions
+            - button "Customer Support Explore category View positions" [ref=e301] [cursor=pointer]:
+              - generic [ref=e302]:
+                - heading "Customer Support" [level=3] [ref=e306]
+                - paragraph [ref=e307]: Explore category
+              - generic [ref=e308]: View positions
+            - button "Operations & HR 1 open role View positions" [ref=e884] [cursor=pointer]:
+              - generic [ref=e313]:
+                - heading "Operations & HR" [level=3] [ref=e317]
+                - paragraph [ref=e318]:
+                  - generic [ref=e885]: 1 open role
+              - generic [ref=e319]: View positions
+        - generic [ref=e887]:
+          - generic [ref=e888]:
+            - generic [ref=e889]:
+              - text: Employer discovery
+              - heading "Organizations hiring now" [level=2] [ref=e890]
+              - paragraph [ref=e891]: Companies represented in the current set of active listings.
+            - button "Browse all current jobs" [ref=e892] [cursor=pointer]
+          - generic [ref=e895]:
+            - link "PC Pacific Cyber Cần Thơ 1 role in current listings" [ref=e896] [cursor=pointer]:
+              - /url: /jobs/88
+              - generic [ref=e897]: PC
+              - heading "Pacific Cyber" [level=3] [ref=e898]
+              - paragraph [ref=e899]: Cần Thơ
+              - generic [ref=e900]: 1 role in current listings
+            - link "QS Quantum Solutions Hải Phòng 1 role in current listings" [ref=e901] [cursor=pointer]:
+              - /url: /jobs/89
+              - generic [ref=e902]: QS
+              - heading "Quantum Solutions" [level=3] [ref=e903]
+              - paragraph [ref=e904]: Hải Phòng
+              - generic [ref=e905]: 1 role in current listings
+            - link "BF BlueRiver Finance Hà Nội 1 role in current listings" [ref=e906] [cursor=pointer]:
+              - /url: /jobs/14
+              - generic [ref=e907]: BF
+              - heading "BlueRiver Finance" [level=3] [ref=e908]
+              - paragraph [ref=e909]: Hà Nội
+              - generic [ref=e910]: 1 role in current listings
+            - link "RM RedSun Media Remote - Việt Nam 1 role in current listings" [ref=e911] [cursor=pointer]:
+              - /url: /jobs/90
+              - generic [ref=e912]: RM
+              - heading "RedSun Media" [level=3] [ref=e913]
+              - paragraph [ref=e914]: Remote - Việt Nam
+              - generic [ref=e915]: 1 role in current listings
+            - link "C CloudNova Đà Nẵng 1 role in current listings" [ref=e916] [cursor=pointer]:
+              - /url: /jobs/15
+              - generic [ref=e917]: C
+              - heading "CloudNova" [level=3] [ref=e918]
+              - paragraph [ref=e919]: Đà Nẵng
+              - generic [ref=e920]: 1 role in current listings
+        - generic [ref=e325]:
+          - generic [ref=e330]:
+            - heading "Verified Openings" [level=4] [ref=e331]
+            - paragraph [ref=e332]: Direct postings from vetted hiring teams and organizations.
+          - generic [ref=e337]:
+            - heading "Direct Application" [level=4] [ref=e338]
+            - paragraph [ref=e339]: No middleman redirections; submit your resume straight to recruiters.
+          - generic [ref=e344]:
+            - heading "Real-Time Status" [level=4] [ref=e345]
+            - paragraph [ref=e346]: Track when your resume is reviewed, shortlisted, or invited.
+          - generic [ref=e351]:
+            - heading "Dedicated Dashboards" [level=4] [ref=e352]
+            - paragraph [ref=e353]: Tailored workspaces for candidates, hiring managers, and admins.
+        - generic [ref=e355]:
+          - generic [ref=e356]:
+            - text: Simple & Transparent
+            - heading "How the Platform Works" [level=2] [ref=e357]
+            - paragraph [ref=e358]: Designed to connect candidates and hiring managers with zero friction.
+          - generic [ref=e359]:
+            - generic [ref=e360]:
+              - generic [ref=e361]: For Job Seekers
+              - heading "Fast-track your job search" [level=3] [ref=e362]
+              - generic [ref=e363]:
+                - generic [ref=e364]:
+                  - generic [ref=e365]: "1"
+                  - generic [ref=e366]:
+                    - heading "Build Your Profile & Resume" [level=4] [ref=e367]
+                    - paragraph [ref=e368]: Create an account, upload your credentials, and maintain your primary resume in one secure hub.
+                - generic [ref=e369]:
+                  - generic [ref=e370]: "2"
+                  - generic [ref=e371]:
+                    - heading "Filter by Skills & Modality" [level=4] [ref=e372]
+                    - paragraph [ref=e373]: Search by remote preference, compensation range, and experience level with instant filter responses.
+                - generic [ref=e374]:
+                  - generic [ref=e375]: "3"
+                  - generic [ref=e376]:
+                    - heading "Apply Directly & Monitor Progress" [level=4] [ref=e377]
+                    - paragraph [ref=e378]: Submit applications with one click and track status updates through your candidate dashboard.
+              - button "Start browsing openings" [ref=e380] [cursor=pointer]
+            - generic [ref=e384]:
+              - generic [ref=e385]: For Employers & Recruiters
+              - heading "Hire talent efficiently" [level=3] [ref=e386]
+              - generic [ref=e387]:
+                - generic [ref=e388]:
+                  - generic [ref=e389]: "1"
+                  - generic [ref=e390]:
+                    - heading "Publish Vacancies" [level=4] [ref=e391]
+                    - paragraph [ref=e392]: Define responsibilities, salary ranges, and specific skill requirements using structured postings.
+                - generic [ref=e393]:
+                  - generic [ref=e394]: "2"
+                  - generic [ref=e395]:
+                    - heading "Screen Qualified Applicants" [level=4] [ref=e396]
+                    - paragraph [ref=e397]: Access verified applicant profiles and inspect uploaded resumes within your employer portal.
+                - generic [ref=e398]:
+                  - generic [ref=e399]: "3"
+                  - generic [ref=e400]:
+                    - heading "Manage Hiring Pipeline" [level=4] [ref=e401]
+                    - paragraph [ref=e402]: Shortlist top candidates, schedule interviews, and issue hiring decisions directly.
+              - link "Post your opening today" [ref=e404] [cursor=pointer]:
+                - /url: /register
+        - generic [ref=e409]:
+          - heading "Ready to Take Your Next Career Step?" [level=2] [ref=e410]
+          - paragraph [ref=e411]: Whether you are seeking your next challenge or hiring qualified professionals, start today on JobPortal.
+          - generic [ref=e412]:
+            - button "Browse Open Positions" [ref=e413] [cursor=pointer]
+            - link "Create Free Account" [ref=e414] [cursor=pointer]:
+              - /url: /register
+    - contentinfo [ref=e415]:
+      - generic [ref=e416]:
+        - generic [ref=e417]:
+          - generic [ref=e418]:
+            - link "JobPortal Logo JobPortal" [ref=e419] [cursor=pointer]:
+              - /url: /
+              - img "JobPortal Logo" [ref=e420]
+              - generic [ref=e421]: JobPortal
+            - paragraph [ref=e422]: A transparent, production-ready recruitment hub connecting verified companies with exceptional talent.
+            - generic [ref=e423]:
+              - generic [ref=e424]: Verified Postings
+              - generic [ref=e427]: Fast Response
+          - generic [ref=e430]:
+            - heading "For Job Seekers" [level=4] [ref=e431]
+            - list [ref=e432]:
+              - listitem [ref=e433]:
+                - link "Browse All Jobs" [ref=e434] [cursor=pointer]:
+                  - /url: /#browse-jobs
+              - listitem [ref=e435]:
+                - link "Explore Categories" [ref=e436] [cursor=pointer]:
+                  - /url: /#categories
+              - listitem [ref=e437]:
+                - link "Remote Opportunities" [ref=e438] [cursor=pointer]:
+                  - /url: /?type=Remote#browse-jobs
+              - listitem [ref=e439]:
+                - link "Full-Time Positions" [ref=e440] [cursor=pointer]:
+                  - /url: /?type=Full-time#browse-jobs
+              - listitem [ref=e441]:
+                - link "Candidate Dashboard" [ref=e442] [cursor=pointer]:
+                  - /url: /dashboard
+          - generic [ref=e443]:
+            - heading "For Employers" [level=4] [ref=e444]
+            - list [ref=e445]:
+              - listitem [ref=e446]:
+                - link "Post a Position" [ref=e447] [cursor=pointer]:
+                  - /url: /employer/post-job
+              - listitem [ref=e448]:
+                - link "Employer Dashboard" [ref=e449] [cursor=pointer]:
+                  - /url: /employer
+              - listitem [ref=e450]:
+                - link "Create Employer Account" [ref=e451] [cursor=pointer]:
+                  - /url: /register
+              - listitem [ref=e452]:
+                - link "Applicant Tracking" [ref=e453] [cursor=pointer]:
+                  - /url: /employer/applicants
+          - generic [ref=e454]:
+            - heading "Platform & Access" [level=4] [ref=e455]
+            - list [ref=e456]:
+              - listitem [ref=e457]:
+                - link "Sign In" [ref=e458] [cursor=pointer]:
+                  - /url: /login
+              - listitem [ref=e459]:
+                - link "Register" [ref=e460] [cursor=pointer]:
+                  - /url: /register
+              - listitem [ref=e461]:
+                - link "Admin Portal" [ref=e462] [cursor=pointer]:
+                  - /url: /admin
+              - listitem [ref=e463]: Operating with direct database integration & verified role authentication.
+        - generic [ref=e464]:
+          - paragraph [ref=e465]: © 2026 JobPortal. All rights reserved.
+          - generic [ref=e466]:
+            - link "Jobs" [ref=e467] [cursor=pointer]:
+              - /url: /jobs
+            - link "Sign In" [ref=e468] [cursor=pointer]:
+              - /url: /login
+            - link "Register" [ref=e469] [cursor=pointer]:
+              - /url: /register
+  - button "Open Tanstack query devtools" [ref=e971] [cursor=pointer]

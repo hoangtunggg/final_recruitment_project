@@ -1,0 +1,129 @@
+services:
+  db-secrets-init:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    user: "0:0"
+    working_dir: /app
+    volumes:
+      - ./backend:/app:ro
+      - mysql_secrets:/run/db-secrets
+    command: node scripts/ensureDockerDbSecrets.js /run/db-secrets
+    restart: "no"
+
+  db:
+    image: mysql:8.4.7
+    environment:
+      MYSQL_DATABASE: job_portal
+      MYSQL_USER: job_portal_app
+      MYSQL_PASSWORD_FILE: /run/db-secrets/mysql_app_password
+      MYSQL_ROOT_PASSWORD_FILE: /run/db-secrets/mysql_root_password
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - mysql_secrets:/run/db-secrets:ro
+    depends_on:
+      db-secrets-init:
+        condition: service_completed_successfully
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -u root --password=\"$$(cat /run/db-secrets/mysql_root_password)\" --silent"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 30s
+    restart: unless-stopped
+
+  db-init:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    working_dir: /app
+    user: "${LOCAL_UID:-1000}:${LOCAL_GID:-1000}"
+    environment:
+      NODE_ENV: development
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_NAME: job_portal
+      DB_USER: job_portal_app
+      DB_SSL: "false"
+      DB_AUTO_CREATE: "false"
+      DB_SYNC_FORCE: "false"
+      DB_SYNC_ALTER: "false"
+    volumes:
+      - ./backend:/app
+      - backend_node_modules:/app/node_modules
+      - mysql_secrets:/run/db-secrets:ro
+    command: ["sh", "-c", "export DB_PASSWORD=\"$$(cat /run/db-secrets/mysql_app_password)\"; exec npm run migrate"]
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: "no"
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    working_dir: /app
+    user: "${LOCAL_UID:-1000}:${LOCAL_GID:-1000}"
+    env_file:
+      - ./backend/.env
+    environment:
+      NODE_ENV: development
+      HOST: 0.0.0.0
+      PORT: 3001
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_NAME: job_portal
+      DB_USER: job_portal_app
+      DB_SSL: "false"
+      DB_AUTO_CREATE: "false"
+      DB_SYNC_FORCE: "false"
+      DB_SYNC_ALTER: "false"
+      DB_SKIP_SCHEMA_INIT: "true"
+    ports:
+      - "127.0.0.1:3001:3001"
+    volumes:
+      - ./backend:/app
+      - backend_node_modules:/app/node_modules
+      - mysql_secrets:/run/db-secrets:ro
+    command: ["sh", "-c", "export DB_PASSWORD=\"$$(cat /run/db-secrets/mysql_app_password)\"; exec npm run dev"]
+    depends_on:
+      db-init:
+        condition: service_completed_successfully
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://127.0.0.1:3001/api/health',r=>process.exit(r.statusCode===200?0:1)).on('error',()=>process.exit(1))"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+      start_period: 30s
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    working_dir: /app
+    user: "${LOCAL_UID:-1000}:${LOCAL_GID:-1000}"
+    environment:
+      VITE_API_URL: http://localhost:3001
+    ports:
+      - "127.0.0.1:5173:5173"
+    volumes:
+      - ./:/app
+      - frontend_node_modules:/app/node_modules
+    command: npm run dev -- --host 0.0.0.0
+    depends_on:
+      backend:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://127.0.0.1:5173/',r=>process.exit(r.statusCode===200?0:1)).on('error',()=>process.exit(1))"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+      start_period: 30s
+    restart: unless-stopped
+
+volumes:
+  mysql_data:
+  mysql_secrets:
+  frontend_node_modules:
+  backend_node_modules:

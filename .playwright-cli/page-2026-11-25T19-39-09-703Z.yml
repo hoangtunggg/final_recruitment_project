@@ -1,0 +1,80 @@
+- generic [ref=f2e3]:
+  - navigation "Main navigation" [ref=f2e4]:
+    - generic [ref=f2e6]:
+      - link "JobPortal Logo JobPortal Careers & Talent" [ref=f2e7] [cursor=pointer]:
+        - /url: /
+        - img "JobPortal Logo" [ref=f2e8]
+        - generic [ref=f2e9]:
+          - generic [ref=f2e10]: JobPortal
+          - generic [ref=f2e11]: Careers & Talent
+      - generic [ref=f2e12]:
+        - button "Switch to dark mode" [ref=f2e13] [cursor=pointer]
+        - button "Toggle navigation menu" [ref=f2e16] [cursor=pointer]
+  - main [ref=f2e19]
+  - contentinfo [ref=f2e20]:
+    - generic [ref=f2e21]:
+      - generic [ref=f2e22]:
+        - generic [ref=f2e23]:
+          - link "JobPortal Logo JobPortal" [ref=f2e24] [cursor=pointer]:
+            - /url: /
+            - img "JobPortal Logo" [ref=f2e25]
+            - generic [ref=f2e26]: JobPortal
+          - paragraph [ref=f2e27]: A transparent, production-ready recruitment hub connecting verified companies with exceptional talent.
+          - generic [ref=f2e28]:
+            - generic [ref=f2e29]: Verified Postings
+            - generic [ref=f2e32]: Fast Response
+        - generic [ref=f2e35]:
+          - heading "For Job Seekers" [level=4] [ref=f2e36]
+          - list [ref=f2e37]:
+            - listitem [ref=f2e38]:
+              - link "Browse All Jobs" [ref=f2e39] [cursor=pointer]:
+                - /url: /#browse-jobs
+            - listitem [ref=f2e40]:
+              - link "Explore Categories" [ref=f2e41] [cursor=pointer]:
+                - /url: /#categories
+            - listitem [ref=f2e42]:
+              - link "Remote Opportunities" [ref=f2e43] [cursor=pointer]:
+                - /url: /?type=Remote#browse-jobs
+            - listitem [ref=f2e44]:
+              - link "Full-Time Positions" [ref=f2e45] [cursor=pointer]:
+                - /url: /?type=Full-time#browse-jobs
+            - listitem [ref=f2e46]:
+              - link "Candidate Dashboard" [ref=f2e47] [cursor=pointer]:
+                - /url: /dashboard
+        - generic [ref=f2e48]:
+          - heading "For Employers" [level=4] [ref=f2e49]
+          - list [ref=f2e50]:
+            - listitem [ref=f2e51]:
+              - link "Post a Position" [ref=f2e52] [cursor=pointer]:
+                - /url: /employer/post-job
+            - listitem [ref=f2e53]:
+              - link "Employer Dashboard" [ref=f2e54] [cursor=pointer]:
+                - /url: /employer
+            - listitem [ref=f2e55]:
+              - link "Create Employer Account" [ref=f2e56] [cursor=pointer]:
+                - /url: /register
+            - listitem [ref=f2e57]:
+              - link "Applicant Tracking" [ref=f2e58] [cursor=pointer]:
+                - /url: /employer/applicants
+        - generic [ref=f2e59]:
+          - heading "Platform & Access" [level=4] [ref=f2e60]
+          - list [ref=f2e61]:
+            - listitem [ref=f2e62]:
+              - link "Sign In" [ref=f2e63] [cursor=pointer]:
+                - /url: /login
+            - listitem [ref=f2e64]:
+              - link "Register" [ref=f2e65] [cursor=pointer]:
+                - /url: /register
+            - listitem [ref=f2e66]:
+              - link "Admin Portal" [ref=f2e67] [cursor=pointer]:
+                - /url: /admin
+            - listitem [ref=f2e68]: Operating with direct database integration & verified role authentication.
+      - generic [ref=f2e69]:
+        - paragraph [ref=f2e70]: © 2026 JobPortal. All rights reserved.
+        - generic [ref=f2e71]:
+          - link "Jobs" [ref=f2e72] [cursor=pointer]:
+            - /url: /jobs
+          - link "Sign In" [ref=f2e73] [cursor=pointer]:
+            - /url: /login
+          - link "Register" [ref=f2e74] [cursor=pointer]:
+            - /url: /register

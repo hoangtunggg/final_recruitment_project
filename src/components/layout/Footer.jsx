@@ -1,0 +1,155 @@
+import { Link, useLocation } from "react-router-dom";
+import { FaShieldAlt, FaBolt } from "react-icons/fa";
+
+const Footer = () => {
+  const location = useLocation();
+
+  // Hide the public Footer on dedicated dashboard layouts (Admin, Employer, and Job Seeker portals)
+  if (
+    location.pathname.startsWith("/admin") ||
+    location.pathname.startsWith("/employer") ||
+    location.pathname.startsWith("/dashboard")
+  ) {
+    return null;
+  }
+
+  return (
+    <footer className="bg-white dark:bg-gray-900 text-slate-600 dark:text-slate-300 border-t border-slate-300 dark:border-gray-700 transition-colors">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10">
+          {/* Brand & Mission */}
+          <div className="col-span-2 lg:col-span-1">
+            <Link to="/" className="flex items-center space-x-2.5 mb-4 group">
+              <img
+                src="/logo.png"
+                alt="JobPortal Logo"
+                className="w-9 h-9 object-contain flex-shrink-0"
+              />
+              <span className="text-xl font-bold tracking-tight text-slate-900 dark:text-white">
+                JobPortal
+              </span>
+            </Link>
+            <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-4 max-w-sm">
+              A transparent, production-ready recruitment hub connecting verified companies with exceptional talent.
+            </p>
+            <div className="flex flex-wrap items-center gap-3 text-xs text-slate-600 dark:text-slate-300">
+              <span className="inline-flex items-center gap-1">
+                <FaShieldAlt className="text-emerald-500 dark:text-emerald-400" /> Verified Postings
+              </span>
+              <span className="inline-flex items-center gap-1">
+                <FaBolt className="text-blue-500 dark:text-blue-400" /> Fast Response
+              </span>
+            </div>
+          </div>
+
+          {/* Job Seekers Links */}
+          <div className="min-w-0">
+            <h4 className="text-sm font-semibold uppercase tracking-wider text-slate-900 dark:text-white mb-4">
+              For Job Seekers
+            </h4>
+            <ul className="space-y-2.5 text-sm">
+              <li>
+                <Link to="/#browse-jobs" className="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                  Browse All Jobs
+                </Link>
+              </li>
+              <li>
+                <Link to="/#categories" className="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                  Explore Categories
+                </Link>
+              </li>
+              <li>
+                <Link to="/?type=Remote#browse-jobs" className="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                  Remote Opportunities
+                </Link>
+              </li>
+              <li>
+                <Link to="/?type=Full-time#browse-jobs" className="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                  Full-Time Positions
+                </Link>
+              </li>
+              <li>
+                <Link to="/dashboard" className="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                  Candidate Dashboard
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Employers Links */}
+          <div className="min-w-0">
+            <h4 className="text-sm font-semibold uppercase tracking-wider text-slate-900 dark:text-white mb-4">
+              For Employers
+            </h4>
+            <ul className="space-y-2.5 text-sm">
+              <li>
+                <Link to="/employer/post-job" className="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                  Post a Position
+                </Link>
+              </li>
+              <li>
+                <Link to="/employer" className="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                  Employer Dashboard
+                </Link>
+              </li>
+              <li>
+                <Link to="/register" className="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                  Create Employer Account
+                </Link>
+              </li>
+              <li>
+                <Link to="/employer/applicants" className="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                  Applicant Tracking
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Platform Info */}
+          <div className="col-span-2 sm:col-span-1 min-w-0">
+            <h4 className="text-sm font-semibold uppercase tracking-wider text-slate-900 dark:text-white mb-4">
+              Platform & Access
+            </h4>
+            <ul className="space-y-2.5 text-sm">
+              <li>
+                <Link to="/login" className="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                  Sign In
+                </Link>
+              </li>
+              <li>
+                <Link to="/register" className="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                  Register
+                </Link>
+              </li>
+              <li>
+                <Link to="/admin" className="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                  Admin Portal
+                </Link>
+              </li>
+              <li className="pt-2 text-xs text-slate-500">
+                Operating with direct database integration & verified role authentication.
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="border-t border-slate-200 dark:border-slate-800 mt-10 pt-6 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-500 gap-4">
+          <p>© {new Date().getFullYear()} JobPortal. All rights reserved.</p>
+          <div className="flex items-center space-x-6">
+            <Link to="/jobs" className="text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 transition-colors">
+              Jobs
+            </Link>
+            <Link to="/login" className="text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 transition-colors">
+              Sign In
+            </Link>
+            <Link to="/register" className="text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 transition-colors">
+              Register
+            </Link>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+};
+
+export default Footer;
