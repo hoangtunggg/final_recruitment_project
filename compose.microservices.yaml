@@ -28,6 +28,7 @@ services:
       APPLICATION_DB_PASSWORD: ${APPLICATION_DB_PASSWORD:?set APPLICATION_DB_PASSWORD}
       MATCHING_DB_PASSWORD: ${MATCHING_DB_PASSWORD:?set MATCHING_DB_PASSWORD}
       NOTIFICATION_DB_PASSWORD: ${NOTIFICATION_DB_PASSWORD:?set NOTIFICATION_DB_PASSWORD}
+      INTERVIEW_DB_PASSWORD: ${INTERVIEW_DB_PASSWORD:?set INTERVIEW_DB_PASSWORD}
     volumes:
       - postgres_microservices_data:/var/lib/postgresql/data
       - ./microservices/postgres/init-databases.sh:/docker-entrypoint-initdb.d/10-databases.sh:ro
@@ -194,6 +195,32 @@ services:
       <<: *service-env
       DATABASE_URL: postgresql://notification_service:${NOTIFICATION_DB_PASSWORD}@postgres:5432/notification_db
     depends_on: { notification-migrate: { condition: service_completed_successfully }, redis: { condition: service_healthy } }
+
+  interview-migrate:
+    build: { context: ./microservices, dockerfile: interview-service/Dockerfile }
+    command: ["npm", "run", "migrate"]
+    environment: { DATABASE_URL: "postgresql://interview_service:${INTERVIEW_DB_PASSWORD}@postgres:5432/interview_db", DB_POOL_MAX: 2 }
+    depends_on: { postgres: { condition: service_healthy } }
+    networks: [internal]
+    restart: "no"
+  # Backend-for-frontend to the AI repo's ai-service / voice-service (AI mock interview page). Holds their internal
+  # tokens and meters sessions per user. Needs egress to those services: `public` here (local: host.docker.internal),
+  # the shared network hireready-edge in the staging override.
+  interview-service:
+    <<: *node-service
+    build: { context: ./microservices, dockerfile: interview-service/Dockerfile }
+    networks: [internal, public]
+    extra_hosts: ["host.docker.internal:host-gateway"]
+    environment:
+      <<: *service-env
+      DATABASE_URL: postgresql://interview_service:${INTERVIEW_DB_PASSWORD}@postgres:5432/interview_db
+      AI_SERVICE_URL: ${AI_SERVICE_URL:-http://host.docker.internal:8000}
+      AI_SERVICE_INTERNAL_TOKEN: ${AI_SERVICE_INTERNAL_TOKEN:-}
+      VOICE_SERVICE_URL: ${VOICE_SERVICE_URL:-http://host.docker.internal:8020}
+      VOICE_SERVICE_INTERNAL_TOKEN: ${VOICE_SERVICE_INTERNAL_TOKEN:-}
+      INTERVIEW_DAILY_LIMIT: ${INTERVIEW_DAILY_LIMIT:-3}
+      JSON_LIMIT: 1mb
+    depends_on: { interview-migrate: { condition: service_completed_successfully } }
 
   matching-migrate:
     profiles: ["ml"]

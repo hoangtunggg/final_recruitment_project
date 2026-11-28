@@ -10,6 +10,11 @@ services:
   api-gateway:
     ports: !reset []
     networks: [public, internal, edge]
+  interview-service:
+    networks: !override [internal, edge] # reaches ai-service:8000 / voice-service:8020 of the AI repo's compose project
+    environment:
+      AI_SERVICE_URL: http://ai-service:8000
+      VOICE_SERVICE_URL: http://voice-service:8020
   frontend:
     profiles: ["disabled-in-staging-frontend-on-vercel"]
 

@@ -1,7 +1,7 @@
 #!/bin/sh
 set -eu
 
-services="identity user company job resume application matching notification"
+services="identity user company job resume application matching notification interview"
 for service in $services; do
   upper="$(printf '%s' "$service" | tr '[:lower:]' '[:upper:]')"
   eval "password=\${${upper}_DB_PASSWORD:-}"
