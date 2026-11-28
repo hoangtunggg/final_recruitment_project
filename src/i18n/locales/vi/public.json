@@ -1,1 +1,274 @@
-{}
+{
+  "time": {
+    "recently": "Vừa đăng gần đây",
+    "justNow": "Vừa xong",
+    "minutesAgo": "{{n}} phút trước",
+    "hoursAgo": "{{n}} giờ trước",
+    "daysAgo": "{{n}} ngày trước",
+    "monthsAgo": "{{n}} tháng trước"
+  },
+  "company": {
+    "logoAlt": "Logo {{name}}",
+    "fallbackName": "công ty"
+  },
+  "jobCard": {
+    "coverAlt": "{{title}} tại {{company}}",
+    "remoteFallback": "Làm từ xa",
+    "hiring": "Đang tuyển",
+    "viewJob": "Xem việc làm"
+  },
+  "companyCard": {
+    "coverAlt": "Môi trường làm việc tại {{name}}",
+    "multiLocation": "Nhiều địa điểm",
+    "openRoles": "Đang tuyển: {{n}} vị trí"
+  },
+  "notFound": {
+    "heading": "Không tìm thấy trang",
+    "description": "Trang bạn đang tìm không tồn tại, đã bị xóa hoặc đã được chuyển sang địa chỉ khác.",
+    "home": "Về trang chủ",
+    "back": "Quay lại"
+  },
+  "jobDetail": {
+    "backToDashboard": "Quay lại bảng điều khiển",
+    "backToJobs": "Quay lại danh sách việc làm",
+    "applyNow": "Ứng tuyển ngay",
+    "practiceInterview": "Luyện phỏng vấn AI cho vị trí này",
+    "practiceHint": "Thử sức với buổi phỏng vấn AI bám sát vị trí này trước khi nộp hồ sơ.",
+    "share": "Chia sẻ việc làm",
+    "linkCopied": "Đã sao chép liên kết",
+    "sidebarLabel": "Thông tin thêm về việc làm",
+    "notFound": {
+      "title": "Không tìm thấy tin tuyển dụng",
+      "description": "Vị trí bạn đang tìm có thể đã hết hạn hoặc đã bị gỡ khỏi hệ thống.",
+      "browse": "Xem việc làm khác"
+    },
+    "facts": {
+      "location": "Địa điểm",
+      "salary": "Mức lương",
+      "negotiable": "Thỏa thuận",
+      "experience": "Kinh nghiệm",
+      "notSpecified": "Không yêu cầu cụ thể",
+      "posted": "Ngày đăng",
+      "deadline": "Hạn nộp hồ sơ",
+      "education": "Học vấn"
+    },
+    "sections": {
+      "description": "Mô tả công việc",
+      "responsibilities": "Trách nhiệm chính",
+      "requirements": "Yêu cầu ứng viên",
+      "skills": "Kỹ năng cần có",
+      "benefits": "Quyền lợi"
+    },
+    "aiCard": {
+      "title": "Phỏng vấn thử với AI",
+      "description": "Làm quen với câu hỏi sát vị trí này, trả lời bằng giọng nói hoặc gõ phím và nhận nhận xét chi tiết.",
+      "cta": "Bắt đầu phỏng vấn thử"
+    }
+  },
+  "apply": {
+    "title": "Ứng tuyển vị trí này",
+    "close": "Đóng cửa sổ ứng tuyển",
+    "applicant": "Thông tin ứng viên",
+    "name": "Họ và tên",
+    "nameFallback": "Ứng viên",
+    "phone": "Số điện thoại",
+    "education": "Học vấn",
+    "educationPlaceholder": "VD: Cử nhân Công nghệ thông tin",
+    "experience": "Kinh nghiệm",
+    "experiencePlaceholder": "VD: 2 năm phát triển web",
+    "skills": "Kỹ năng chính",
+    "skillsPlaceholder": "VD: React, Node.js, SQL",
+    "coverLetter": "Thư giới thiệu / lời nhắn",
+    "coverLetterPlaceholder": "Giới thiệu ngắn gọn về bạn và lý do bạn phù hợp với vị trí này...",
+    "resume": "CV (PDF hoặc DOCX, tối đa 5 MB)",
+    "resumeDrop": "Nhấn để đính kèm CV của bạn",
+    "resumeHint": "Hỗ trợ .pdf, .doc, .docx",
+    "cancel": "Hủy",
+    "submit": "Gửi hồ sơ",
+    "submitting": "Đang gửi...",
+    "successTitle": "Đã gửi hồ sơ ứng tuyển!",
+    "successBody": "Hồ sơ của bạn cho vị trí {{title}} đã được gửi tới {{company}}. Bạn có thể theo dõi trạng thái trong bảng điều khiển.",
+    "errors": {
+      "phone": "Vui lòng nhập số điện thoại",
+      "experience": "Vui lòng nhập kinh nghiệm của bạn",
+      "education": "Vui lòng nhập học vấn",
+      "skills": "Vui lòng nhập kỹ năng chính",
+      "coverLetter": "Vui lòng viết thư giới thiệu",
+      "fileTooLarge": "Tệp vượt quá 5 MB. Vui lòng chọn tệp PDF hoặc DOCX nhỏ hơn.",
+      "submitFailed": "Không thể gửi hồ sơ lúc này. Vui lòng thử lại."
+    }
+  },
+  "home": {
+    "hero": {
+      "statusLoading": "Đang kết nối tới danh sách việc làm...",
+      "statusOpen": "{{n}} vị trí đang mở tuyển",
+      "statusIdle": "Nền tảng tuyển dụng đã xác minh",
+      "titleStart": "Tìm công việc phù hợp và",
+      "titleHighlight": "luyện phỏng vấn cùng AI",
+      "subtitle": "Tìm việc theo vị trí, công ty, địa điểm và hình thức làm việc, rồi tự tin bước vào buổi phỏng vấn thật.",
+      "searchLabel": "Tìm kiếm việc làm",
+      "keywordLabel": "Chức danh hoặc từ khóa",
+      "keywordPlaceholder": "Chức danh, kỹ năng hoặc công ty",
+      "locationLabel": "Địa điểm làm việc",
+      "locationPlaceholder": "Địa điểm hoặc \"Remote\"",
+      "searchButton": "Tìm việc",
+      "popular": "Phổ biến:"
+    },
+    "quickTags": {
+      "engineering": "Kỹ thuật",
+      "design": "Thiết kế",
+      "marketing": "Marketing"
+    },
+    "categories": {
+      "software": "Phần mềm & Công nghệ",
+      "design": "Sản phẩm & Thiết kế",
+      "marketing": "Marketing & Tăng trưởng",
+      "sales": "Kinh doanh & Bán hàng",
+      "finance": "Tài chính & Kế toán",
+      "healthcare": "Y tế & Khoa học",
+      "support": "Chăm sóc khách hàng",
+      "operations": "Vận hành & Nhân sự"
+    },
+    "sort": {
+      "label": "Sắp xếp",
+      "newest": "Mới nhất",
+      "salary": "Lương cao nhất",
+      "title": "Tên vị trí (A-Z)"
+    },
+    "filters": {
+      "type": "Hình thức làm việc",
+      "experience": "Kinh nghiệm",
+      "salaryLabel": "Mức lương",
+      "all": "Tất cả",
+      "active": "Đang lọc:",
+      "clearAll": "Xóa tất cả",
+      "remove": "Bỏ bộ lọc {{label}}",
+      "chipKeyword": "Từ khóa: {{value}}",
+      "chipLocation": "Địa điểm: {{value}}",
+      "chipCategory": "Ngành: {{value}}",
+      "chipType": "Hình thức: {{value}}",
+      "chipExperience": "Kinh nghiệm: {{value}}",
+      "chipSalary": "Lương: {{value}}",
+      "salary": {
+        "under-50k": "Dưới $50k",
+        "50-80": "$50k - $80k",
+        "80-120": "$80k - $120k",
+        "120-150": "$120k - $150k",
+        "150-200": "$150k - $200k",
+        "200k+": "Từ $200k trở lên"
+      }
+    },
+    "browse": {
+      "eyebrow": "Cơ hội hiện có",
+      "title": "Việc làm đang tuyển",
+      "subtitle": "Các vị trí đang mở từ nhà tuyển dụng đã xác minh. Lọc theo hình thức, kinh nghiệm và mức lương ngay tại đây.",
+      "showing": "Hiển thị {{shown}} / {{total}} việc làm",
+      "error": "Không thể tải danh sách việc làm. Vui lòng thử lại.",
+      "retry": "Tải lại danh sách",
+      "noMatchTitle": "Chưa có việc làm khớp với bộ lọc",
+      "noMatchDescription": "Hãy thử đổi từ khóa hoặc xóa bớt bộ lọc để xem thêm kết quả.",
+      "resetFilters": "Đặt lại bộ lọc",
+      "emptyTitle": "Hiện chưa có tin tuyển dụng nào",
+      "emptyDescription": "Các vị trí mới sẽ xuất hiện tại đây ngay khi nhà tuyển dụng đăng tin. Trong lúc chờ, bạn có thể luyện phỏng vấn với AI.",
+      "tryInterview": "Luyện phỏng vấn AI",
+      "postJob": "Đăng tin tuyển dụng",
+      "createAccount": "Tạo tài khoản miễn phí"
+    },
+    "promo": {
+      "eyebrow": "Mới: Phỏng vấn thử với AI",
+      "title": "Luyện phỏng vấn cùng AI trước buổi phỏng vấn thật",
+      "description": "Chọn vị trí và cấp độ, trả lời câu hỏi như một buổi phỏng vấn thực tế và nhận báo cáo rõ ràng về điểm mạnh, điểm cần cải thiện.",
+      "points": {
+        "tracks": "Câu hỏi theo từng lĩnh vực và cấp độ, từ fresher đến senior",
+        "voice": "Trả lời bằng giọng nói hoặc gõ phím, linh hoạt theo thiết bị của bạn",
+        "report": "Báo cáo kết quả chi tiết sau mỗi buổi luyện tập"
+      },
+      "cta": "Bắt đầu phỏng vấn thử",
+      "sampleQuestion": "Bạn hãy kể về một dự án backend gần đây mà bạn tự hào nhất?",
+      "sampleAnswer": "Em từng xây dựng API đặt lịch cho một ứng dụng nội bộ, tối ưu truy vấn để giảm thời gian phản hồi..."
+    },
+    "categoriesSection": {
+      "eyebrow": "Khám phá theo lĩnh vực",
+      "title": "Tìm việc theo ngành nghề",
+      "subtitle": "Lọc các vị trí phù hợp với lĩnh vực chuyên môn của bạn chỉ với một lần nhấn.",
+      "openRoles": "{{n}} vị trí đang tuyển",
+      "explore": "Khám phá ngành này",
+      "view": "Xem việc làm",
+      "applied": "Đang áp dụng bộ lọc"
+    },
+    "companies": {
+      "eyebrow": "Nhà tuyển dụng",
+      "title": "Doanh nghiệp đang tuyển dụng",
+      "subtitle": "Các công ty có tin tuyển dụng đang mở trên nền tảng.",
+      "browseAll": "Xem tất cả việc làm"
+    },
+    "pillars": {
+      "verified": {
+        "title": "Tin tuyển dụng xác minh",
+        "description": "Vị trí đăng trực tiếp từ doanh nghiệp và đội ngũ tuyển dụng đã được kiểm duyệt."
+      },
+      "direct": {
+        "title": "Ứng tuyển trực tiếp",
+        "description": "Gửi CV thẳng tới nhà tuyển dụng, không qua trung gian."
+      },
+      "status": {
+        "title": "Theo dõi theo thời gian thực",
+        "description": "Biết ngay khi hồ sơ được xem, vào danh sách rút gọn hoặc được mời phỏng vấn."
+      },
+      "dashboards": {
+        "title": "Bảng điều khiển riêng",
+        "description": "Không gian làm việc dành riêng cho ứng viên, nhà tuyển dụng và quản trị viên."
+      }
+    },
+    "how": {
+      "eyebrow": "Đơn giản & minh bạch",
+      "title": "Cách nền tảng hoạt động",
+      "subtitle": "Kết nối ứng viên và nhà tuyển dụng một cách nhanh gọn, không rườm rà.",
+      "candidates": {
+        "badge": "Dành cho ứng viên",
+        "title": "Tăng tốc hành trình tìm việc",
+        "cta": "Bắt đầu xem việc làm",
+        "steps": {
+          "1": {
+            "title": "Tạo hồ sơ và tải CV",
+            "description": "Đăng ký tài khoản, tải lên CV chính và quản lý mọi giấy tờ ở một nơi an toàn."
+          },
+          "2": {
+            "title": "Lọc theo kỹ năng và hình thức",
+            "description": "Tìm theo mô hình làm việc, mức lương và kinh nghiệm với kết quả cập nhật ngay."
+          },
+          "3": {
+            "title": "Ứng tuyển và theo dõi tiến độ",
+            "description": "Nộp hồ sơ chỉ với vài thao tác và theo dõi trạng thái trong bảng điều khiển ứng viên."
+          }
+        }
+      },
+      "employers": {
+        "badge": "Dành cho nhà tuyển dụng",
+        "title": "Tuyển dụng hiệu quả",
+        "cta": "Đăng tin tuyển dụng ngay",
+        "steps": {
+          "1": {
+            "title": "Đăng tin tuyển dụng",
+            "description": "Mô tả trách nhiệm, mức lương và kỹ năng yêu cầu bằng mẫu tin có cấu trúc."
+          },
+          "2": {
+            "title": "Sàng lọc ứng viên phù hợp",
+            "description": "Xem hồ sơ và CV ứng viên ngay trong cổng nhà tuyển dụng."
+          },
+          "3": {
+            "title": "Quản lý quy trình tuyển dụng",
+            "description": "Chọn ứng viên tiềm năng, lên lịch phỏng vấn và gửi quyết định trực tiếp."
+          }
+        }
+      }
+    },
+    "finalCta": {
+      "title": "Sẵn sàng cho bước tiến tiếp theo trong sự nghiệp?",
+      "description": "Dù bạn đang tìm thử thách mới hay cần tuyển nhân tài, hãy bắt đầu ngay hôm nay trên JobPortal.",
+      "browse": "Xem việc làm đang tuyển",
+      "dashboard": "Vào bảng điều khiển",
+      "register": "Tạo tài khoản miễn phí"
+    }
+  }
+}

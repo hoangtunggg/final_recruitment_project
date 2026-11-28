@@ -1,1 +1,253 @@
-{}
+{
+  "common": {
+    "retry": "Thử lại",
+    "cancel": "Hủy",
+    "exploreRecommended": "Xem việc làm gợi ý"
+  },
+  "tabs": {
+    "aria": "Các mục trong bảng điều khiển",
+    "overview": "Tổng quan",
+    "applications": "Đơn ứng tuyển",
+    "saved": "Việc đã lưu",
+    "recommended": "Gợi ý cho bạn",
+    "resumes": "CV của tôi",
+    "interview": "Phỏng vấn AI"
+  },
+  "sections": {
+    "overview": "Bảng điều khiển ứng viên",
+    "applications": "Đơn ứng tuyển của tôi",
+    "saved": "Việc làm đã lưu",
+    "recommended": "Gợi ý dành cho bạn",
+    "resumes": "CV của tôi"
+  },
+  "shell": {
+    "brandAria": "Về tổng quan bảng điều khiển ứng viên",
+    "signOut": "Đăng xuất",
+    "skip": "Bỏ qua và đến nội dung chính"
+  },
+  "header": {
+    "fallbackName": "Ứng viên",
+    "welcome": "Chào mừng trở lại, {{name}}!",
+    "subtitle": "Quản lý đơn ứng tuyển, lịch phỏng vấn và hồ sơ của bạn tại một nơi.",
+    "interviewCta": "Luyện phỏng vấn với AI",
+    "manageResumes": "Quản lý CV"
+  },
+  "kpi": {
+    "applications": { "label": "Đơn ứng tuyển", "hint": "Xem tất cả đơn đã gửi" },
+    "interviews": { "label": "Phỏng vấn", "hint": "Đang ở vòng phỏng vấn" },
+    "offers": { "label": "Đề nghị nhận việc", "hint": "Đề nghị đã nhận" },
+    "saved": { "label": "Việc đã lưu", "hint": "Việc làm đã đánh dấu" }
+  },
+  "feedback": {
+    "dismiss": "Đóng thông báo",
+    "applicationUpdate": "Cập nhật đơn ứng tuyển: {{message}}",
+    "removedSaved": "Đã bỏ khỏi danh sách việc đã lưu.",
+    "saved": "Đã lưu \"{{title}}\" vào danh sách việc đã lưu.",
+    "withdrawn": "Đã rút đơn ứng tuyển.",
+    "withdrawFailed": "Không thể rút đơn ứng tuyển lúc này. Vui lòng thử lại."
+  },
+  "statusMessages": {
+    "title": "Cập nhật trạng thái đơn ứng tuyển",
+    "generic": "Trạng thái đơn ứng tuyển đã chuyển sang: {{status}}",
+    "under_review": "Nhà tuyển dụng đang xem xét hồ sơ của bạn.",
+    "shortlisted": "Chúc mừng! Bạn đã vào danh sách rút gọn cho vị trí này.",
+    "interview_scheduled": "Đã có lịch phỏng vấn cho đơn ứng tuyển của bạn.",
+    "interviewed": "Buổi phỏng vấn đã hoàn tất, đang chờ quyết định từ nhà tuyển dụng.",
+    "offered": "Chúc mừng! Bạn đã nhận được đề nghị nhận việc.",
+    "accepted": "Chào mừng bạn gia nhập! Đơn ứng tuyển của bạn đã được chấp nhận.",
+    "rejected": "Rất tiếc, hồ sơ của bạn chưa được chọn cho vị trí này.",
+    "withdrawn": "Đơn ứng tuyển của bạn đã được đánh dấu là đã rút."
+  },
+  "pipeline": {
+    "1": "Đã nộp",
+    "2": "Sàng lọc",
+    "3": "Rút gọn",
+    "4": "Phỏng vấn",
+    "5": "Quyết định"
+  },
+  "overview": {
+    "recently": "gần đây",
+    "applied": "Nộp ngày {{date}}",
+    "viewJob": "Xem việc làm",
+    "skillMatch": "{{n}} kỹ năng phù hợp",
+    "recentTitle": "Đơn ứng tuyển gần đây",
+    "recentSubtitle": "Các hồ sơ bạn vừa nộp và tiến độ xử lý",
+    "viewAll": "Xem tất cả ({{n}})",
+    "noApplications": "Bạn chưa nộp đơn ứng tuyển nào",
+    "noApplicationsHint": "Khám phá các việc làm đang mở và ứng tuyển trực tiếp.",
+    "recommendedTitle": "Gợi ý dành cho bạn",
+    "recommendedBySkills": "Xếp hạng theo kỹ năng trong hồ sơ của bạn",
+    "recommendedLatest": "Các vị trí mới đăng trên nền tảng",
+    "noJobs": "Hiện chưa có vị trí nào đang mở",
+    "noJobsHint": "Hãy quay lại sau khi nhà tuyển dụng đăng tin mới. Trong lúc chờ, bạn có thể luyện phỏng vấn với AI."
+  },
+  "applications": {
+    "progress": "Tiến độ ứng tuyển",
+    "fallbackTitle": "Vị trí đã ứng tuyển",
+    "fallbackCompany": "Công ty",
+    "noLocation": "Chưa rõ địa điểm",
+    "appliedRecently": "Vừa nộp gần đây",
+    "appliedOn": "Nộp ngày {{date}}",
+    "rejectedNote": "Hồ sơ này chưa được chọn để đi tiếp trong quy trình tuyển dụng.",
+    "withdrawnNote": "Bạn đã rút đơn ứng tuyển này.",
+    "interviewAt": "Lịch phỏng vấn: {{date}}",
+    "offerDeadline": "Hạn phản hồi đề nghị: {{date}}",
+    "downloadResume": "Tải CV đã nộp",
+    "withdraw": "Rút đơn",
+    "viewJob": "Xem việc làm",
+    "feedback": {
+      "downloaded": "Đã tải CV của đơn ứng tuyển.",
+      "downloadFailed": "Không thể tải tệp CV của đơn ứng tuyển."
+    },
+    "search": "Tìm đơn ứng tuyển",
+    "searchPlaceholder": "Tìm theo vị trí, công ty hoặc địa điểm...",
+    "statusFilter": "Trạng thái",
+    "filters": {
+      "all": "Tất cả trạng thái",
+      "pending": "Chờ xử lý",
+      "under_review": "Đang xem xét",
+      "shortlisted": "Vào danh sách rút gọn",
+      "interview": "Phỏng vấn",
+      "offered": "Đã nhận đề nghị",
+      "rejected": "Chưa được chọn",
+      "withdrawn": "Đã rút đơn"
+    },
+    "showing": "Hiển thị {{shown}} / {{total}} đơn",
+    "clearFilters": "Xóa bộ lọc",
+    "errorTitle": "Không tải được đơn ứng tuyển",
+    "errorDescription": "Đã xảy ra sự cố khi tải danh sách. Vui lòng thử lại.",
+    "noMatchTitle": "Không có đơn nào khớp với bộ lọc",
+    "noMatchDescription": "Hãy thử đổi từ khóa hoặc chọn trạng thái khác.",
+    "emptyTitle": "Bạn chưa nộp đơn ứng tuyển nào",
+    "emptyDescription": "Khám phá các việc làm đang mở và ứng tuyển trực tiếp chỉ với vài bước.",
+    "withdrawDialog": {
+      "title": "Rút đơn ứng tuyển",
+      "keep": "Giữ đơn",
+      "confirm": "Rút đơn ứng tuyển",
+      "message": "Bạn có chắc muốn rút đơn ứng tuyển vị trí \"{{title}}\" tại {{company}}? Nhà tuyển dụng sẽ được thông báo rằng bạn không còn tham gia quy trình.",
+      "thisPosition": "vị trí này",
+      "theCompany": "công ty"
+    }
+  },
+  "jobCard": {
+    "fallbackTitle": "Vị trí tuyển dụng",
+    "fallbackCompany": "Công ty",
+    "noLocation": "Chưa rõ địa điểm",
+    "closed": "Tin đã đóng",
+    "view": "Xem việc làm",
+    "unavailable": "Không còn khả dụng"
+  },
+  "saved": {
+    "title": "Việc làm đã lưu ({{n}})",
+    "subtitle": "Các tin đã đánh dấu để xem lại hoặc ứng tuyển sau",
+    "saved": "Đã lưu",
+    "savedOn": "Lưu ngày {{date}}",
+    "remove": "Bỏ khỏi việc đã lưu",
+    "removeAria": "Bỏ lưu việc làm {{title}}",
+    "emptyTitle": "Bạn chưa lưu việc làm nào",
+    "emptyDescription": "Đánh dấu các tin tuyển dụng bạn quan tâm để xem lại hoặc ứng tuyển sau."
+  },
+  "recommended": {
+    "title": "Cơ hội gợi ý ({{n}})",
+    "rankedBy": "Xếp hạng theo kỹ năng trong hồ sơ ({{skills}})",
+    "latest": "Các vị trí mới nhất từ nhà tuyển dụng đã xác minh",
+    "emptyTitle": "Chưa có gợi ý nào",
+    "emptyDescription": "Việc làm mới sẽ xuất hiện ở đây khi nhà tuyển dụng đăng tin.",
+    "matching": "{{n}} kỹ năng phù hợp",
+    "active": "Đang tuyển",
+    "saved": "Đã lưu",
+    "save": "Lưu việc làm",
+    "saveAria": "Lưu việc làm {{title}}",
+    "unsaveAria": "Bỏ lưu việc làm {{title}}",
+    "matchesProfile": "Khớp với kỹ năng trong hồ sơ:"
+  },
+  "resumes": {
+    "thisResume": "CV này",
+    "recently": "gần đây",
+    "default": "CV mặc định",
+    "uploadedOn": "Tải lên {{date}}",
+    "updating": "Đang cập nhật...",
+    "setDefault": "Đặt làm mặc định",
+    "download": "Tải CV xuống",
+    "downloadAria": "Tải CV {{name}} xuống",
+    "delete": "Xóa CV",
+    "deleteAria": "Xóa CV {{name}}",
+    "title": "CV của tôi ({{n}})",
+    "subtitle": "Tải lên CV dạng PDF hoặc DOCX (tối đa 5 MB) để dùng khi ứng tuyển",
+    "guideline": "Hỗ trợ tệp .pdf, .doc và .docx dung lượng tối đa 5 MB. Bạn có thể đặt một CV làm mặc định cho các lần ứng tuyển.",
+    "upload": "Tải CV lên",
+    "uploading": "Đang tải lên...",
+    "errorTitle": "Không tải được danh sách CV",
+    "errorDescription": "Đã xảy ra sự cố. Vui lòng thử lại.",
+    "emptyTitle": "Bạn chưa tải CV nào lên",
+    "emptyDescription": "Tải CV dạng PDF hoặc DOCX lên để ứng tuyển chỉ với một lần nhấn.",
+    "feedback": {
+      "tooLarge": "Tệp vượt quá 5 MB. Vui lòng chọn tệp PDF hoặc DOCX nhỏ hơn.",
+      "badFormat": "Định dạng không hợp lệ. Vui lòng tải lên tệp PDF, DOC hoặc DOCX.",
+      "uploaded": "Đã tải lên \"{{name}}\".",
+      "uploadFailed": "Không thể tải CV lên lúc này. Vui lòng thử lại.",
+      "defaultUpdated": "Đã cập nhật CV mặc định.",
+      "defaultFailed": "Không thể đặt CV mặc định lúc này.",
+      "downloaded": "Đã tải \"{{name}}\" xuống.",
+      "downloadFailed": "Không thể tải CV xuống lúc này.",
+      "deleted": "Đã xóa \"{{name}}\".",
+      "deleteFailed": "Không thể xóa CV lúc này. Vui lòng thử lại."
+    },
+    "deleteDialog": {
+      "title": "Xóa CV",
+      "confirm": "Xóa CV",
+      "message": "Bạn có chắc muốn xóa vĩnh viễn \"{{name}}\"? Tệp này sẽ bị gỡ khỏi hồ sơ của bạn."
+    }
+  },
+  "profile": {
+    "title": "Hồ sơ ứng viên",
+    "subtitle": "Thông tin tài khoản được quản lý trên nền tảng",
+    "active": "Tài khoản đang hoạt động",
+    "name": "Họ và tên",
+    "na": "Chưa có",
+    "role": "Vai trò",
+    "phone": "Số điện thoại",
+    "memberSince": "Tham gia từ",
+    "defaultResume": "CV mặc định",
+    "noResume": "Chưa có CV mặc định",
+    "skills": "Kỹ năng trong hồ sơ",
+    "notice": "Họ tên và email được đồng bộ từ thông tin đăng nhập của bạn. Việc chỉnh sửa hồ sơ tự phục vụ hiện được quản lý bởi quản trị viên."
+  },
+  "match": {
+    "title": "Phân tích CV với công việc",
+    "disclaimer": "Tính năng thử nghiệm. Điểm phù hợp không phải xác suất được tuyển dụng.",
+    "loadingResumes": "Đang tải CV…",
+    "resumeError": "Không tải được danh sách CV. Vui lòng tải lại trang.",
+    "needResume": "Bạn cần tải CV lên trước khi phân tích.",
+    "chooseResume": "Chọn CV",
+    "analyze": "Phân tích CV",
+    "analyzing": "Đang phân tích…",
+    "unavailable": "Phân tích CV hiện chưa khả dụng. Vui lòng thử lại sau.",
+    "failed": "Không thể phân tích lúc này. Hãy thử lại sau.",
+    "score": "Điểm phù hợp thử nghiệm: {{score}}/100",
+    "components": "Liên quan nội dung: {{relevance}}/100 · Kỹ năng bắt buộc: {{skills}}/100",
+    "undetermined": "Chưa xác định",
+    "matched": "Có bằng chứng",
+    "contradicted": "CV phủ định",
+    "unverified": "Chưa xác minh",
+    "preferred": "Kỹ năng ưu tiên",
+    "unspecified": "Kỹ năng chưa rõ mức ưu tiên trong JD",
+    "experience": "Kinh nghiệm",
+    "education": "Học vấn",
+    "expMatched": "có bằng chứng phù hợp",
+    "expPartial": "chưa đạt số năm nêu trong JD",
+    "expUnverified": "chưa xác minh",
+    "recommendations": "Gợi ý cải thiện CV"
+  },
+  "sidebar": {
+    "aria": "Điều hướng dành cho ứng viên",
+    "close": "Đóng thanh bên",
+    "workspace": "Không gian làm việc",
+    "overview": "Tổng quan",
+    "applications": "Đơn ứng tuyển",
+    "saved": "Việc đã lưu",
+    "recommended": "Gợi ý cho bạn",
+    "resumes": "CV của tôi",
+    "interview": "Phỏng vấn AI"
+  }
+}

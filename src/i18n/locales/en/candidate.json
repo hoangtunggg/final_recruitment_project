@@ -1,1 +1,253 @@
-{}
+{
+  "common": {
+    "retry": "Try again",
+    "cancel": "Cancel",
+    "exploreRecommended": "Explore recommended jobs"
+  },
+  "tabs": {
+    "aria": "Dashboard views",
+    "overview": "Overview",
+    "applications": "Applications",
+    "saved": "Saved jobs",
+    "recommended": "Recommended",
+    "resumes": "My resumes",
+    "interview": "AI interview"
+  },
+  "sections": {
+    "overview": "Candidate dashboard",
+    "applications": "My applications",
+    "saved": "Saved jobs",
+    "recommended": "Recommended for you",
+    "resumes": "My resumes"
+  },
+  "shell": {
+    "brandAria": "Back to the candidate dashboard overview",
+    "signOut": "Sign out",
+    "skip": "Skip to main content"
+  },
+  "header": {
+    "fallbackName": "Job seeker",
+    "welcome": "Welcome back, {{name}}!",
+    "subtitle": "Manage your applications, interviews and credentials in one place.",
+    "interviewCta": "Practise with AI",
+    "manageResumes": "Manage resumes"
+  },
+  "kpi": {
+    "applications": { "label": "Applications", "hint": "View all submitted" },
+    "interviews": { "label": "Interviews", "hint": "Active interview stage" },
+    "offers": { "label": "Job offers", "hint": "Received offers" },
+    "saved": { "label": "Saved jobs", "hint": "Bookmarked listings" }
+  },
+  "feedback": {
+    "dismiss": "Dismiss notification",
+    "applicationUpdate": "Application update: {{message}}",
+    "removedSaved": "Removed from saved jobs.",
+    "saved": "\"{{title}}\" saved to your bookmarks.",
+    "withdrawn": "Application successfully withdrawn.",
+    "withdrawFailed": "Could not withdraw the application right now. Please try again."
+  },
+  "statusMessages": {
+    "title": "Application status update",
+    "generic": "Application status updated to: {{status}}",
+    "under_review": "Your application is being reviewed by the hiring team.",
+    "shortlisted": "Congratulations! You have been shortlisted for the position.",
+    "interview_scheduled": "An interview has been scheduled for your application.",
+    "interviewed": "Interview completed - awaiting a decision from the employer.",
+    "offered": "Congratulations! You have received a job offer.",
+    "accepted": "Welcome aboard! Your application was accepted.",
+    "rejected": "Your application was not selected for this position.",
+    "withdrawn": "Your application has been marked as withdrawn."
+  },
+  "pipeline": {
+    "1": "Submitted",
+    "2": "Screening",
+    "3": "Shortlisted",
+    "4": "Interview",
+    "5": "Decision"
+  },
+  "overview": {
+    "recently": "recently",
+    "applied": "Applied {{date}}",
+    "viewJob": "View job",
+    "skillMatch": "{{n}} skill match",
+    "recentTitle": "Recent applications",
+    "recentSubtitle": "Your latest submissions and active progress",
+    "viewAll": "View all ({{n}})",
+    "noApplications": "No applications submitted yet",
+    "noApplicationsHint": "Explore open positions and apply directly.",
+    "recommendedTitle": "Recommended for you",
+    "recommendedBySkills": "Ranked according to your profile skills",
+    "recommendedLatest": "Fresh active positions on the platform",
+    "noJobs": "No open positions right now",
+    "noJobsHint": "Check back when employers publish new roles. In the meantime, you can practise an interview with AI."
+  },
+  "applications": {
+    "progress": "Application progress",
+    "fallbackTitle": "Position applied",
+    "fallbackCompany": "Company",
+    "noLocation": "Location not specified",
+    "appliedRecently": "Applied recently",
+    "appliedOn": "Applied on {{date}}",
+    "rejectedNote": "This application was not selected to advance further in the hiring process.",
+    "withdrawnNote": "You withdrew this application.",
+    "interviewAt": "Interview scheduled for: {{date}}",
+    "offerDeadline": "Offer response deadline: {{date}}",
+    "downloadResume": "Download submitted resume",
+    "withdraw": "Withdraw",
+    "viewJob": "View job",
+    "feedback": {
+      "downloaded": "Application resume downloaded successfully.",
+      "downloadFailed": "The application resume file could not be downloaded."
+    },
+    "search": "Search applications",
+    "searchPlaceholder": "Search by position, company or location...",
+    "statusFilter": "Status",
+    "filters": {
+      "all": "All statuses",
+      "pending": "Pending",
+      "under_review": "Under review",
+      "shortlisted": "Shortlisted",
+      "interview": "Interviews",
+      "offered": "Offered",
+      "rejected": "Not selected",
+      "withdrawn": "Withdrawn"
+    },
+    "showing": "Showing {{shown}} of {{total}} applications",
+    "clearFilters": "Clear filters",
+    "errorTitle": "Could not load your applications",
+    "errorDescription": "Something went wrong while loading the list. Please try again.",
+    "noMatchTitle": "No applications match your filter",
+    "noMatchDescription": "Try a different keyword or choose another status.",
+    "emptyTitle": "No applications submitted yet",
+    "emptyDescription": "Explore open positions and apply directly in a few steps.",
+    "withdrawDialog": {
+      "title": "Withdraw application",
+      "keep": "Keep application",
+      "confirm": "Withdraw application",
+      "message": "Are you sure you want to withdraw your application for \"{{title}}\" at {{company}}? The employer will be notified that you are no longer in consideration.",
+      "thisPosition": "this position",
+      "theCompany": "the company"
+    }
+  },
+  "jobCard": {
+    "fallbackTitle": "Job position",
+    "fallbackCompany": "Company",
+    "noLocation": "Location not specified",
+    "closed": "Listing closed",
+    "view": "View job",
+    "unavailable": "No longer available"
+  },
+  "saved": {
+    "title": "Saved positions ({{n}})",
+    "subtitle": "Bookmarked listings saved for application and follow-up",
+    "saved": "Saved",
+    "savedOn": "Saved {{date}}",
+    "remove": "Remove from saved jobs",
+    "removeAria": "Remove saved job {{title}}",
+    "emptyTitle": "No saved jobs yet",
+    "emptyDescription": "Bookmark interesting job postings while exploring to review or apply to them later."
+  },
+  "recommended": {
+    "title": "Recommended opportunities ({{n}})",
+    "rankedBy": "Ranked using your profile skills ({{skills}})",
+    "latest": "Latest published roles from verified organisations",
+    "emptyTitle": "No recommendations right now",
+    "emptyDescription": "New job openings will appear here as employers publish positions.",
+    "matching": "{{n}} matching skills",
+    "active": "Active listing",
+    "saved": "Saved",
+    "save": "Save job",
+    "saveAria": "Save job {{title}}",
+    "unsaveAria": "Unsave job {{title}}",
+    "matchesProfile": "Matches your profile skills:"
+  },
+  "resumes": {
+    "thisResume": "this resume",
+    "recently": "recently",
+    "default": "Default resume",
+    "uploadedOn": "Uploaded {{date}}",
+    "updating": "Updating...",
+    "setDefault": "Set as default",
+    "download": "Download resume",
+    "downloadAria": "Download resume {{name}}",
+    "delete": "Delete resume",
+    "deleteAria": "Delete resume {{name}}",
+    "title": "My resumes ({{n}})",
+    "subtitle": "Upload PDF or DOCX documents (max 5 MB) for job applications",
+    "guideline": "Supported files: .pdf, .doc and .docx up to 5 MB. You can set one resume as the default for applications.",
+    "upload": "Upload resume",
+    "uploading": "Uploading...",
+    "errorTitle": "Failed to load resumes",
+    "errorDescription": "Something went wrong. Please try again.",
+    "emptyTitle": "No resumes uploaded yet",
+    "emptyDescription": "Upload your CV in PDF or DOCX format so you can apply to jobs with a single click.",
+    "feedback": {
+      "tooLarge": "File size exceeds the 5 MB limit. Please select a smaller PDF or DOCX file.",
+      "badFormat": "Invalid file format. Please upload a PDF, DOC, or DOCX document.",
+      "uploaded": "\"{{name}}\" uploaded successfully.",
+      "uploadFailed": "Could not upload the resume right now. Please try again.",
+      "defaultUpdated": "Default resume updated successfully.",
+      "defaultFailed": "Could not set the default resume right now.",
+      "downloaded": "\"{{name}}\" downloaded successfully.",
+      "downloadFailed": "Could not download the resume right now.",
+      "deleted": "\"{{name}}\" deleted successfully.",
+      "deleteFailed": "Could not delete the resume right now. Please try again."
+    },
+    "deleteDialog": {
+      "title": "Delete resume",
+      "confirm": "Delete resume",
+      "message": "Are you sure you want to permanently delete \"{{name}}\"? This file will be removed from your profile."
+    }
+  },
+  "profile": {
+    "title": "Candidate profile",
+    "subtitle": "Account details managed on the platform",
+    "active": "Active account",
+    "name": "Full name",
+    "na": "N/A",
+    "role": "Role",
+    "phone": "Phone",
+    "memberSince": "Member since",
+    "defaultResume": "Default resume",
+    "noResume": "No default resume yet",
+    "skills": "Profile skills",
+    "notice": "Your name and email are synced from your sign-in credentials. Self-service profile updates are currently managed by your administrator."
+  },
+  "match": {
+    "title": "Match your resume to this job",
+    "disclaimer": "Experimental feature. The match score is not a probability of being hired.",
+    "loadingResumes": "Loading resumes…",
+    "resumeError": "Could not load your resumes. Please reload the page.",
+    "needResume": "Upload a resume before running the analysis.",
+    "chooseResume": "Choose a resume",
+    "analyze": "Analyse resume",
+    "analyzing": "Analysing…",
+    "unavailable": "Resume analysis is not available right now. Please try again later.",
+    "failed": "Could not run the analysis right now. Please try again later.",
+    "score": "Experimental match score: {{score}}/100",
+    "components": "Content relevance: {{relevance}}/100 · Required skills: {{skills}}/100",
+    "undetermined": "Not determined",
+    "matched": "Evidence found",
+    "contradicted": "Contradicted by resume",
+    "unverified": "Not verified",
+    "preferred": "Preferred skills",
+    "unspecified": "Skills with unclear priority in the job description",
+    "experience": "Experience",
+    "education": "Education",
+    "expMatched": "matching evidence found",
+    "expPartial": "below the years stated in the job description",
+    "expUnverified": "not verified",
+    "recommendations": "Suggestions to improve your resume"
+  },
+  "sidebar": {
+    "aria": "Job seeker navigation",
+    "close": "Close sidebar",
+    "workspace": "Workspace",
+    "overview": "Overview",
+    "applications": "Applications",
+    "saved": "Saved jobs",
+    "recommended": "Recommended",
+    "resumes": "My resumes",
+    "interview": "AI interview"
+  }
+}

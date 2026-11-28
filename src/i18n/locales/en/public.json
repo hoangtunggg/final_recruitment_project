@@ -1,1 +1,274 @@
-{}
+{
+  "time": {
+    "recently": "Recently posted",
+    "justNow": "Just now",
+    "minutesAgo": "{{n}}m ago",
+    "hoursAgo": "{{n}}h ago",
+    "daysAgo": "{{n}}d ago",
+    "monthsAgo": "{{n}}mo ago"
+  },
+  "company": {
+    "logoAlt": "{{name}} logo",
+    "fallbackName": "Company"
+  },
+  "jobCard": {
+    "coverAlt": "{{title}} at {{company}}",
+    "remoteFallback": "Remote",
+    "hiring": "Actively hiring",
+    "viewJob": "View job"
+  },
+  "companyCard": {
+    "coverAlt": "{{name}} workplace",
+    "multiLocation": "Multiple locations",
+    "openRoles": "Open roles: {{n}}"
+  },
+  "notFound": {
+    "heading": "Page not found",
+    "description": "The page you are looking for does not exist, has been removed, or has moved to another address.",
+    "home": "Go to homepage",
+    "back": "Go back"
+  },
+  "jobDetail": {
+    "backToDashboard": "Back to dashboard",
+    "backToJobs": "Back to jobs",
+    "applyNow": "Apply now",
+    "practiceInterview": "Practise an AI interview for this job",
+    "practiceHint": "Try an AI interview tailored to this role before you apply.",
+    "share": "Share job",
+    "linkCopied": "Link copied",
+    "sidebarLabel": "More about this job",
+    "notFound": {
+      "title": "Job posting not found",
+      "description": "The position you are looking for may have expired or been removed.",
+      "browse": "Browse other jobs"
+    },
+    "facts": {
+      "location": "Location",
+      "salary": "Salary",
+      "negotiable": "Negotiable",
+      "experience": "Experience",
+      "notSpecified": "Not specified",
+      "posted": "Posted",
+      "deadline": "Apply by",
+      "education": "Education"
+    },
+    "sections": {
+      "description": "Job description",
+      "responsibilities": "Responsibilities",
+      "requirements": "Requirements",
+      "skills": "Skills",
+      "benefits": "Benefits"
+    },
+    "aiCard": {
+      "title": "Practise with AI",
+      "description": "Get used to questions tailored to this role, answer by voice or by typing, and receive detailed feedback.",
+      "cta": "Start a practice interview"
+    }
+  },
+  "apply": {
+    "title": "Apply for this position",
+    "close": "Close application dialog",
+    "applicant": "Applicant information",
+    "name": "Name",
+    "nameFallback": "Job seeker",
+    "phone": "Phone number",
+    "education": "Education",
+    "educationPlaceholder": "e.g. BSc in Computer Science",
+    "experience": "Experience",
+    "experiencePlaceholder": "e.g. 2 years of web development",
+    "skills": "Key skills",
+    "skillsPlaceholder": "e.g. React, Node.js, SQL",
+    "coverLetter": "Cover letter / note",
+    "coverLetterPlaceholder": "Briefly introduce yourself and explain why you fit this role...",
+    "resume": "Resume (PDF or DOCX, max 5 MB)",
+    "resumeDrop": "Click to attach your resume",
+    "resumeHint": "Supports .pdf, .doc, .docx",
+    "cancel": "Cancel",
+    "submit": "Submit application",
+    "submitting": "Submitting...",
+    "successTitle": "Application submitted!",
+    "successBody": "Your application for {{title}} has been sent to {{company}}. You can track its status in your dashboard.",
+    "errors": {
+      "phone": "Phone number is required",
+      "experience": "Experience details are required",
+      "education": "Education is required",
+      "skills": "Key skills are required",
+      "coverLetter": "Cover letter is required",
+      "fileTooLarge": "File size exceeds the 5 MB limit. Please choose a smaller PDF or DOCX file.",
+      "submitFailed": "Could not submit your application right now. Please try again."
+    }
+  },
+  "home": {
+    "hero": {
+      "statusLoading": "Connecting to the live job registry...",
+      "statusOpen": "{{n}} verified positions open right now",
+      "statusIdle": "Verified recruitment platform",
+      "titleStart": "Find the right job and",
+      "titleHighlight": "practise interviews with AI",
+      "subtitle": "Search openings by role, company, location and working style, then walk into the real interview with confidence.",
+      "searchLabel": "Job search",
+      "keywordLabel": "Job title or keywords",
+      "keywordPlaceholder": "Job title, skills, or company",
+      "locationLabel": "Job location",
+      "locationPlaceholder": "Location or \"Remote\"",
+      "searchButton": "Search jobs",
+      "popular": "Popular:"
+    },
+    "quickTags": {
+      "engineering": "Engineering",
+      "design": "Design",
+      "marketing": "Marketing"
+    },
+    "categories": {
+      "software": "Software & Tech",
+      "design": "Product & Design",
+      "marketing": "Marketing & Growth",
+      "sales": "Sales & Business",
+      "finance": "Finance & Accounting",
+      "healthcare": "Healthcare & Science",
+      "support": "Customer Support",
+      "operations": "Operations & HR"
+    },
+    "sort": {
+      "label": "Sort by",
+      "newest": "Newest first",
+      "salary": "Highest salary",
+      "title": "Role title (A-Z)"
+    },
+    "filters": {
+      "type": "Job type",
+      "experience": "Experience",
+      "salaryLabel": "Salary range",
+      "all": "All",
+      "active": "Active filters:",
+      "clearAll": "Clear all",
+      "remove": "Remove filter {{label}}",
+      "chipKeyword": "Keyword: {{value}}",
+      "chipLocation": "Location: {{value}}",
+      "chipCategory": "Category: {{value}}",
+      "chipType": "Type: {{value}}",
+      "chipExperience": "Experience: {{value}}",
+      "chipSalary": "Salary: {{value}}",
+      "salary": {
+        "under-50k": "Under $50k",
+        "50-80": "$50k - $80k",
+        "80-120": "$80k - $120k",
+        "120-150": "$120k - $150k",
+        "150-200": "$150k - $200k",
+        "200k+": "$200k and above"
+      }
+    },
+    "browse": {
+      "eyebrow": "Current opportunities",
+      "title": "Browse open positions",
+      "subtitle": "Active roles from verified employers. Filter by type, experience and salary right here.",
+      "showing": "Showing {{shown}} of {{total}} jobs",
+      "error": "We could not load the job list. Please try again.",
+      "retry": "Reload jobs",
+      "noMatchTitle": "No jobs match your filters",
+      "noMatchDescription": "Try a different keyword or remove some filters to see more results.",
+      "resetFilters": "Reset all filters",
+      "emptyTitle": "No active job postings right now",
+      "emptyDescription": "New positions will appear here as soon as employers publish them. In the meantime, you can practise an interview with AI.",
+      "tryInterview": "Practise an AI interview",
+      "postJob": "Post a job",
+      "createAccount": "Create a free account"
+    },
+    "promo": {
+      "eyebrow": "New: AI practice interview",
+      "title": "Practise with AI before the real interview",
+      "description": "Pick a role and level, answer questions like in a real interview and get a clear report on your strengths and what to improve.",
+      "points": {
+        "tracks": "Questions by field and level, from fresher to senior",
+        "voice": "Answer by voice or by typing, whichever suits your device",
+        "report": "A detailed result report after every practice session"
+      },
+      "cta": "Start a practice interview",
+      "sampleQuestion": "Tell me about a recent backend project you are proud of.",
+      "sampleAnswer": "I built a booking API for an internal app and tuned the queries to cut response time..."
+    },
+    "categoriesSection": {
+      "eyebrow": "Targeted discovery",
+      "title": "Explore roles by category",
+      "subtitle": "Filter jobs in your functional area of expertise with one click.",
+      "openRoles": "{{n}} open roles",
+      "explore": "Explore category",
+      "view": "View positions",
+      "applied": "Filter applied"
+    },
+    "companies": {
+      "eyebrow": "Employers",
+      "title": "Organisations hiring now",
+      "subtitle": "Companies represented in the current set of active listings.",
+      "browseAll": "Browse all current jobs"
+    },
+    "pillars": {
+      "verified": {
+        "title": "Verified openings",
+        "description": "Direct postings from vetted hiring teams and organisations."
+      },
+      "direct": {
+        "title": "Direct application",
+        "description": "No middleman redirects: send your resume straight to recruiters."
+      },
+      "status": {
+        "title": "Real-time status",
+        "description": "Know when your resume is reviewed, shortlisted or invited to interview."
+      },
+      "dashboards": {
+        "title": "Dedicated dashboards",
+        "description": "Tailored workspaces for candidates, hiring managers and admins."
+      }
+    },
+    "how": {
+      "eyebrow": "Simple & transparent",
+      "title": "How the platform works",
+      "subtitle": "Designed to connect candidates and hiring managers with zero friction.",
+      "candidates": {
+        "badge": "For job seekers",
+        "title": "Fast-track your job search",
+        "cta": "Start browsing openings",
+        "steps": {
+          "1": {
+            "title": "Build your profile and resume",
+            "description": "Create an account, upload your credentials and keep your main resume in one secure place."
+          },
+          "2": {
+            "title": "Filter by skills and work style",
+            "description": "Search by remote preference, salary range and experience level with instant results."
+          },
+          "3": {
+            "title": "Apply directly and track progress",
+            "description": "Submit applications in a few clicks and follow status updates in your candidate dashboard."
+          }
+        }
+      },
+      "employers": {
+        "badge": "For employers & recruiters",
+        "title": "Hire talent efficiently",
+        "cta": "Post your opening today",
+        "steps": {
+          "1": {
+            "title": "Publish vacancies",
+            "description": "Define responsibilities, salary ranges and required skills with structured postings."
+          },
+          "2": {
+            "title": "Screen qualified applicants",
+            "description": "Review applicant profiles and uploaded resumes inside your employer portal."
+          },
+          "3": {
+            "title": "Manage the hiring pipeline",
+            "description": "Shortlist top candidates, schedule interviews and issue hiring decisions directly."
+          }
+        }
+      }
+    },
+    "finalCta": {
+      "title": "Ready to take your next career step?",
+      "description": "Whether you are seeking your next challenge or hiring great people, start today on JobPortal.",
+      "browse": "Browse open positions",
+      "dashboard": "Go to dashboard",
+      "register": "Create a free account"
+    }
+  }
+}

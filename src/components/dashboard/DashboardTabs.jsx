@@ -1,64 +1,39 @@
 import React from "react";
-import {
-  FiGrid,
-  FiBriefcase,
-  FiBookmark,
-  FiStar,
-  FiFileText,
-} from "react-icons/fi";
+import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { FiBriefcase, FiBookmark, FiFileText, FiGrid, FiMic, FiStar } from "react-icons/fi";
+import { cx } from "../ui";
 
 const TABS = [
-  {
-    id: "overview",
-    label: "Overview",
-    icon: FiGrid,
-  },
-  {
-    id: "applications",
-    label: "Applications",
-    icon: FiBriefcase,
-    countKey: "applications",
-  },
-  {
-    id: "saved",
-    label: "Saved Jobs",
-    icon: FiBookmark,
-    countKey: "saved",
-  },
-  {
-    id: "recommended",
-    label: "Recommended",
-    icon: FiStar,
-    countKey: "recommended",
-  },
-  {
-    id: "resumes",
-    label: "My Resumes",
-    icon: FiFileText,
-    countKey: "resumes",
-  },
+  { id: "overview", icon: FiGrid },
+  { id: "applications", icon: FiBriefcase, countKey: "applications" },
+  { id: "saved", icon: FiBookmark, countKey: "saved" },
+  { id: "recommended", icon: FiStar, countKey: "recommended" },
+  { id: "resumes", icon: FiFileText, countKey: "resumes" },
 ];
 
-const DashboardTabs = ({
-  activeTab,
-  onTabChange,
-  counts = {},
-  instanceId = "dashboard",
-}) => {
+const pillClass = (active) =>
+  cx(
+    "inline-flex min-h-11 select-none items-center gap-2 whitespace-nowrap rounded-pill px-4 text-sm font-semibold transition-colors",
+    active ? "bg-primary-600 text-white" : "text-ink hover:bg-tint hover:text-primary-text"
+  );
+
+/**
+ * Candidate dashboard navigation: the five in-page tabs (role="tab") plus a link to the AI
+ * interview (/interview), which is a separate page and therefore not part of the tablist.
+ * `instanceId` prefixes the element ids (kept so a layout can render the bar more than once).
+ */
+const DashboardTabs = ({ activeTab, onTabChange, counts = {}, instanceId = "dashboard" }) => {
+  const { t } = useTranslation("candidate");
+
   return (
-    <div className="min-w-0">
-      {/* Scrollable Container on Mobile */}
-      <div className="overflow-x-auto scrollbar-none -mx-4 px-4 sm:mx-0 sm:px-0">
-        <nav
-          className="flex gap-1.5 py-2 min-w-max lg:justify-center"
-          role="tablist"
-          aria-label="Dashboard views"
-        >
+    <div className="min-w-0 overflow-x-auto scrollbar-none">
+      <div className="flex min-w-max items-center gap-1.5 py-2">
+        <nav className="flex gap-1.5" role="tablist" aria-label={t("tabs.aria")}>
           {TABS.map((tab) => {
             const Icon = tab.icon;
             const count = tab.countKey ? counts[tab.countKey] : undefined;
             const isActive = activeTab === tab.id;
-
             return (
               <button
                 key={tab.id}
@@ -68,28 +43,16 @@ const DashboardTabs = ({
                 aria-controls={`dashboard-panel-${tab.id}`}
                 type="button"
                 onClick={() => onTabChange(tab.id)}
-                className={`inline-flex min-h-11 items-center gap-2 px-3 rounded-lg font-semibold text-sm transition-colors select-none whitespace-nowrap focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700 ${
-                  isActive
-                    ? "bg-blue-700 text-white"
-                    : "text-gray-700 dark:text-gray-300 hover:text-blue-700 dark:hover:text-blue-300 hover:bg-blue-50 dark:hover:bg-blue-950/40"
-                }`}
+                className={cx(pillClass(isActive), "cursor-pointer")}
               >
-                <Icon
-                  className={`text-sm sm:text-base flex-shrink-0 ${
-                    isActive
-                      ? "text-white"
-                      : "text-gray-500 dark:text-gray-400 group-hover:text-blue-600"
-                  }`}
-                />
-                <span>{tab.label}</span>
-
+                <Icon className="shrink-0 text-base" aria-hidden="true" />
+                <span>{t(`tabs.${tab.id}`)}</span>
                 {typeof count === "number" && count > 0 && (
                   <span
-                    className={`inline-flex items-center justify-center px-1.5 py-0.5 rounded-full text-[11px] font-bold ${
-                      isActive
-                        ? "bg-white/20 text-white"
-                        : "bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200"
-                    }`}
+                    className={cx(
+                      "inline-flex min-w-5 items-center justify-center rounded-full px-1.5 text-xs font-bold",
+                      isActive ? "bg-white/25 text-white" : "bg-tint text-primary-text"
+                    )}
                   >
                     {count}
                   </span>
@@ -98,6 +61,15 @@ const DashboardTabs = ({
             );
           })}
         </nav>
+        <Link
+          to="/interview"
+          id={`${instanceId}-dashboard-interview-link`}
+          data-testid={`${instanceId}-dashboard-interview-link`}
+          className={cx(pillClass(false), "border border-primary-500 text-primary-text")}
+        >
+          <FiMic className="shrink-0 text-base" aria-hidden="true" />
+          {t("tabs.interview")}
+        </Link>
       </div>
     </div>
   );

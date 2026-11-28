@@ -1,161 +1,111 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import {
-  FaMapMarkerAlt,
-  FaClock,
-  FaDollarSign,
-  FaArrowRight,
-  FaShieldAlt,
-} from "react-icons/fa";
+import { useTranslation } from "react-i18next";
+import { FaMapMarkerAlt, FaClock, FaMoneyBillWave, FaArrowRight } from "react-icons/fa";
 import CompanyLogo from "../common/CompanyLogo";
+import { Badge, cx } from "../ui";
 import { resolveMediaUrl } from "../../utils/mediaUrl";
+import { useEnumLabel } from "../../i18n/helpers";
+import { jobTypeTone, splitSkills, useTimeAgo } from "./job-format-helpers";
 
-const formatTimeAgo = (dateString) => {
-  if (!dateString) return "Recently";
-  const date = new Date(dateString);
-  if (isNaN(date.getTime())) return "Recently";
-
-  const seconds = Math.floor((new Date() - date) / 1000);
-  if (seconds < 60) return "Just now";
-  const minutes = Math.floor(seconds / 60);
-  if (minutes < 60) return `${minutes}m ago`;
-  const hours = Math.floor(minutes / 60);
-  if (hours < 24) return `${hours}h ago`;
-  const days = Math.floor(hours / 24);
-  if (days < 30) return `${days}d ago`;
-  const months = Math.floor(days / 30);
-  return `${months}mo ago`;
-};
-
-const getTypeBadgeClass = (type) => {
-  const normalized = (type || "").toLowerCase();
-  if (normalized.includes("remote")) {
-    return "bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950/40 dark:text-emerald-300 dark:border-emerald-800";
-  }
-  if (normalized.includes("part-time")) {
-    return "bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-950/40 dark:text-amber-300 dark:border-amber-800";
-  }
-  if (normalized.includes("contract")) {
-    return "bg-purple-50 text-purple-700 border-purple-200 dark:bg-purple-950/40 dark:text-purple-300 dark:border-purple-800";
-  }
-  if (normalized.includes("internship")) {
-    return "bg-cyan-50 text-cyan-700 border-cyan-200 dark:bg-cyan-950/40 dark:text-cyan-300 dark:border-cyan-800";
-  }
-  return "bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-950/40 dark:text-blue-300 dark:border-blue-800";
-};
-
+/**
+ * Job card used in the home listing grid.
+ * The whole card is one link to /jobs/:id (no nested buttons, so it is valid HTML and keyboard friendly).
+ * `job.companyLogoUrl` is optional and injected by the listing page.
+ */
 const JobCard = ({ job }) => {
+  const { t } = useTranslation("public");
+  const enumLabel = useEnumLabel();
+  const timeAgo = useTimeAgo();
   const imageUrl = resolveMediaUrl(job?.imageUrl);
   const [failedImageUrl, setFailedImageUrl] = useState(null);
-  const postedText = formatTimeAgo(job?.createdAt || job?.posted);
 
   if (!job) return null;
 
-  const skillsList = job.skills
-    ? job.skills
-        .split(",")
-        .map((s) => s.trim())
-        .filter((s) => s.length > 0)
-    : [];
+  const skills = splitSkills(job.skills).slice(0, 3);
+  const showCover = imageUrl && failedImageUrl !== imageUrl;
 
   return (
     <Link
       to={`/jobs/${job.id}`}
-      className="group flex min-h-80 min-w-0 flex-col overflow-hidden rounded-xl border border-slate-300 bg-white transition-colors hover:border-blue-600 dark:border-gray-600 dark:bg-gray-800 dark:hover:border-blue-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700"
+      data-testid="job-card"
+      className={cx(
+        "group flex min-w-0 flex-col overflow-hidden rounded-card border border-tint-line bg-surface",
+        "shadow-card transition-shadow duration-200 hover:shadow-card-hover motion-reduce:transition-none"
+      )}
     >
-      <div className="relative aspect-[16/7] overflow-hidden bg-gradient-to-br from-blue-100 via-indigo-50 to-slate-100 dark:from-blue-950 dark:via-indigo-950/60 dark:to-gray-800">
-        {imageUrl && failedImageUrl !== imageUrl && (
+      {showCover && (
+        <div className="aspect-[16/6] overflow-hidden bg-tint">
           <img
             src={imageUrl}
-            alt={`${job.title} at ${job.company}`}
-            className="h-full w-full object-cover transition-transform duration-300 motion-reduce:transition-none group-hover:scale-[1.02]"
+            alt={t("jobCard.coverAlt", { title: job.title, company: job.company })}
+            className="h-full w-full object-cover"
             loading="lazy"
             decoding="async"
             onError={() => setFailedImageUrl(imageUrl)}
           />
-        )}
-        <div className="absolute inset-x-0 bottom-0 h-14 bg-gradient-to-t from-slate-950/35 to-transparent" aria-hidden="true" />
-        <CompanyLogo
-          name={job.company}
-          src={job.companyLogoUrl}
-          className="absolute bottom-3 left-4 h-12 w-12"
-        />
-      </div>
+        </div>
+      )}
 
-      <div className="flex flex-1 flex-col justify-between p-4">
-      <div>
-        <div className="flex items-start justify-between gap-3">
-          <div className="min-w-0">
-              <div className="flex items-center gap-1.5 font-semibold text-slate-900 dark:text-white text-sm min-w-0">
-                <span className="truncate">{job.company}</span>
-                <FaShieldAlt
-                  className="text-blue-500 text-[11px] shrink-0"
-                  title="Verified Organization"
-                />
-              </div>
-              <div className="flex items-center gap-1 text-xs text-slate-600 dark:text-gray-300 mt-1">
-                <FaMapMarkerAlt className="text-gray-400 text-[10px]" />
-                <span className="truncate">{job.location || "Remote"}</span>
-              </div>
+      <div className="flex flex-1 flex-col p-5">
+        <div className="flex items-start gap-3">
+          <CompanyLogo name={job.company} src={job.companyLogoUrl} className="h-12 w-12" />
+          <div className="min-w-0 flex-1">
+            <p className="truncate text-sm font-semibold text-ink">{job.company}</p>
+            <p className="mt-0.5 flex items-center gap-1.5 text-sm text-muted">
+              <FaMapMarkerAlt className="shrink-0 text-xs" aria-hidden="true" />
+              <span className="truncate">{job.location || t("jobCard.remoteFallback")}</span>
+            </p>
           </div>
-
-          <div className="flex flex-col items-end gap-1.5 shrink-0">
-            {job.type && (
-              <span
-                className={`text-xs font-semibold px-2 py-1 rounded-md border whitespace-nowrap ${getTypeBadgeClass(
-                  job.type
-                )}`}
-              >
-                {job.type}
-              </span>
-            )}
-          </div>
+          {job.type && (
+            <Badge tone={jobTypeTone(job.type)} size="sm">
+              {enumLabel("jobType", job.type)}
+            </Badge>
+          )}
         </div>
 
-        <h3 className="mt-3 text-base font-bold text-slate-900 dark:text-white group-hover:text-blue-700 dark:group-hover:text-blue-300 transition-colors leading-snug line-clamp-2 min-h-12">
+        <h3 className="mt-4 line-clamp-2 min-h-[3.25rem] text-lg font-bold leading-snug text-ink transition-colors group-hover:text-primary-text">
           {job.title}
         </h3>
 
-        <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs">
+        <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
           {job.salary && (
-            <span className="inline-flex items-center gap-1 font-semibold text-green-700 dark:text-green-300 min-w-0">
-              <FaDollarSign className="text-emerald-600 dark:text-emerald-400 text-[11px]" />
+            <span className="inline-flex min-w-0 items-center gap-1.5 font-semibold text-success">
+              <FaMoneyBillWave className="shrink-0 text-xs" aria-hidden="true" />
               <span className="truncate">{job.salary}</span>
             </span>
           )}
-          <span className="inline-flex items-center gap-1 text-slate-500 dark:text-gray-300 font-medium whitespace-nowrap">
-            <FaClock className="text-[10px]" />
-            <span>{postedText}</span>
+          <span className="inline-flex items-center gap-1.5 text-muted">
+            <FaClock className="shrink-0 text-xs" aria-hidden="true" />
+            {timeAgo(job.createdAt || job.posted)}
           </span>
         </div>
 
-        <div className="mt-3 flex flex-wrap gap-1.5">
-          {job.experience && (
-            <span className="text-xs font-medium px-2 py-1 rounded-md bg-slate-100 text-slate-700 border border-slate-200 dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600">
-              {job.experience}
-            </span>
-          )}
-          {skillsList.slice(0, 2).map((skill, index) => (
-              <span
-                key={index}
-                className="text-xs px-2 py-1 rounded-md font-medium bg-slate-100 text-slate-700 dark:bg-gray-700 dark:text-gray-200"
-              >
+        {(job.experience || skills.length > 0) && (
+          <div className="mt-3 flex flex-wrap gap-1.5">
+            {job.experience && (
+              <Badge tone="neutral" size="sm">
+                {enumLabel("experienceLevel", job.experience)}
+              </Badge>
+            )}
+            {skills.map((skill) => (
+              <Badge key={skill} tone="primary" size="sm">
                 {skill}
-              </span>
-          ))}
-        </div>
-      </div>
+              </Badge>
+            ))}
+          </div>
+        )}
 
-      <div className="mt-3 pt-3 border-t border-slate-200 dark:border-gray-700 flex items-center justify-between gap-3">
-        <span className="text-xs font-medium text-slate-600 dark:text-gray-300 flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-green-600" />
-          <span>Actively hiring</span>
-        </span>
-        <span className="inline-flex min-h-11 items-center gap-1.5 text-xs font-semibold text-blue-700 dark:text-blue-300">
-          <span>View job</span>
-          <FaArrowRight className="text-xs" />
-        </span>
-      </div>
+        <div className="mt-auto flex items-center justify-between gap-3 border-t border-line pt-4">
+          <span className="flex items-center gap-2 text-sm text-muted">
+            <span className="h-2 w-2 rounded-full bg-brand-green" aria-hidden="true" />
+            {t("jobCard.hiring")}
+          </span>
+          <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary-text">
+            {t("jobCard.viewJob")}
+            <FaArrowRight className="text-xs transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
+          </span>
+        </div>
       </div>
     </Link>
   );

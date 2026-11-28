@@ -1,24 +1,19 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
+import AuthGateLoading from "./AuthGateLoading";
 
 const EmployerRoute = ({ children }) => {
   const { user, loading } = useAuth();
 
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 transition-colors">
-        <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600 dark:border-blue-400"></div>
-      </div>
-    );
-  }
+  if (loading) return <AuthGateLoading />;
 
-  // Check if user is authenticated
+  // Not signed in -> login
   if (!user) {
     return <Navigate to="/login" replace />;
   }
 
-  // Check if user has employer or admin role
+  // Only employers and admins may use the employer portal
   if (user.role !== "employer" && user.role !== "admin") {
     return <Navigate to="/dashboard" replace />;
   }

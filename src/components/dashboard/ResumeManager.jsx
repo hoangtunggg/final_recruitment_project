@@ -1,240 +1,144 @@
 import React, { useRef } from "react";
-import {
-  FiFileText,
-  FiUpload,
-  FiDownload,
-  FiTrash2,
-  FiCheckCircle,
-  FiClock,
-  FiAlertCircle,
-  FiCheck,
-  FiInfo,
-} from "react-icons/fi";
+import { useTranslation } from "react-i18next";
+import { FiAlertCircle, FiCheck, FiClock, FiDownload, FiFileText, FiInfo, FiTrash2, FiUpload } from "react-icons/fi";
+import { Badge, Button, Card, EmptyState, Spinner, cx } from "../ui";
+import { useLocale } from "../../i18n/helpers";
 
-const ResumeManager = ({
-  resumes = [],
-  loading = false,
-  error = null,
-  uploading = false,
-  actionLoadingId = null,
-  onUpload,
-  onSetDefault,
-  onDownload,
-  onDelete,
-  onRetry,
-}) => {
-  const fileInputRef = useRef(null);
+const ACCEPT = ".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document";
 
-  const handleFileChange = (e) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      onUpload(file);
-    }
-    // Reset file input so identical file can be selected again if needed
-    if (fileInputRef.current) {
-      fileInputRef.current.value = "";
-    }
-  };
+/** Upload button: a real <label> for the hidden file input, so it is keyboard and screen-reader friendly. */
+const UploadButton = ({ inputId, uploading, label, busyLabel }) => (
+  <label
+    htmlFor={inputId}
+    className={cx(
+      "inline-flex min-h-11 items-center justify-center gap-2 rounded-pill border border-primary-600 bg-primary-600 px-8 py-2 font-semibold text-white transition-colors focus-within:shadow-focus",
+      uploading ? "cursor-not-allowed opacity-50" : "cursor-pointer hover:bg-primary-700"
+    )}
+  >
+    {uploading ? <Spinner size="sm" /> : <FiUpload aria-hidden="true" />}
+    {uploading ? busyLabel : label}
+  </label>
+);
+
+const ResumeRow = ({ resume, locale, busy, uploading, onSetDefault, onDownload, onDelete }) => {
+  const { t } = useTranslation("candidate");
+  const isDefault = Boolean(resume.isDefault);
+  const uploaded = resume.uploadedDate
+    ? new Date(resume.uploadedDate).toLocaleDateString(locale, { month: "short", day: "numeric", year: "numeric" })
+    : t("resumes.recently");
+  const iconButton = "inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border border-line text-muted transition-colors disabled:cursor-not-allowed disabled:opacity-50";
 
   return (
-    <div className="space-y-4">
-      {/* Header and Upload Section */}
-      <div className="bg-white dark:bg-gray-800 rounded-xl border border-slate-300 dark:border-gray-600 p-5 sm:p-6">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div>
-            <h2 className="text-lg font-bold text-gray-900 dark:text-white">
-              My Resumes ({resumes.length})
-            </h2>
-            <p className="text-sm text-slate-600 dark:text-gray-300 mt-1">
-              Upload PDF or DOCX documents (max 5 MB) for job applications
-            </p>
+    <li
+      data-testid="resume-row"
+      className={cx(
+        "flex flex-col gap-4 rounded-card border p-4 sm:flex-row sm:items-center sm:justify-between",
+        isDefault ? "border-primary-500 bg-tint" : "border-line bg-surface"
+      )}
+    >
+      <div className="flex min-w-0 items-center gap-4">
+        <span
+          aria-hidden="true"
+          className={cx("flex h-12 w-12 shrink-0 items-center justify-center rounded-full text-xl", isDefault ? "bg-primary-600 text-white" : "bg-tint text-primary-text")}
+        >
+          <FiFileText />
+        </span>
+        <div className="min-w-0">
+          <div className="flex flex-wrap items-center gap-2">
+            <h3 className="truncate font-bold text-ink">{resume.name}</h3>
+            {isDefault && (
+              <Badge tone="primary" size="sm" icon={<FiCheck />}>
+                {t("resumes.default")}
+              </Badge>
+            )}
           </div>
-
-          <div>
-            <input
-              ref={fileInputRef}
-              type="file"
-              accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-              onChange={handleFileChange}
-              disabled={uploading}
-              className="hidden"
-              id="resume-upload-input"
-            />
-            <label
-              htmlFor="resume-upload-input"
-              className={`inline-flex min-h-11 items-center gap-2 px-4 rounded-lg font-semibold text-sm transition-colors select-none ${
-                uploading
-                  ? "bg-gray-100 text-gray-400 dark:bg-gray-700 dark:text-gray-500 cursor-not-allowed"
-                  : "bg-blue-700 hover:bg-blue-800 active:bg-blue-900 text-white cursor-pointer"
-              }`}
-            >
-              <FiUpload className={`text-sm ${uploading ? "animate-bounce" : ""}`} />
-              <span>{uploading ? "Uploading Resume..." : "Upload New Resume"}</span>
-            </label>
-          </div>
-        </div>
-
-        {/* Upload format guidelines banner */}
-        <div className="mt-4 p-3 rounded-lg bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-900 flex items-start gap-2.5 text-sm text-blue-800 dark:text-blue-200">
-          <FiInfo className="text-sm flex-shrink-0 mt-0.5 text-blue-600 dark:text-blue-400" />
-          <div>
-            <span>Accepted formats: <strong>PDF, DOC, DOCX</strong> up to <strong>5 MB</strong>. The resume marked as <strong>Default</strong> is automatically attached to your job applications unless you select another.</span>
-          </div>
+          <p className="mt-0.5 flex items-center gap-1.5 text-sm text-muted">
+            <FiClock aria-hidden="true" />
+            {t("resumes.uploadedOn", { date: uploaded })}
+          </p>
         </div>
       </div>
+      <div className="flex flex-wrap items-center gap-2">
+        {!isDefault && (
+          <Button variant="outline" size="sm" disabled={busy || uploading} onClick={() => onSetDefault(resume.id)}>
+            {busy ? t("resumes.updating") : t("resumes.setDefault")}
+          </Button>
+        )}
+        <button type="button" disabled={busy} title={t("resumes.download")} aria-label={t("resumes.downloadAria", { name: resume.name })} onClick={() => onDownload(resume.id, resume.name)} className={cx(iconButton, "hover:border-primary-500 hover:text-primary-text")}>
+          <FiDownload aria-hidden="true" />
+        </button>
+        <button type="button" disabled={busy} title={t("resumes.delete")} aria-label={t("resumes.deleteAria", { name: resume.name })} onClick={() => onDelete(resume.id, resume.name)} className={cx(iconButton, "hover:border-danger hover:text-danger")}>
+          <FiTrash2 aria-hidden="true" />
+        </button>
+      </div>
+    </li>
+  );
+};
 
-      {/* Main Content Area */}
+/** The candidate's CV library: upload, set default, download and delete (with loading / error / empty states). */
+const ResumeManager = ({ resumes = [], loading = false, error = null, uploading = false, actionLoadingId = null, onUpload, onSetDefault, onDownload, onDelete, onRetry }) => {
+  const { t } = useTranslation("candidate");
+  const locale = useLocale();
+  const fileInputRef = useRef(null);
+  const inputId = "resume-upload-input";
+
+  const handleFileChange = (event) => {
+    const file = event.target.files?.[0];
+    if (file) onUpload(file);
+    // Reset so selecting the same file again still triggers onChange.
+    if (fileInputRef.current) fileInputRef.current.value = "";
+  };
+
+  const upload = <UploadButton inputId={inputId} uploading={uploading} label={t("resumes.upload")} busyLabel={t("resumes.uploading")} />;
+
+  return (
+    <div className="space-y-5">
+      <input ref={fileInputRef} id={inputId} type="file" accept={ACCEPT} onChange={handleFileChange} disabled={uploading} className="sr-only" data-testid="resume-file-input" />
+
+      <Card padding="md">
+        <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
+          <div>
+            <h2 className="text-xl font-bold text-ink">{t("resumes.title", { n: resumes.length })}</h2>
+            <p className="mt-1 text-muted">{t("resumes.subtitle")}</p>
+          </div>
+          {upload}
+        </div>
+        <p className="mt-4 flex items-start gap-2 rounded-control bg-tint p-3 text-sm text-muted">
+          <FiInfo className="mt-0.5 shrink-0 text-primary-text" aria-hidden="true" />
+          {t("resumes.guideline")}
+        </p>
+      </Card>
+
       {loading ? (
-        <div className="space-y-4">
+        <div className="space-y-3" aria-hidden="true">
           {[1, 2].map((i) => (
-            <div
-              key={i}
-              className="bg-white dark:bg-gray-800 rounded-xl border border-slate-300 dark:border-gray-600 p-5 sm:p-6 animate-pulse flex items-center justify-between"
-            >
-              <div className="flex items-center gap-4 flex-1">
-                <div className="w-12 h-12 rounded-xl bg-gray-200 dark:bg-gray-700"></div>
-                <div className="space-y-2 flex-1">
-                  <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/3"></div>
-                  <div className="h-3 bg-gray-200 dark:bg-gray-700 rounded w-1/4"></div>
-                </div>
-              </div>
-              <div className="h-8 bg-gray-200 dark:bg-gray-700 rounded-lg w-28"></div>
-            </div>
+            <div key={i} className="h-20 animate-pulse rounded-card bg-tint" />
           ))}
         </div>
       ) : error ? (
-        <div className="text-center py-12 px-4 bg-white dark:bg-gray-800 rounded-xl border border-red-200 dark:border-red-900/50 p-6 max-w-md mx-auto shadow-sm">
-          <FiAlertCircle className="text-3xl text-red-500 mx-auto mb-3" />
-          <h3 className="text-base font-bold text-gray-900 dark:text-white mb-1">
-            Failed to load resumes
-          </h3>
-          <p className="text-xs text-gray-600 dark:text-gray-400 mb-4">{error}</p>
-          {onRetry && (
-            <button
-              type="button"
-              onClick={onRetry}
-              className="min-h-11 px-4 bg-blue-700 hover:bg-blue-800 text-white rounded-lg text-sm font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700"
-            >
-              Try Again
-            </button>
-          )}
-        </div>
+        <EmptyState
+          icon={<FiAlertCircle />}
+          title={t("resumes.errorTitle")}
+          description={t("resumes.errorDescription")}
+          action={onRetry && <Button variant="outline" onClick={onRetry}>{t("common.retry")}</Button>}
+        />
       ) : resumes.length === 0 ? (
-        <div className="text-center py-16 bg-white dark:bg-gray-800 rounded-xl border border-slate-300 dark:border-gray-600 p-6 max-w-lg mx-auto">
-          <div className="w-14 h-14 bg-blue-50 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400 rounded-2xl flex items-center justify-center mx-auto mb-4">
-            <FiFileText className="text-2xl" />
-          </div>
-          <h3 className="text-base font-bold text-gray-900 dark:text-white mb-1.5">
-            No resumes uploaded yet
-          </h3>
-          <p className="text-sm text-slate-600 dark:text-gray-300 mb-6 max-w-sm mx-auto">
-            Upload your CV or resume in PDF or DOCX format so you can apply to jobs with a single click.
-          </p>
-          <label
-            htmlFor="resume-upload-input"
-            className="inline-flex min-h-11 items-center gap-2 px-4 rounded-lg text-sm font-semibold text-white bg-blue-700 hover:bg-blue-800 cursor-pointer transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700"
-          >
-            <FiUpload className="text-sm" />
-            <span>Upload Your First Resume</span>
-          </label>
-        </div>
+        <EmptyState icon={<FiFileText />} title={t("resumes.emptyTitle")} description={t("resumes.emptyDescription")} action={upload} />
       ) : (
-        <div className="space-y-3">
-          {resumes.map((resume) => {
-            const isDefault = Boolean(resume.isDefault);
-            const isProcessing = actionLoadingId === resume.id;
-            const formattedDate = resume.uploadedDate
-              ? new Date(resume.uploadedDate).toLocaleDateString(undefined, {
-                  month: "short",
-                  day: "numeric",
-                  year: "numeric",
-                })
-              : "Recently";
-
-            return (
-              <div
-                key={resume.id}
-                className={`bg-white dark:bg-gray-800 rounded-xl border p-5 sm:p-6 transition-all duration-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4 ${
-                  isDefault
-                    ? "border-blue-300 dark:border-blue-700/80 bg-blue-50/20 dark:bg-blue-950/10"
-                    : "border-gray-200 dark:border-gray-700"
-                }`}
-              >
-                {/* File info */}
-                <div className="flex items-start sm:items-center gap-4 min-w-0 flex-1">
-                  <div
-                    className={`w-12 h-12 rounded-xl flex items-center justify-center text-xl flex-shrink-0 ${
-                      isDefault
-                        ? "bg-blue-100 text-blue-700 dark:bg-blue-900/60 dark:text-blue-300"
-                        : "bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-300"
-                    }`}
-                  >
-                    <FiFileText />
-                  </div>
-
-                  <div className="min-w-0 flex-1">
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <h3 className="text-sm font-bold text-gray-900 dark:text-white truncate">
-                        {resume.name}
-                      </h3>
-                      {isDefault && (
-                        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-blue-100 text-blue-800 dark:bg-blue-900/60 dark:text-blue-200 border border-blue-200 dark:border-blue-800">
-                          <FiCheck className="text-[11px]" />
-                          Default Resume
-                        </span>
-                      )}
-                    </div>
-
-                    <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-slate-600 dark:text-gray-300">
-                      <span>Size: {resume.size || "Unknown"}</span>
-                      <span>•</span>
-                      <span className="flex items-center gap-1">
-                        <FiClock className="text-[11px]" />
-                        Uploaded {formattedDate}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Actions */}
-                <div className="flex items-center gap-2 self-end sm:self-center flex-shrink-0">
-                  {!isDefault && (
-                    <button
-                      type="button"
-                      onClick={() => onSetDefault(resume.id)}
-                      disabled={isProcessing || uploading}
-                      className="min-h-11 px-3 rounded-lg border border-slate-300 dark:border-gray-600 hover:border-blue-600 text-sm font-semibold text-slate-700 dark:text-gray-200 hover:text-blue-700 dark:hover:text-blue-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-700"
-                    >
-                      {isProcessing ? "Updating..." : "Set as Default"}
-                    </button>
-                  )}
-
-                  <button
-                    type="button"
-                    onClick={() => onDownload(resume.id, resume.name)}
-                    disabled={isProcessing}
-                    title="Download resume"
-                    aria-label="Download resume"
-                    className="inline-flex h-11 w-11 items-center justify-center rounded-lg border border-slate-300 dark:border-gray-600 hover:bg-slate-50 dark:hover:bg-gray-700 text-slate-700 dark:text-gray-300 hover:text-blue-700 dark:hover:text-blue-300 transition-colors disabled:opacity-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-700"
-                  >
-                    <FiDownload className="text-sm" />
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => onDelete(resume.id, resume.name)}
-                    disabled={isProcessing}
-                    title="Delete resume"
-                    aria-label="Delete resume"
-                    className="inline-flex h-11 w-11 items-center justify-center rounded-lg border border-slate-300 dark:border-gray-600 hover:bg-red-50 dark:hover:bg-red-950/40 text-slate-700 dark:text-gray-300 hover:text-red-700 dark:hover:text-red-300 transition-colors disabled:opacity-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-red-700"
-                  >
-                    <FiTrash2 className="text-sm" />
-                  </button>
-                </div>
-              </div>
-            );
-          })}
-        </div>
+        <ul className="space-y-3">
+          {resumes.map((resume) => (
+            <ResumeRow
+              key={resume.id}
+              resume={resume}
+              locale={locale}
+              busy={actionLoadingId === resume.id}
+              uploading={uploading}
+              onSetDefault={onSetDefault}
+              onDownload={onDownload}
+              onDelete={onDelete}
+            />
+          ))}
+        </ul>
       )}
     </div>
   );

@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import axios from "axios";
 import authApi from "../services/authApi";
 
@@ -29,8 +30,12 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(localStorage.getItem("token"));
   const [loading, setLoading] = useState(true);
+  // Only the very first session check replaces the page with a spinner. login()/register() also
+  // toggle `loading`, but must not unmount the form (it would lose the typed values and any inline error).
+  const [initializing, setInitializing] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const { t } = useTranslation("common");
 
   // Set auth token in axios headers
   const setAuthToken = (token) => {
@@ -79,6 +84,7 @@ export const AuthProvider = ({ children }) => {
         }
       }
       setLoading(false);
+      setInitializing(false);
     };
 
     checkAuth();
@@ -241,11 +247,14 @@ export const AuthProvider = ({ children }) => {
         setError,
       }}
     >
-      {loading ? (
-        <div className="min-h-screen flex items-center justify-center">
-          <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-            <p className="mt-4 text-gray-600">Loading...</p>
+      {initializing ? (
+        <div
+          role="status"
+          className="flex min-h-screen items-center justify-center bg-canvas"
+        >
+          <div className="flex flex-col items-center gap-4 text-primary-500">
+            <span className="h-12 w-12 animate-spin rounded-full border-4 border-current border-t-transparent" />
+            <p className="font-medium text-muted">{t("states.loading")}</p>
           </div>
         </div>
       ) : (

@@ -1,0 +1,100 @@
+/* Scoped presentation rules for the admin + employer workspaces, driven by the theme tokens in index.css. */
+.workspace-ui {
+  background: rgb(var(--canvas));
+  color: rgb(var(--ink));
+}
+
+.workspace-ui main,
+.workspace-ui .grid > * {
+  min-width: 0;
+}
+
+.workspace-skip-link {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 100;
+  transform: translateY(-160%);
+  border-radius: 70px;
+  background: rgb(var(--primary-text));
+  color: rgb(var(--surface));
+  padding: 10px 18px;
+  font-size: 14px;
+  font-weight: 700;
+  transition: transform 150ms ease;
+}
+
+.workspace-skip-link:focus {
+  transform: translateY(0);
+}
+
+.workspace-ui h1 {
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.workspace-ui :is(input:not([type="checkbox"]):not([type="radio"]):not([type="file"]), select, textarea) {
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.workspace-ui :is(input:not([type="checkbox"]):not([type="radio"]):not([type="file"]), select) {
+  min-height: 44px;
+}
+
+.workspace-ui button {
+  min-height: 36px;
+}
+
+.workspace-ui :is(.rounded-2xl, .rounded-3xl) {
+  border-radius: 12px;
+}
+
+.workspace-ui :is(.shadow-xs, .shadow-sm, .shadow-md) {
+  box-shadow: none;
+}
+
+.workspace-ui table {
+  width: 100%;
+  min-width: 640px;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+
+.workspace-ui th {
+  background: rgb(var(--tint));
+  color: rgb(var(--muted));
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.035em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.workspace-ui :is(th, td) {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgb(var(--line));
+  vertical-align: middle;
+}
+
+.workspace-ui td {
+  font-size: 14px;
+}
+
+.workspace-ui tbody tr:hover {
+  background: rgb(var(--tint));
+}
+
+.workspace-ui .overflow-x-auto {
+  max-width: 100%;
+  overscroll-behavior-inline: contain;
+  scrollbar-width: thin;
+}
+
+@media (max-width: 639px) {
+  .workspace-ui :is(th, td) {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+}
