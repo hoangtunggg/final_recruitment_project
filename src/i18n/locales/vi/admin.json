@@ -1,1 +1,383 @@
-{}
+{
+  "layout": {
+    "skipToContent": "Chuyển đến nội dung chính"
+  },
+  "nav": {
+    "ariaLabel": "Điều hướng khu vực quản trị",
+    "panelTitle": "Quản trị hệ thống",
+    "closeSidebar": "Đóng thanh điều hướng",
+    "adminFallback": "Quản trị viên",
+    "dashboard": "Tổng quan",
+    "jobManagement": "Quản lý việc làm",
+    "allJobs": "Tất cả việc làm",
+    "addJob": "Thêm việc làm mới",
+    "userManagement": "Quản lý người dùng",
+    "allUsers": "Tất cả người dùng",
+    "employers": "Nhà tuyển dụng",
+    "applications": "Quản lý đơn ứng tuyển",
+    "reports": "Báo cáo & phân tích",
+    "notifications": "Thông báo",
+    "settings": "Cài đặt hệ thống"
+  },
+  "header": {
+    "toggleSidebar": "Mở hoặc đóng thanh điều hướng",
+    "searchPlaceholder": "Tìm kiếm chung đang tắt",
+    "searchDisabledHint": "Tìm kiếm chung trên mọi mục hiện đang tắt. Hãy dùng bộ lọc trong trang Quản lý việc làm hoặc Quản lý người dùng.",
+    "searchAria": "Tìm kiếm chung đang tắt; hãy dùng ô tìm kiếm của từng trang",
+    "notificationsAria": "Thông báo hoạt động quản trị",
+    "notifications": "Thông báo",
+    "unread": "{{n}} thông báo chưa đọc",
+    "allRead": "Đã đọc hết thông báo",
+    "closePanel": "Đóng bảng thông báo",
+    "empty": "Chưa có thông báo nào",
+    "viewAll": "Xem tất cả thông báo →"
+  },
+  "shared": {
+    "dismissAlert": "Đóng thông báo",
+    "clearSearch": "Xóa nội dung tìm kiếm",
+    "closeDialog": "Đóng hộp thoại",
+    "notSpecified": "Chưa nêu",
+    "notProvided": "Chưa cung cấp",
+    "unknown": "Không rõ",
+    "none": "Không có",
+    "showing": "Hiển thị {{from}}–{{to}} trên {{total}} {{noun}}",
+    "pageOf": "Trang {{page}} / {{pages}}"
+  },
+  "jobs": {
+    "title": "Kiểm duyệt & quản lý việc làm",
+    "subtitle": "Xem xét, duyệt, đăng, chỉnh sửa hoặc gỡ tin tuyển dụng trên toàn nền tảng.",
+    "addNew": "Thêm việc làm mới",
+    "searchPlaceholder": "Tìm theo chức danh, công ty hoặc địa điểm...",
+    "filterStatusAria": "Lọc việc làm theo trạng thái",
+    "filterApprovalAria": "Lọc việc làm theo trạng thái duyệt",
+    "allStatuses": "Tất cả trạng thái",
+    "allApprovals": "Tất cả trạng thái duyệt",
+    "loading": "Đang tải danh sách việc làm...",
+    "loadFailedTitle": "Không thể tải danh sách việc làm",
+    "emptyTitle": "Không tìm thấy việc làm nào",
+    "emptyFiltered": "Không có tin tuyển dụng nào khớp với từ khóa hoặc bộ lọc của bạn.",
+    "emptyNone": "Hiện chưa có việc làm nào trong hệ thống.",
+    "noun": "việc làm",
+    "errors": {
+      "loadDb": "Không thể tải việc làm từ cơ sở dữ liệu",
+      "update": "Không thể cập nhật việc làm",
+      "create": "Không thể tạo việc làm",
+      "approve": "Không thể duyệt việc làm",
+      "reject": "Không thể từ chối việc làm",
+      "delete": "Không thể xóa việc làm"
+    },
+    "toast": {
+      "updated": "Đã cập nhật việc làm \"{{title}}\"",
+      "created": "Đã tạo việc làm \"{{title}}\"",
+      "approvedPublished": "Đã duyệt và đăng việc làm \"{{title}}\"",
+      "approvedOnly": "Đã duyệt việc làm \"{{title}}\" (trạng thái vẫn là {{status}})",
+      "rejected": "Đã từ chối và đóng việc làm \"{{title}}\"",
+      "deleted": "Đã xóa việc làm \"{{title}}\""
+    },
+    "th": {
+      "titleCompany": "Chức danh & công ty",
+      "locationType": "Địa điểm & hình thức",
+      "status": "Trạng thái",
+      "moderation": "Kiểm duyệt",
+      "posted": "Ngày đăng",
+      "actions": "Thao tác"
+    },
+    "actions": {
+      "viewAria": "Xem chi tiết {{title}}",
+      "editAria": "Chỉnh sửa {{title}}",
+      "approveAria": "Duyệt {{title}}",
+      "approvePublishAria": "Duyệt và đăng {{title}}",
+      "rejectAria": "Từ chối và đóng {{title}}",
+      "deleteAria": "Xóa {{title}}",
+      "approve": "Duyệt",
+      "approvePublish": "Duyệt và đăng",
+      "rejectClose": "Từ chối và đóng"
+    },
+    "details": {
+      "aria": "Chi tiết việc làm",
+      "subtitle": "{{company}} • Mã việc làm #{{id}}",
+      "location": "Địa điểm",
+      "jobType": "Hình thức làm việc",
+      "experience": "Kinh nghiệm",
+      "salary": "Mức lương",
+      "listingStatus": "Trạng thái tin",
+      "moderationStatus": "Trạng thái kiểm duyệt",
+      "postingEmployer": "Nhà tuyển dụng đăng tin",
+      "description": "Mô tả công việc",
+      "requirements": "Yêu cầu",
+      "responsibilities": "Trách nhiệm",
+      "deadline": "Hạn nộp hồ sơ",
+      "noDeadline": "Không có hạn nộp",
+      "contact": "Email / điện thoại liên hệ"
+    },
+    "form": {
+      "title": "Chức danh",
+      "company": "Tên công ty",
+      "location": "Địa điểm",
+      "salary": "Mức lương",
+      "salaryPlaceholder": "VD: 20.000.000 - 30.000.000 VND",
+      "type": "Hình thức làm việc",
+      "experience": "Cấp độ kinh nghiệm",
+      "listingStatus": "Trạng thái tin",
+      "approvalStatus": "Trạng thái duyệt",
+      "description": "Mô tả công việc",
+      "requirements": "Yêu cầu"
+    },
+    "editModal": {
+      "title": "Chỉnh sửa tin tuyển dụng",
+      "submit": "Lưu thay đổi"
+    },
+    "addModal": {
+      "title": "Thêm tin tuyển dụng mới",
+      "submit": "Tạo việc làm"
+    },
+    "delete": {
+      "aria": "Xác nhận xóa tin tuyển dụng",
+      "title": "Xóa tin tuyển dụng",
+      "confirm": "Xóa việc làm",
+      "message": "Bạn có chắc muốn xóa vĩnh viễn việc làm \"{{title}}\" của {{company}}? Hành động này không thể hoàn tác và sẽ xóa mọi đơn ứng tuyển đã nộp cho việc làm này."
+    }
+  },
+  "users": {
+    "title": "Quản lý người dùng",
+    "subtitle": "Quản lý tài khoản, vai trò và quyền hạn trên nền tảng, có phân trang trực tiếp từ cơ sở dữ liệu.",
+    "searchPlaceholder": "Tìm theo tên, email hoặc địa điểm...",
+    "filterRoleAria": "Lọc người dùng theo vai trò",
+    "filterStatusAria": "Lọc người dùng theo trạng thái",
+    "allRoles": "Tất cả vai trò",
+    "allStatuses": "Tất cả trạng thái",
+    "loading": "Đang tải danh sách người dùng...",
+    "loadFailedTitle": "Không thể tải danh sách người dùng",
+    "emptyTitle": "Không tìm thấy người dùng nào",
+    "emptyFiltered": "Không có tài khoản nào khớp với bộ lọc của bạn.",
+    "emptyNone": "Hệ thống chưa có người dùng đã đăng ký.",
+    "noun": "người dùng",
+    "never": "Chưa từng",
+    "status": {
+      "active": "Đang hoạt động",
+      "inactive": "Không hoạt động",
+      "blocked": "Đã khóa"
+    },
+    "th": {
+      "user": "Người dùng",
+      "role": "Vai trò",
+      "status": "Trạng thái",
+      "joined": "Ngày tham gia",
+      "lastLogin": "Đăng nhập gần nhất",
+      "actions": "Thao tác"
+    },
+    "actions": {
+      "viewAria": "Xem chi tiết {{name}}",
+      "changeRoleAria": "Đổi vai trò của {{name}}",
+      "changeStatusAria": "Đổi trạng thái tài khoản của {{name}}",
+      "deleteAria": "Xóa người dùng {{name}}"
+    },
+    "toast": {
+      "roleUpdated": "Đã đổi vai trò của {{name}} thành {{role}}",
+      "statusUpdated": "Đã đổi trạng thái của {{name}} thành {{status}}",
+      "deleted": "Đã xóa tài khoản {{name}} ({{email}})"
+    },
+    "errors": {
+      "loadDb": "Không thể tải người dùng từ cơ sở dữ liệu",
+      "role": "Không thể cập nhật vai trò người dùng",
+      "status": "Không thể cập nhật trạng thái người dùng",
+      "delete": "Không thể xóa tài khoản người dùng"
+    },
+    "details": {
+      "aria": "Chi tiết người dùng",
+      "subtitle": "Mã người dùng #{{id}}",
+      "loading": "Đang tải hồ sơ và hoạt động...",
+      "email": "Địa chỉ email",
+      "phone": "Số điện thoại",
+      "location": "Địa điểm",
+      "memberSince": "Tham gia từ",
+      "role": "Vai trò tài khoản",
+      "status": "Trạng thái tài khoản",
+      "bio": "Giới thiệu",
+      "companyProfile": "Hồ sơ công ty",
+      "companyName": "Tên công ty",
+      "industry": "Lĩnh vực",
+      "companySize": "Quy mô công ty",
+      "website": "Website",
+      "skills": "Kỹ năng",
+      "noSkills": "Hồ sơ này chưa liệt kê kỹ năng nào.",
+      "applicationHistory": "Lịch sử ứng tuyển",
+      "noApplications": "Người dùng này chưa có đơn ứng tuyển nào.",
+      "jobFallback": "Việc làm #{{id}}"
+    },
+    "roleModal": {
+      "aria": "Cập nhật vai trò người dùng",
+      "title": "Cập nhật vai trò người dùng",
+      "intro": "Chọn vai trò mới cho {{name}} ({{email}}).",
+      "label": "Vai trò được gán",
+      "adminWarning": "Quản trị viên có toàn quyền với mọi dữ liệu, việc làm và quản lý người dùng.",
+      "confirm": "Xác nhận đổi vai trò"
+    },
+    "statusModal": {
+      "aria": "Cập nhật trạng thái tài khoản",
+      "title": "Cập nhật trạng thái tài khoản",
+      "intro": "Chọn trạng thái tài khoản cho {{name}}.",
+      "label": "Trạng thái tài khoản",
+      "options": {
+        "active": "Đang hoạt động (truy cập bình thường)",
+        "inactive": "Không hoạt động (hạn chế truy cập)",
+        "blocked": "Đã khóa (tạm ngưng tài khoản)"
+      },
+      "blockedWarning": "Người dùng bị khóa không thể đăng nhập, nộp đơn hoặc đăng tin.",
+      "confirm": "Xác nhận trạng thái"
+    },
+    "delete": {
+      "aria": "Xác nhận xóa tài khoản người dùng",
+      "title": "Xóa tài khoản người dùng",
+      "confirm": "Xóa tài khoản",
+      "message": "Bạn có chắc muốn xóa vĩnh viễn {{name}} ({{email}})? Hành động này không thể hoàn tác và sẽ xóa mọi dữ liệu liên quan trên nền tảng."
+    }
+  },
+  "applications": {
+    "title": "Kiểm duyệt & theo dõi đơn ứng tuyển",
+    "subtitle": "Xem đơn ứng tuyển của ứng viên trên mọi việc làm, cập nhật trạng thái, kiểm tra hồ sơ và quản lý các đơn đã nộp.",
+    "searchPlaceholder": "Tìm theo tên hoặc email ứng viên...",
+    "filterStatusAria": "Lọc đơn ứng tuyển theo trạng thái",
+    "filterJobAria": "Lọc đơn ứng tuyển theo việc làm",
+    "allStatuses": "Tất cả trạng thái",
+    "allJobs": "Tất cả việc làm",
+    "loading": "Đang tải danh sách đơn ứng tuyển...",
+    "loadFailedTitle": "Không thể tải danh sách đơn ứng tuyển",
+    "emptyTitle": "Không tìm thấy đơn ứng tuyển nào",
+    "emptyFiltered": "Không có đơn ứng tuyển nào khớp với bộ lọc của bạn.",
+    "emptyNone": "Chưa có đơn ứng tuyển nào được nộp.",
+    "noun": "đơn ứng tuyển",
+    "jobFallback": "Việc làm #{{id}}",
+    "unknownCompany": "Công ty không rõ",
+    "download": "Tải xuống",
+    "noResume": "Không có CV",
+    "th": {
+      "applicant": "Ứng viên",
+      "jobCompany": "Việc làm & công ty",
+      "applied": "Ngày nộp",
+      "status": "Trạng thái",
+      "resume": "CV",
+      "actions": "Thao tác"
+    },
+    "actions": {
+      "viewAria": "Xem chi tiết đơn của {{name}}",
+      "changeStatusAria": "Đổi trạng thái đơn của {{name}}",
+      "deleteAria": "Xóa đơn ứng tuyển của {{name}}"
+    },
+    "toast": {
+      "statusUpdated": "Đã đổi trạng thái đơn của {{name}} thành \"{{status}}\"",
+      "resumeDownloaded": "Đã tải CV của {{name}}",
+      "deleted": "Đã xóa đơn ứng tuyển của {{name}}"
+    },
+    "errors": {
+      "load": "Không thể tải đơn ứng tuyển",
+      "update": "Không thể cập nhật trạng thái đơn",
+      "noResume": "Đơn ứng tuyển này không có tệp CV đính kèm.",
+      "download": "Không thể tải CV của ứng viên.",
+      "delete": "Không thể xóa đơn ứng tuyển"
+    },
+    "details": {
+      "aria": "Chi tiết đơn ứng tuyển",
+      "subtitle": "Đơn #{{id}} • Nộp ngày {{date}}",
+      "applicantInfo": "Thông tin ứng viên",
+      "fullName": "Họ và tên",
+      "email": "Địa chỉ email",
+      "phone": "Số điện thoại",
+      "expectedSalary": "Mức lương mong muốn",
+      "availability": "Thời gian có thể bắt đầu",
+      "immediate": "Ngay lập tức",
+      "targetJob": "Việc làm ứng tuyển",
+      "jobTitle": "Chức danh",
+      "jobIdFallback": "Mã việc làm #{{id}}",
+      "company": "Công ty",
+      "location": "Địa điểm",
+      "currentStatus": "Trạng thái hiện tại",
+      "skills": "Kỹ năng",
+      "noSkills": "Chưa nêu kỹ năng",
+      "coverLetter": "Thư xin việc",
+      "experience": "Tóm tắt kinh nghiệm",
+      "education": "Học vấn",
+      "notes": "Ghi chú nội bộ của người duyệt",
+      "resume": "CV của ứng viên",
+      "downloadFile": "Tải tệp gốc",
+      "noResumeFile": "Đơn ứng tuyển này không đính kèm tệp CV.",
+      "changeStatus": "Đổi trạng thái"
+    },
+    "statusModal": {
+      "aria": "Cập nhật trạng thái đơn ứng tuyển",
+      "title": "Cập nhật trạng thái đơn ứng tuyển",
+      "intro": "Chọn trạng thái trong quy trình tuyển dụng cho ứng viên {{name}}.",
+      "pipelineStatus": "Trạng thái quy trình",
+      "notes": "Ghi chú của người duyệt (không bắt buộc)",
+      "notesPlaceholder": "Thêm nhận xét hoặc ghi chú đánh giá nội bộ...",
+      "confirm": "Xác nhận trạng thái"
+    },
+    "delete": {
+      "aria": "Xác nhận xóa đơn ứng tuyển",
+      "title": "Xóa đơn ứng tuyển",
+      "confirm": "Xóa đơn ứng tuyển",
+      "thisJob": "việc làm này",
+      "message": "Bạn có chắc muốn xóa đơn ứng tuyển của {{name}} cho {{job}}? Hành động này không thể hoàn tác."
+    }
+  },
+  "addJob": {
+    "title": "Thêm việc làm mới",
+    "subtitle": "Tạo tin tuyển dụng mới cho công ty",
+    "back": "Quay lại danh sách việc làm",
+    "sections": {
+      "basic": "Thông tin cơ bản",
+      "details": "Chi tiết công việc",
+      "application": "Thông tin ứng tuyển"
+    },
+    "fields": {
+      "title": "Chức danh",
+      "company": "Công ty",
+      "location": "Địa điểm",
+      "type": "Hình thức làm việc",
+      "salary": "Mức lương",
+      "experience": "Cấp độ kinh nghiệm",
+      "description": "Mô tả công việc",
+      "responsibilities": "Trách nhiệm",
+      "requirements": "Yêu cầu",
+      "education": "Học vấn",
+      "skills": "Kỹ năng",
+      "benefits": "Quyền lợi",
+      "applicationDeadline": "Hạn nộp hồ sơ",
+      "contactEmail": "Email liên hệ",
+      "contactPhone": "Số điện thoại liên hệ"
+    },
+    "placeholders": {
+      "title": "VD: Lập trình viên React cao cấp",
+      "company": "VD: Công ty Công nghệ ABC",
+      "location": "VD: Hà Nội, TP. Hồ Chí Minh hoặc Làm từ xa",
+      "salary": "VD: 25 - 40 triệu VND",
+      "description": "Mô tả chi tiết vị trí tuyển dụng...",
+      "responsibilities": "Liệt kê các trách nhiệm chính của vị trí...",
+      "requirements": "Liệt kê kỹ năng, bằng cấp và kinh nghiệm yêu cầu...",
+      "education": "VD: Cử nhân Công nghệ thông tin",
+      "skills": "VD: React, JavaScript, Node.js",
+      "benefits": "Liệt kê các quyền lợi và chế độ đãi ngộ...",
+      "contactEmail": "hr@congty.vn",
+      "contactPhone": "0901 234 567"
+    },
+    "errors": {
+      "title": "Vui lòng nhập chức danh",
+      "company": "Vui lòng nhập tên công ty",
+      "location": "Vui lòng nhập địa điểm",
+      "description": "Vui lòng nhập mô tả công việc",
+      "requirements": "Vui lòng nhập yêu cầu công việc",
+      "responsibilities": "Vui lòng nhập trách nhiệm công việc"
+    },
+    "saveDraft": "Lưu bản nháp",
+    "create": "Tạo việc làm",
+    "publish": "Đăng việc làm",
+    "alerts": {
+      "created": "Đã tạo việc làm thành công!",
+      "postError": "Lỗi khi đăng việc làm: {{error}}",
+      "draftSaved": "Đã lưu bản nháp thành công!",
+      "draftError": "Lỗi khi lưu bản nháp: {{error}}",
+      "published": "Đã đăng việc làm thành công!",
+      "publishError": "Lỗi khi đăng việc làm: {{error}}"
+    }
+  }
+}

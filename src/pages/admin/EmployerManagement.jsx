@@ -19,8 +19,38 @@ import {
 } from "react-icons/fi";
 import userApi from "../../services/userApi";
 import jobApi from "../../services/jobApi";
+import { Trans, useTranslation } from "react-i18next";
+import { Badge, Button, PageHeader } from "../../components/ui";
+import { useEnumLabel, useLocale } from "../../i18n/helpers";
+
+const STATUS_TONES = { active: "success", inactive: "warning", blocked: "danger" };
+const PLAN_TONES = { enterprise: "warning", premium: "primary", basic: "info" };
+const JOB_STATUS_TONES = { active: "success", closed: "neutral" };
+
+// Badges: API values (active, free, ...) stay as-is, only the label is translated.
+const UserStatusBadge = ({ status }) => {
+  const { t } = useTranslation("adminOps");
+  return (
+    <Badge tone={STATUS_TONES[status] || "neutral"} size="sm">
+      {t(`userStatus.${status}`, { defaultValue: String(status ?? "") })}
+    </Badge>
+  );
+};
+
+const PlanBadge = ({ plan }) => {
+  const { t } = useTranslation("adminOps");
+  const key = String(plan).toLowerCase();
+  return (
+    <Badge tone={PLAN_TONES[key] || "neutral"} size="sm">
+      {t(`employers.plan.${key}`, { defaultValue: String(plan) })}
+    </Badge>
+  );
+};
 
 const EmployerManagement = () => {
+  const { t } = useTranslation("adminOps");
+  const enumLabel = useEnumLabel();
+  const locale = useLocale();
   // Query state
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
@@ -121,12 +151,12 @@ const EmployerManagement = () => {
         }
       } catch (err) {
         console.error("Error loading employers:", err);
-        setError(err.response?.data?.error || err.message || "Failed to load employers from database");
+        setError(err.response?.data?.error || err.message || t("employers.errors.load"));
       } finally {
         setLoading(false);
       }
     },
-    [page, searchTerm, statusFilter]
+    [page, searchTerm, statusFilter, t]
   );
 
   // Debounced search / filter trigger
@@ -154,31 +184,7 @@ const EmployerManagement = () => {
     setPage(1);
   };
 
-  const getStatusBadgeClasses = (status) => {
-    switch (status) {
-      case "active":
-        return "bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300";
-      case "inactive":
-        return "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/40 dark:text-yellow-300";
-      case "blocked":
-        return "bg-red-100 text-red-800 dark:bg-red-900/40 dark:text-red-300";
-      default:
-        return "bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300";
-    }
-  };
-
-  const getPlanBadgeClasses = (plan) => {
-    switch (plan?.toLowerCase()) {
-      case "enterprise":
-        return "bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-300";
-      case "premium":
-        return "bg-purple-100 text-purple-800 dark:bg-purple-900/40 dark:text-purple-300";
-      case "basic":
-        return "bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300";
-      default:
-        return "bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300";
-    }
-  };
+  // Status / plan badges live at module level (UserStatusBadge, PlanBadge).
 
   // View employer full details
   const handleViewEmployer = async (employer) => {
@@ -223,13 +229,19 @@ const EmployerManagement = () => {
     setActionLoading(true);
     try {
       await userApi.updateUserStatus(selectedEmployer.id, newStatus);
-      showFeedback("success", `Account status for ${selectedEmployer.name} updated to ${newStatus}`);
+      showFeedback(
+        "success",
+        t("employers.feedback.statusUpdated", {
+          name: selectedEmployer.name,
+          status: t(`userStatus.${newStatus}`, { defaultValue: newStatus }),
+        })
+      );
       setShowStatusModal(false);
       setSelectedEmployer(null);
       loadEmployers();
     } catch (err) {
       console.error("Error updating employer status:", err);
-      showFeedback("error", err.response?.data?.error || "Failed to update employer status");
+      showFeedback("error", err.response?.data?.error || t("employers.errors.updateStatus"));
     } finally {
       setActionLoading(false);
     }
@@ -246,13 +258,13 @@ const EmployerManagement = () => {
     setActionLoading(true);
     try {
       await userApi.deleteUser(selectedEmployer.id);
-      showFeedback("success", `Employer account ${selectedEmployer.name} was successfully deleted`);
+      showFeedback("success", t("employers.feedback.deleted", { name: selectedEmployer.name }));
       setShowDeleteModal(false);
       setSelectedEmployer(null);
       loadEmployers();
     } catch (err) {
       console.error("Error deleting employer:", err);
-      showFeedback("error", err.response?.data?.error || "Failed to delete employer account");
+      showFeedback("error", err.response?.data?.error || t("employers.errors.delete"));
     } finally {
       setActionLoading(false);
     }
@@ -265,24 +277,21 @@ const EmployerManagement = () => {
   return (
     <div className="space-y-5">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div>
-          <h1 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">
-            Employer Management
-          </h1>
-          <p className="text-gray-600 dark:text-gray-400 mt-1 text-sm">
-            Manage registered employers, company profiles, job counts, and subscription statuses.
-          </p>
-        </div>
-        <button
-          onClick={() => loadEmployers()}
-          disabled={loading}
-          className="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700  transition-colors"
-        >
-          <FiRefreshCw className={`w-4 h-4 mr-2 ${loading ? "animate-spin" : ""}`} />
-          Refresh
-        </button>
-      </div>
+      <PageHeader
+        title={t("employers.title")}
+        subtitle={t("employers.subtitle")}
+        actions={
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => loadEmployers()}
+            disabled={loading}
+            leftIcon={<FiRefreshCw className={`w-4 h-4 ${loading ? "animate-spin" : ""}`} />}
+          >
+            {t("common:actions.refresh")}
+          </Button>
+        }
+      />
 
       {/* Notification Banner */}
       {notification && (
@@ -290,8 +299,8 @@ const EmployerManagement = () => {
           role="alert"
           className={`flex items-center justify-between p-4 rounded-lg  text-sm border ${
             notification.type === "success"
-              ? "bg-green-50 text-green-800 border-green-200 dark:bg-green-900/30 dark:text-green-300 dark:border-green-800"
-              : "bg-red-50 text-red-800 border-red-200 dark:bg-red-900/30 dark:text-red-300 dark:border-red-800"
+              ? "bg-success/10 text-success border-success/30"
+              : "bg-danger/10 text-danger border-danger/30"
           }`}
         >
           <div className="flex items-center gap-2">
@@ -304,8 +313,8 @@ const EmployerManagement = () => {
           </div>
           <button
             onClick={() => setNotification(null)}
-            className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
-            aria-label="Dismiss alert"
+            className="text-muted hover:text-ink"
+            aria-label={t("employers.dismiss")}
           >
             <FiX className="w-4 h-4" />
           </button>
@@ -313,17 +322,18 @@ const EmployerManagement = () => {
       )}
 
       {/* Search and Filters */}
-      <div className="bg-white dark:bg-gray-800 rounded-lg  border border-slate-300 dark:border-gray-600 p-4">
+      <div className="bg-surface rounded-card shadow-card border border-tint-line p-4">
         <div className="flex flex-col md:flex-row gap-4">
           {/* Search Input */}
           <div className="flex-1 relative">
-            <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+            <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted w-4 h-4" />
             <input
               type="text"
-              placeholder="Search employers by name, company, or email..."
+              placeholder={t("employers.searchPlaceholder")}
+              aria-label={t("employers.searchPlaceholder")}
               value={searchTerm}
               onChange={handleSearchChange}
-              className="w-full pl-10 pr-10 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full pl-10 pr-10 py-2 text-sm border border-line rounded-lg bg-surface text-ink placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-primary-500"
             />
             {searchTerm && (
               <button
@@ -331,8 +341,8 @@ const EmployerManagement = () => {
                   setSearchTerm("");
                   setPage(1);
                 }}
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
-                aria-label="Clear search"
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted hover:text-ink"
+                aria-label={t("employers.clearSearch")}
               >
                 <FiX className="w-4 h-4" />
               </button>
@@ -344,148 +354,130 @@ const EmployerManagement = () => {
             <select
               value={statusFilter}
               onChange={handleStatusFilterChange}
-              aria-label="Filter employers by status"
-              className="w-full appearance-none bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-2 pr-8 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              aria-label={t("employers.statusFilterLabel")}
+              className="w-full appearance-none bg-surface border border-line rounded-lg px-4 py-2 pr-8 text-sm text-ink focus:outline-none focus:ring-2 focus:ring-primary-500"
             >
-              <option value="all">All Statuses</option>
-              <option value="active">Active</option>
-              <option value="inactive">Inactive</option>
-              <option value="blocked">Blocked</option>
+              <option value="all">{t("employers.allStatuses")}</option>
+              <option value="active">{t("userStatus.active")}</option>
+              <option value="inactive">{t("userStatus.inactive")}</option>
+              <option value="blocked">{t("userStatus.blocked")}</option>
             </select>
-            <FiChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none w-4 h-4" />
+            <FiChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted pointer-events-none w-4 h-4" />
           </div>
         </div>
       </div>
 
       {/* Employers Table */}
-      <div className="bg-white dark:bg-gray-800 rounded-lg  border border-slate-300 dark:border-gray-600 overflow-hidden">
+      <div className="bg-surface rounded-card shadow-card border border-tint-line overflow-hidden">
         {loading ? (
           <div className="p-12 text-center">
-            <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mb-3" />
-            <p className="text-sm text-slate-600 dark:text-gray-300">Loading employers from database...</p>
+            <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600 mb-3" />
+            <p className="text-sm text-muted">{t("employers.loading")}</p>
           </div>
         ) : error ? (
           <div className="p-12 text-center">
-            <FiAlertCircle className="w-10 h-10 text-red-500 mx-auto mb-3" />
-            <p className="text-base font-semibold text-gray-900 dark:text-white">Unable to load employers</p>
-            <p className="text-sm text-red-600 dark:text-red-400 mt-1 mb-4">{error}</p>
-            <button
-              onClick={() => loadEmployers()}
-              className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700"
-            >
-              Try Again
-            </button>
+            <FiAlertCircle className="w-10 h-10 text-danger mx-auto mb-3" />
+            <p className="text-base font-semibold text-ink">{t("employers.loadErrorTitle")}</p>
+            <p className="text-sm text-danger mt-1 mb-4">{error}</p>
+            <Button size="sm" onClick={() => loadEmployers()}>
+              {t("common:states.retry")}
+            </Button>
           </div>
         ) : employers.length === 0 ? (
           <div className="p-12 text-center">
-            <FiBriefcase className="w-12 h-12 text-gray-400 mx-auto mb-3" />
-            <p className="text-base font-medium text-gray-900 dark:text-white">No employers found</p>
-            <p className="text-sm text-slate-600 dark:text-gray-300 mt-1 mb-4">
+            <FiBriefcase className="w-12 h-12 text-muted mx-auto mb-3" />
+            <p className="text-base font-medium text-ink">{t("employers.emptyTitle")}</p>
+            <p className="text-sm text-muted mt-1 mb-4">
               {searchTerm || statusFilter !== "all"
-                ? "No employer accounts match your search or filter."
-                : "No registered employer accounts found."}
+                ? t("employers.emptyFiltered")
+                : t("employers.emptyAll")}
             </p>
             {(searchTerm || statusFilter !== "all") && (
-              <button
-                onClick={handleClearFilters}
-                className="px-4 py-2 text-sm font-medium text-blue-600 dark:text-blue-400 border border-blue-600 dark:border-blue-400 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20"
-              >
-                Clear Filters
-              </button>
+              <Button variant="outline" size="sm" onClick={handleClearFilters}>
+                {t("common:actions.clearFilters")}
+              </Button>
             )}
           </div>
         ) : (
           <>
             <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                <thead className="bg-gray-50 dark:bg-gray-700/50">
+              <table className="min-w-full divide-y divide-line">
+                <thead className="bg-tint">
                   <tr>
-                    <th className="px-6 py-3 text-left text-xs font-semibold text-slate-600 dark:text-gray-300 uppercase tracking-wider">
-                      Employer
+                    <th className="px-6 py-3 text-left text-xs font-semibold text-muted uppercase tracking-wider">
+                      {t("employers.table.employer")}
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-semibold text-slate-600 dark:text-gray-300 uppercase tracking-wider">
-                      Company
+                    <th className="px-6 py-3 text-left text-xs font-semibold text-muted uppercase tracking-wider">
+                      {t("employers.table.company")}
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-semibold text-slate-600 dark:text-gray-300 uppercase tracking-wider">
-                      Status
+                    <th className="px-6 py-3 text-left text-xs font-semibold text-muted uppercase tracking-wider">
+                      {t("employers.table.status")}
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-semibold text-slate-600 dark:text-gray-300 uppercase tracking-wider">
-                      Jobs Posted
+                    <th className="px-6 py-3 text-left text-xs font-semibold text-muted uppercase tracking-wider">
+                      {t("employers.table.jobsPosted")}
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-semibold text-slate-600 dark:text-gray-300 uppercase tracking-wider">
-                      Plan
+                    <th className="px-6 py-3 text-left text-xs font-semibold text-muted uppercase tracking-wider">
+                      {t("employers.table.plan")}
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-semibold text-slate-600 dark:text-gray-300 uppercase tracking-wider">
-                      Joined
+                    <th className="px-6 py-3 text-left text-xs font-semibold text-muted uppercase tracking-wider">
+                      {t("employers.table.joined")}
                     </th>
-                    <th className="px-6 py-3 text-right text-xs font-semibold text-slate-600 dark:text-gray-300 uppercase tracking-wider">
-                      Actions
+                    <th className="px-6 py-3 text-right text-xs font-semibold text-muted uppercase tracking-wider">
+                      {t("employers.table.actions")}
                     </th>
                   </tr>
                 </thead>
-                <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                <tbody className="bg-surface divide-y divide-line">
                   {employers.map((employer) => {
                     const parsedDetails = safeParseJSON(employer.employerDetails);
                     const companyName =
-                      parsedDetails.company || employer.company || "Not specified";
+                      parsedDetails.company || employer.company || t("employers.notSpecified");
                     const jobsCount = employerJobCounts[employer.id] ?? "...";
                     const plan = employer.subscriptionPlan || "free";
 
                     return (
                       <tr
                         key={employer.id}
-                        className="hover:bg-gray-50 dark:hover:bg-gray-700/40 transition-colors"
+                        className="hover:bg-tint transition-colors"
                       >
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="flex items-center">
-                            <div className="h-10 w-10 flex-shrink-0 rounded-full bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-300 flex items-center justify-center font-bold text-sm">
+                            <div className="h-10 w-10 flex-shrink-0 rounded-full bg-primary-50 dark:bg-primary-900/40 text-primary-text flex items-center justify-center font-bold text-sm">
                               {employer.name ? employer.name.charAt(0).toUpperCase() : "E"}
                             </div>
                             <div className="ml-4">
-                              <div className="text-sm font-medium text-gray-900 dark:text-white">
+                              <div className="text-sm font-medium text-ink">
                                 {employer.name}
                               </div>
-                              <div className="text-sm text-slate-600 dark:text-gray-300 flex items-center gap-1">
+                              <div className="text-sm text-muted flex items-center gap-1">
                                 <FiMail className="w-3.5 h-3.5" />
                                 <span>{employer.email}</span>
                               </div>
                             </div>
                           </div>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white font-medium">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-ink font-medium">
                           {companyName}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <span
-                            className={`inline-flex px-2.5 py-0.5 text-xs font-medium rounded-full capitalize ${getStatusBadgeClasses(
-                              employer.status
-                            )}`}
-                          >
-                            {employer.status}
-                          </span>
+                          <UserStatusBadge status={employer.status} />
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-gray-300">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-ink">
                           <div className="flex items-center gap-1.5">
-                            <FiBriefcase className="w-3.5 h-3.5 text-gray-400" />
+                            <FiBriefcase className="w-3.5 h-3.5 text-muted" />
                             <span>{jobsCount}</span>
                           </div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <span
-                            className={`inline-flex px-2.5 py-0.5 text-xs font-medium rounded-full capitalize ${getPlanBadgeClasses(
-                              plan
-                            )}`}
-                          >
-                            {plan}
-                          </span>
+                          <PlanBadge plan={plan} />
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-600 dark:text-gray-300">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-muted">
                           <div className="flex items-center gap-1.5">
-                            <FiCalendar className="w-3.5 h-3.5 text-gray-400" />
+                            <FiCalendar className="w-3.5 h-3.5 text-muted" />
                             <span>
                               {employer.createdAt
-                                ? new Date(employer.createdAt).toLocaleDateString()
-                                : "Unknown"}
+                                ? new Date(employer.createdAt).toLocaleDateString(locale)
+                                : t("employers.unknown")}
                             </span>
                           </div>
                         </td>
@@ -493,25 +485,25 @@ const EmployerManagement = () => {
                           <div className="flex items-center justify-end space-x-2">
                             <button
                               onClick={() => handleViewEmployer(employer)}
-                              className="p-1.5 text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300 rounded hover:bg-blue-50 dark:hover:bg-blue-900/30"
-                              title="View Employer Profile & Jobs"
-                              aria-label={`View details for ${employer.name}`}
+                              className="p-1.5 text-primary-text rounded hover:bg-tint"
+                              title={t("employers.table.viewTitle")}
+                              aria-label={t("employers.table.viewAria", { name: employer.name })}
                             >
                               <FiEye className="w-4 h-4" />
                             </button>
                             <button
                               onClick={() => openStatusModal(employer)}
-                              className="p-1.5 text-yellow-600 hover:text-yellow-900 dark:text-yellow-400 dark:hover:text-yellow-300 rounded hover:bg-yellow-50 dark:hover:bg-yellow-900/30"
-                              title="Change Account Status"
-                              aria-label={`Change status for ${employer.name}`}
+                              className="p-1.5 text-warning rounded hover:bg-warning/10"
+                              title={t("employers.table.statusTitle")}
+                              aria-label={t("employers.table.statusAria", { name: employer.name })}
                             >
                               <FiEdit2 className="w-4 h-4" />
                             </button>
                             <button
                               onClick={() => openDeleteModal(employer)}
-                              className="p-1.5 text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300 rounded hover:bg-red-50 dark:hover:bg-red-900/30"
-                              title="Delete Employer Account"
-                              aria-label={`Delete employer ${employer.name}`}
+                              className="p-1.5 text-danger rounded hover:bg-danger/10"
+                              title={t("employers.table.deleteTitle")}
+                              aria-label={t("employers.table.deleteAria", { name: employer.name })}
                             >
                               <FiTrash2 className="w-4 h-4" />
                             </button>
@@ -525,40 +517,35 @@ const EmployerManagement = () => {
             </div>
 
             {/* Pagination Controls */}
-            <div className="px-6 py-4 bg-gray-50 dark:bg-gray-700/50 border-t border-slate-300 dark:border-gray-600 flex flex-col sm:flex-row items-center justify-between gap-4">
-              <div className="text-sm text-gray-700 dark:text-gray-300">
-                Showing{" "}
-                <span className="font-semibold text-gray-900 dark:text-white">
-                  {(pagination.currentPage - 1) * limit + 1}
-                </span>{" "}
-                to{" "}
-                <span className="font-semibold text-gray-900 dark:text-white">
-                  {Math.min(pagination.currentPage * limit, pagination.totalUsers)}
-                </span>{" "}
-                of{" "}
-                <span className="font-semibold text-gray-900 dark:text-white">
-                  {pagination.totalUsers}
-                </span>{" "}
-                employers
+            <div className="px-6 py-4 bg-tint border-t border-line flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div className="text-sm text-ink">
+                {t("employers.pagination.showing", {
+                  from: (pagination.currentPage - 1) * limit + 1,
+                  to: Math.min(pagination.currentPage * limit, pagination.totalUsers),
+                  total: pagination.totalUsers,
+                })}
               </div>
 
               <div className="inline-flex items-center gap-2">
                 <button
                   onClick={() => setPage((p) => Math.max(1, p - 1))}
                   disabled={!pagination.hasPrev || pagination.currentPage <= 1 || loading}
-                  className="px-3 py-1.5 text-sm font-medium rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-40 disabled:cursor-not-allowed"
+                  className="px-3 py-1.5 text-sm font-medium rounded-md border border-line bg-surface text-ink hover:bg-tint disabled:opacity-40 disabled:cursor-not-allowed"
                 >
-                  Previous
+                  {t("employers.pagination.previous")}
                 </button>
-                <span className="text-sm text-gray-600 dark:text-gray-300 px-2">
-                  Page {pagination.currentPage} of {Math.max(1, pagination.totalPages)}
+                <span className="text-sm text-muted px-2">
+                  {t("employers.pagination.pageOf", {
+                    page: pagination.currentPage,
+                    total: Math.max(1, pagination.totalPages),
+                  })}
                 </span>
                 <button
                   onClick={() => setPage((p) => p + 1)}
                   disabled={!pagination.hasNext || pagination.currentPage >= pagination.totalPages || loading}
-                  className="px-3 py-1.5 text-sm font-medium rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-40 disabled:cursor-not-allowed"
+                  className="px-3 py-1.5 text-sm font-medium rounded-md border border-line bg-surface text-ink hover:bg-tint disabled:opacity-40 disabled:cursor-not-allowed"
                 >
-                  Next
+                  {t("employers.pagination.next")}
                 </button>
               </div>
             </div>
@@ -568,19 +555,19 @@ const EmployerManagement = () => {
 
       {/* Employer Details Modal */}
       {showDetailsModal && selectedEmployer && (
-        <div className="fixed inset-0 z-50 overflow-y-auto bg-black/60 flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-label="Employer details">
-          <div className="relative bg-white dark:bg-gray-800 rounded-xl max-w-3xl w-full p-6 shadow-xl border border-slate-300 dark:border-gray-600">
-            <div className="flex items-center justify-between pb-4 border-b border-slate-300 dark:border-gray-600">
+        <div className="fixed inset-0 z-50 overflow-y-auto bg-black/60 flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-label={t("employers.details.ariaLabel")}>
+          <div className="relative bg-surface rounded-xl max-w-3xl w-full p-6 shadow-xl border border-line">
+            <div className="flex items-center justify-between pb-4 border-b border-line">
               <div className="flex items-center gap-3">
-                <div className="h-10 w-10 rounded-full bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-300 flex items-center justify-center font-bold">
+                <div className="h-10 w-10 rounded-full bg-primary-50 dark:bg-primary-900/40 text-primary-text flex items-center justify-center font-bold">
                   {selectedEmployer.name?.charAt(0).toUpperCase()}
                 </div>
                 <div>
-                  <h3 className="text-lg font-bold text-gray-900 dark:text-white">
+                  <h3 className="text-lg font-bold text-ink">
                     {parsedModalCompany.company || selectedEmployer.company || selectedEmployer.name}
                   </h3>
-                  <p className="text-xs text-slate-600 dark:text-gray-300">
-                    Employer Account #{selectedEmployer.id} • {selectedEmployer.email}
+                  <p className="text-xs text-muted">
+                    {t("employers.details.account", { id: selectedEmployer.id, email: selectedEmployer.email })}
                   </p>
                 </div>
               </div>
@@ -590,8 +577,8 @@ const EmployerManagement = () => {
                   setEmployerDetails(null);
                   setEmployerJobs([]);
                 }}
-                className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
-                aria-label="Close dialog"
+                className="text-muted hover:text-ink"
+                aria-label={t("employers.details.close")}
               >
                 <FiX className="w-5 h-5" />
               </button>
@@ -599,40 +586,40 @@ const EmployerManagement = () => {
 
             {detailsLoading ? (
               <div className="py-12 text-center">
-                <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mb-2" />
-                <p className="text-sm text-slate-600 dark:text-gray-300">Loading company profile & jobs...</p>
+                <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600 mb-2" />
+                <p className="text-sm text-muted">{t("employers.details.loading")}</p>
               </div>
             ) : (
               <div className="mt-4 space-y-6 max-h-[70vh] overflow-y-auto pr-1">
                 {/* Company & Account Info Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {/* Company Info Box */}
-                  <div className="bg-gray-50 dark:bg-gray-700/30 p-4 rounded-lg space-y-3 border border-slate-300 dark:border-gray-600">
-                    <h4 className="text-xs font-semibold text-slate-600 dark:text-gray-300 uppercase tracking-wider flex items-center gap-1.5">
-                      <FiBriefcase className="w-4 h-4 text-blue-600 dark:text-blue-400" />
-                      Company Details
+                  <div className="bg-tint p-4 rounded-lg space-y-3 border border-line">
+                    <h4 className="text-xs font-semibold text-muted uppercase tracking-wider flex items-center gap-1.5">
+                      <FiBriefcase className="w-4 h-4 text-primary-text" />
+                      {t("employers.details.companyDetails")}
                     </h4>
                     <div>
-                      <span className="text-xs text-slate-600 dark:text-gray-300">Company Name</span>
-                      <p className="text-sm font-semibold text-gray-900 dark:text-white">
-                        {parsedModalCompany.company || selectedEmployer.company || "Not specified"}
+                      <span className="text-xs text-muted">{t("employers.details.companyName")}</span>
+                      <p className="text-sm font-semibold text-ink">
+                        {parsedModalCompany.company || selectedEmployer.company || t("employers.notSpecified")}
                       </p>
                     </div>
                     <div>
-                      <span className="text-xs text-slate-600 dark:text-gray-300">Industry</span>
-                      <p className="text-sm text-gray-800 dark:text-gray-200">
-                        {parsedModalCompany.industry || "Not specified"}
+                      <span className="text-xs text-muted">{t("employers.details.industry")}</span>
+                      <p className="text-sm text-ink">
+                        {parsedModalCompany.industry || t("employers.notSpecified")}
                       </p>
                     </div>
                     <div>
-                      <span className="text-xs text-slate-600 dark:text-gray-300">Company Size</span>
-                      <p className="text-sm text-gray-800 dark:text-gray-200">
-                        {parsedModalCompany.companySize || "Not specified"}
+                      <span className="text-xs text-muted">{t("employers.details.companySize")}</span>
+                      <p className="text-sm text-ink">
+                        {parsedModalCompany.companySize || t("employers.notSpecified")}
                       </p>
                     </div>
                     <div>
-                      <span className="text-xs text-slate-600 dark:text-gray-300">Website</span>
-                      <p className="text-sm text-blue-600 dark:text-blue-400">
+                      <span className="text-xs text-muted">{t("employers.details.website")}</span>
+                      <p className="text-sm text-primary-text">
                         {parsedModalCompany.website || selectedEmployer.website ? (
                           <a
                             href={parsedModalCompany.website || selectedEmployer.website}
@@ -644,61 +631,51 @@ const EmployerManagement = () => {
                             {parsedModalCompany.website || selectedEmployer.website}
                           </a>
                         ) : (
-                          "Not specified"
+                          t("employers.notSpecified")
                         )}
                       </p>
                     </div>
                   </div>
 
                   {/* Account & Subscription Box */}
-                  <div className="bg-gray-50 dark:bg-gray-700/30 p-4 rounded-lg space-y-3 border border-slate-300 dark:border-gray-600">
-                    <h4 className="text-xs font-semibold text-slate-600 dark:text-gray-300 uppercase tracking-wider flex items-center gap-1.5">
-                      <FiLayers className="w-4 h-4 text-purple-600 dark:text-purple-400" />
-                      Account & Subscription
+                  <div className="bg-tint p-4 rounded-lg space-y-3 border border-line">
+                    <h4 className="text-xs font-semibold text-muted uppercase tracking-wider flex items-center gap-1.5">
+                      <FiLayers className="w-4 h-4 text-warning" />
+                      {t("employers.details.accountSub")}
                     </h4>
                     <div>
-                      <span className="text-xs text-slate-600 dark:text-gray-300">Contact Person</span>
-                      <p className="text-sm font-medium text-gray-900 dark:text-white">
+                      <span className="text-xs text-muted">{t("employers.details.contact")}</span>
+                      <p className="text-sm font-medium text-ink">
                         {selectedEmployer.name}
                       </p>
                     </div>
                     <div>
-                      <span className="text-xs text-slate-600 dark:text-gray-300">Email & Phone</span>
-                      <p className="text-sm text-gray-800 dark:text-gray-200 flex items-center gap-1">
-                        <FiMail className="w-3 h-3 text-gray-400" /> {selectedEmployer.email}
+                      <span className="text-xs text-muted">{t("employers.details.emailPhone")}</span>
+                      <p className="text-sm text-ink flex items-center gap-1">
+                        <FiMail className="w-3 h-3 text-muted" /> {selectedEmployer.email}
                       </p>
                       {selectedEmployer.phone && (
-                        <p className="text-xs text-gray-600 dark:text-gray-400 flex items-center gap-1 mt-0.5">
-                          <FiPhone className="w-3 h-3 text-gray-400" /> {selectedEmployer.phone}
+                        <p className="text-xs text-muted flex items-center gap-1 mt-0.5">
+                          <FiPhone className="w-3 h-3 text-muted" /> {selectedEmployer.phone}
                         </p>
                       )}
                     </div>
                     <div>
-                      <span className="text-xs text-slate-600 dark:text-gray-300">Status</span>
+                      <span className="text-xs text-muted">{t("employers.details.status")}</span>
                       <div className="mt-0.5">
-                        <span
-                          className={`inline-flex px-2 py-0.5 text-xs font-semibold rounded-full capitalize ${getStatusBadgeClasses(
-                            selectedEmployer.status
-                          )}`}
-                        >
-                          {selectedEmployer.status}
-                        </span>
+                        <UserStatusBadge status={selectedEmployer.status} />
                       </div>
                     </div>
                     <div>
-                      <span className="text-xs text-slate-600 dark:text-gray-300">Subscription Plan</span>
+                      <span className="text-xs text-muted">{t("employers.details.plan")}</span>
                       <div className="mt-0.5 flex items-center gap-2">
-                        <span
-                          className={`inline-flex px-2 py-0.5 text-xs font-semibold rounded-full capitalize ${getPlanBadgeClasses(
-                            selectedEmployer.subscriptionPlan || "free"
-                          )}`}
-                        >
-                          {selectedEmployer.subscriptionPlan || "free"}
-                        </span>
-                        <span className="text-xs text-slate-600 dark:text-gray-300">
+                        <PlanBadge plan={selectedEmployer.subscriptionPlan || "free"} />
+                        <span className="text-xs text-muted">
                           {selectedEmployer.subscriptionExpires
-                            ? `Expires: ${new Date(selectedEmployer.subscriptionExpires).toLocaleDateString()}`
-                            : "No expiration"}
+                            ? t("employers.details.expires", {
+                                date: new Date(selectedEmployer.subscriptionExpires).toLocaleDateString(locale),
+                              })
+                            : t("employers.details.noExpiry")}
                         </span>
                       </div>
                     </div>
@@ -708,10 +685,10 @@ const EmployerManagement = () => {
                 {/* Company Bio / Description */}
                 {(employerDetails?.bio || selectedEmployer.bio) && (
                   <div>
-                    <h4 className="text-xs font-semibold text-slate-600 dark:text-gray-300 uppercase tracking-wider mb-1">
-                      Company Bio / Description
+                    <h4 className="text-xs font-semibold text-muted uppercase tracking-wider mb-1">
+                      {t("employers.details.bio")}
                     </h4>
-                    <p className="text-sm text-gray-800 dark:text-gray-200 bg-gray-50 dark:bg-gray-700/30 p-3 rounded-lg border border-slate-300 dark:border-gray-600">
+                    <p className="text-sm text-ink bg-tint p-3 rounded-lg border border-line">
                       {employerDetails?.bio || selectedEmployer.bio}
                     </p>
                   </div>
@@ -720,11 +697,13 @@ const EmployerManagement = () => {
                 {/* Job Postings History from real backend */}
                 <div>
                   <div className="flex items-center justify-between mb-2">
-                    <h4 className="text-xs font-semibold text-slate-600 dark:text-gray-300 uppercase tracking-wider">
-                      Recent Job Postings ({employerJobs.length})
+                    <h4 className="text-xs font-semibold text-muted uppercase tracking-wider">
+                      {t("employers.details.recentJobs", { n: employerJobs.length })}
                     </h4>
-                    <span className="text-xs text-slate-600 dark:text-gray-300">
-                      Total posted in database: {employerJobCounts[selectedEmployer.id] ?? employerJobs.length}
+                    <span className="text-xs text-muted">
+                      {t("employers.details.totalPosted", {
+                        n: employerJobCounts[selectedEmployer.id] ?? employerJobs.length,
+                      })}
                     </span>
                   </div>
 
@@ -733,37 +712,31 @@ const EmployerManagement = () => {
                       {employerJobs.map((job) => (
                         <div
                           key={job.id}
-                          className="flex items-center justify-between p-3 rounded-lg bg-gray-50 dark:bg-gray-700/40 border border-slate-300 dark:border-gray-600 text-sm"
+                          className="flex items-center justify-between p-3 rounded-lg bg-tint border border-line text-sm"
                         >
                           <div>
-                            <p className="font-semibold text-gray-900 dark:text-white">
+                            <p className="font-semibold text-ink">
                               {job.title}
                             </p>
-                            <p className="text-xs text-slate-600 dark:text-gray-300 flex items-center gap-2 mt-0.5">
+                            <p className="text-xs text-muted flex items-center gap-2 mt-0.5">
                               {job.location && (
                                 <span className="flex items-center gap-1">
                                   <FiMapPin className="w-3 h-3" />
                                   {job.location}
                                 </span>
                               )}
-                              <span>• {job.type || "Full-time"}</span>
+                              <span>• {enumLabel("jobType", job.type || "Full-time")}</span>
                             </p>
                           </div>
                           <div className="text-right">
-                            <span
-                              className={`inline-flex px-2 py-0.5 text-xs font-semibold rounded-full capitalize ${
-                                job.status === "active"
-                                  ? "bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300"
-                                  : job.status === "closed"
-                                  ? "bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300"
-                                  : "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/40 dark:text-yellow-300"
-                              }`}
-                            >
-                              {job.status}
-                            </span>
-                            <p className="text-[11px] text-gray-400 mt-0.5">
+                            <Badge tone={JOB_STATUS_TONES[job.status] || "warning"} size="sm">
+                              {t(`reports.jobs.status.${String(job.status).toLowerCase()}`, {
+                                defaultValue: enumLabel("jobStatus", job.status),
+                              })}
+                            </Badge>
+                            <p className="text-[11px] text-muted mt-0.5">
                               {job.createdAt
-                                ? new Date(job.createdAt).toLocaleDateString()
+                                ? new Date(job.createdAt).toLocaleDateString(locale)
                                 : ""}
                             </p>
                           </div>
@@ -771,25 +744,26 @@ const EmployerManagement = () => {
                       ))}
                     </div>
                   ) : (
-                    <p className="text-sm text-slate-600 dark:text-gray-300 italic bg-gray-50 dark:bg-gray-700/30 p-4 rounded-lg text-center">
-                      No jobs have been posted by this employer yet.
+                    <p className="text-sm text-muted italic bg-tint p-4 rounded-lg text-center">
+                      {t("employers.details.noJobs")}
                     </p>
                   )}
                 </div>
               </div>
             )}
 
-            <div className="mt-6 pt-4 border-t border-slate-300 dark:border-gray-600 flex justify-end">
-              <button
+            <div className="mt-6 pt-4 border-t border-line flex justify-end">
+              <Button
+                variant="outline"
+                size="sm"
                 onClick={() => {
                   setShowDetailsModal(false);
                   setEmployerDetails(null);
                   setEmployerJobs([]);
                 }}
-                className="px-4 py-2 text-sm font-medium rounded-lg text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
               >
-                Close
-              </button>
+                {t("employers.details.closeButton")}
+              </Button>
             </div>
           </div>
         </div>
@@ -797,56 +771,59 @@ const EmployerManagement = () => {
 
       {/* Status Change Modal */}
       {showStatusModal && selectedEmployer && (
-        <div className="fixed inset-0 z-50 overflow-y-auto bg-black/60 flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-label="Update employer status">
-          <div className="relative bg-white dark:bg-gray-800 rounded-xl max-w-md w-full p-6 shadow-xl border border-slate-300 dark:border-gray-600">
-            <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">
-              Update Employer Status
+        <div className="fixed inset-0 z-50 overflow-y-auto bg-black/60 flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-label={t("employers.statusModal.ariaLabel")}>
+          <div className="relative bg-surface rounded-xl max-w-md w-full p-6 shadow-xl border border-line">
+            <h3 className="text-lg font-bold text-ink mb-2">
+              {t("employers.statusModal.title")}
             </h3>
-            <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
-              Select an account status for employer{" "}
-              <strong className="text-gray-900 dark:text-white">{selectedEmployer.name}</strong>.
+            <p className="text-sm text-muted mb-4">
+              <Trans
+                i18nKey="employers.statusModal.description"
+                ns="adminOps"
+                values={{ name: selectedEmployer.name }}
+                components={{ strong: <strong className="text-ink" /> }}
+              />
             </p>
 
             <div className="mb-4">
-              <label className="block text-xs font-semibold text-gray-700 dark:text-gray-300 mb-1 uppercase tracking-wider">
-                Account Status
+              <label className="block text-xs font-semibold text-ink mb-1 uppercase tracking-wider">
+                {t("employers.statusModal.accountStatus")}
               </label>
               <select
                 value={newStatus}
                 onChange={(e) => setNewStatus(e.target.value)}
-                className="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                className="w-full px-3 py-2 text-sm border border-line rounded-lg bg-surface text-ink focus:outline-none focus:ring-2 focus:ring-primary-500"
               >
-                <option value="active">Active (Full employer access)</option>
-                <option value="inactive">Inactive (Limited access)</option>
-                <option value="blocked">Blocked (Suspended account)</option>
+                <option value="active">{t("employers.statusModal.optionActive")}</option>
+                <option value="inactive">{t("employers.statusModal.optionInactive")}</option>
+                <option value="blocked">{t("employers.statusModal.optionBlocked")}</option>
               </select>
             </div>
 
             {newStatus === "blocked" && (
-              <div className="p-3 mb-4 rounded-lg bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 text-xs text-red-800 dark:text-red-300 flex items-center gap-2">
+              <div className="p-3 mb-4 rounded-lg bg-danger/10 border border-danger/30 text-xs text-danger flex items-center gap-2">
                 <FiAlertCircle className="w-4 h-4 flex-shrink-0" />
-                <span>Blocked employers cannot post jobs or review applications.</span>
+                <span>{t("employers.statusModal.blockedWarning")}</span>
               </div>
             )}
 
-            <div className="flex justify-end gap-3 pt-3 border-t border-slate-300 dark:border-gray-600">
-              <button
-                type="button"
+            <div className="flex justify-end gap-3 pt-3 border-t border-line">
+              <Button
+                variant="outline"
+                size="sm"
                 onClick={() => setShowStatusModal(false)}
                 disabled={actionLoading}
-                className="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg"
               >
-                Cancel
-              </button>
-              <button
-                type="button"
+                {t("common:actions.cancel")}
+              </Button>
+              <Button
+                size="sm"
                 onClick={handleUpdateStatus}
-                disabled={actionLoading || newStatus === selectedEmployer.status}
-                className="px-4 py-2 text-sm font-medium text-white bg-yellow-600 hover:bg-yellow-700 disabled:opacity-50 rounded-lg flex items-center gap-2"
+                disabled={newStatus === selectedEmployer.status}
+                loading={actionLoading}
               >
-                {actionLoading && <div className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin" />}
-                Confirm Status
-              </button>
+                {t("employers.statusModal.confirm")}
+              </Button>
             </div>
           </div>
         </div>
@@ -854,39 +831,35 @@ const EmployerManagement = () => {
 
       {/* Delete Employer Modal */}
       {showDeleteModal && selectedEmployer && (
-        <div className="fixed inset-0 z-50 overflow-y-auto bg-black/60 flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-label="Delete employer account confirmation">
-          <div className="relative bg-white dark:bg-gray-800 rounded-xl max-w-md w-full p-6 shadow-xl border border-slate-300 dark:border-gray-600">
-            <div className="flex items-center gap-3 text-red-600 dark:text-red-400 mb-3">
+        <div className="fixed inset-0 z-50 overflow-y-auto bg-black/60 flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-label={t("employers.deleteModal.ariaLabel")}>
+          <div className="relative bg-surface rounded-xl max-w-md w-full p-6 shadow-xl border border-line">
+            <div className="flex items-center gap-3 text-danger mb-3">
               <FiAlertCircle className="w-6 h-6 flex-shrink-0" />
-              <h3 className="text-lg font-bold text-gray-900 dark:text-white">
-                Delete Employer Account
+              <h3 className="text-lg font-bold text-ink">
+                {t("employers.deleteModal.title")}
               </h3>
             </div>
-            <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
-              Are you sure you want to permanently delete{" "}
-              <strong className="text-gray-900 dark:text-white">{selectedEmployer.name}</strong> (
-              {selectedEmployer.email})? This action will permanently remove the employer profile
-              and associated job postings.
+            <p className="text-sm text-muted mb-4">
+              <Trans
+                i18nKey="employers.deleteModal.body"
+                ns="adminOps"
+                values={{ name: selectedEmployer.name, email: selectedEmployer.email }}
+                components={{ strong: <strong className="text-ink" /> }}
+              />
             </p>
 
-            <div className="flex justify-end gap-3 pt-3 border-t border-slate-300 dark:border-gray-600">
-              <button
-                type="button"
+            <div className="flex justify-end gap-3 pt-3 border-t border-line">
+              <Button
+                variant="outline"
+                size="sm"
                 onClick={() => setShowDeleteModal(false)}
                 disabled={actionLoading}
-                className="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg"
               >
-                Cancel
-              </button>
-              <button
-                type="button"
-                onClick={handleDeleteEmployer}
-                disabled={actionLoading}
-                className="px-4 py-2 text-sm font-medium text-white bg-red-600 hover:bg-red-700 disabled:opacity-50 rounded-lg flex items-center gap-2"
-              >
-                {actionLoading && <div className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin" />}
-                Delete Employer
-              </button>
+                {t("common:actions.cancel")}
+              </Button>
+              <Button variant="danger" size="sm" onClick={handleDeleteEmployer} loading={actionLoading}>
+                {t("employers.deleteModal.confirm")}
+              </Button>
             </div>
           </div>
         </div>

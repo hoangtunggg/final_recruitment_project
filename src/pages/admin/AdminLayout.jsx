@@ -2,9 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import AdminSidebar from "../../components/admin/AdminSidebar";
 import AdminHeader from "../../components/admin/AdminHeader";
-import "../../styles/management.css";
+import { useTranslation } from "react-i18next";
+import { TopBar } from "../../components/ui";
+import "../../styles/workspace-ui.css";
 
 const AdminLayout = () => {
+  const { t } = useTranslation("admin");
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
@@ -59,14 +62,15 @@ const AdminLayout = () => {
   };
 
   return (
-    <div className="management-ui min-h-screen bg-slate-50 dark:bg-gray-900 text-slate-900 dark:text-gray-100 transition-colors duration-200">
-      <a className="management-skip-link" href="#admin-main-content">
-        Skip to main content
+    <div className="workspace-ui min-h-screen pt-1.5 bg-canvas text-ink transition-colors duration-200">
+      <TopBar className="!h-1.5 fixed inset-x-0 top-0 z-[60]" />
+      <a className="workspace-skip-link" href="#admin-main-content">
+        {t("layout.skipToContent")}
       </a>
       {/* Mobile sidebar backdrop overlay */}
       {sidebarOpen && (
         <div
-          className="fixed inset-0 z-40 bg-gray-600/50 dark:bg-gray-900/80 backdrop-blur-sm lg:hidden transition-opacity"
+          className="fixed inset-0 z-40 bg-ink/50 backdrop-blur-sm lg:hidden transition-opacity"
           onClick={() => setSidebarOpen(false)}
           aria-hidden="true"
         />

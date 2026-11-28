@@ -1,1 +1,383 @@
-{}
+{
+  "layout": {
+    "skipToContent": "Skip to main content"
+  },
+  "nav": {
+    "ariaLabel": "Admin navigation",
+    "panelTitle": "Admin panel",
+    "closeSidebar": "Close sidebar",
+    "adminFallback": "Administrator",
+    "dashboard": "Dashboard",
+    "jobManagement": "Job management",
+    "allJobs": "All jobs",
+    "addJob": "Add new job",
+    "userManagement": "User management",
+    "allUsers": "All users",
+    "employers": "Employers",
+    "applications": "Application management",
+    "reports": "Reports & analytics",
+    "notifications": "Notifications",
+    "settings": "System settings"
+  },
+  "header": {
+    "toggleSidebar": "Toggle navigation sidebar",
+    "searchPlaceholder": "Global search is off",
+    "searchDisabledHint": "Global search across all resources is currently disabled. Please use the filters inside Job Management or User Management.",
+    "searchAria": "Global search is disabled; use the page-level search",
+    "notificationsAria": "Admin activity notifications",
+    "notifications": "Notifications",
+    "unread": "{{n}} unread notification(s)",
+    "allRead": "All notifications are read",
+    "closePanel": "Close notifications panel",
+    "empty": "No notifications yet",
+    "viewAll": "View all notifications →"
+  },
+  "shared": {
+    "dismissAlert": "Dismiss alert",
+    "clearSearch": "Clear search",
+    "closeDialog": "Close dialog",
+    "notSpecified": "Not specified",
+    "notProvided": "Not provided",
+    "unknown": "Unknown",
+    "none": "None",
+    "showing": "Showing {{from}} to {{to}} of {{total}} {{noun}}",
+    "pageOf": "Page {{page}} of {{pages}}"
+  },
+  "jobs": {
+    "title": "Job moderation & management",
+    "subtitle": "Review, approve, publish, edit or remove job listings across the platform.",
+    "addNew": "Add new job",
+    "searchPlaceholder": "Search by title, company or location...",
+    "filterStatusAria": "Filter jobs by status",
+    "filterApprovalAria": "Filter jobs by approval",
+    "allStatuses": "All statuses",
+    "allApprovals": "All approvals",
+    "loading": "Loading jobs...",
+    "loadFailedTitle": "Unable to load jobs",
+    "emptyTitle": "No jobs found",
+    "emptyFiltered": "No job listings match your search or filter criteria.",
+    "emptyNone": "There are no jobs in the system yet.",
+    "noun": "jobs",
+    "errors": {
+      "loadDb": "Failed to load jobs from the database",
+      "update": "Failed to update job",
+      "create": "Failed to create job",
+      "approve": "Failed to approve job",
+      "reject": "Failed to reject job",
+      "delete": "Failed to delete job"
+    },
+    "toast": {
+      "updated": "Job \"{{title}}\" updated successfully",
+      "created": "Job \"{{title}}\" created successfully",
+      "approvedPublished": "Job \"{{title}}\" has been approved and published",
+      "approvedOnly": "Job \"{{title}}\" has been approved (status remains {{status}})",
+      "rejected": "Job \"{{title}}\" has been rejected and closed",
+      "deleted": "Job \"{{title}}\" has been deleted"
+    },
+    "th": {
+      "titleCompany": "Job title & company",
+      "locationType": "Location & type",
+      "status": "Status",
+      "moderation": "Moderation",
+      "posted": "Posted",
+      "actions": "Actions"
+    },
+    "actions": {
+      "viewAria": "View details for {{title}}",
+      "editAria": "Edit {{title}}",
+      "approveAria": "Approve {{title}}",
+      "approvePublishAria": "Approve & publish {{title}}",
+      "rejectAria": "Reject & close {{title}}",
+      "deleteAria": "Delete {{title}}",
+      "approve": "Approve",
+      "approvePublish": "Approve & publish",
+      "rejectClose": "Reject & close"
+    },
+    "details": {
+      "aria": "Job details",
+      "subtitle": "{{company}} • Job ID #{{id}}",
+      "location": "Location",
+      "jobType": "Job type",
+      "experience": "Experience",
+      "salary": "Salary",
+      "listingStatus": "Listing status",
+      "moderationStatus": "Moderation status",
+      "postingEmployer": "Posting employer",
+      "description": "Job description",
+      "requirements": "Requirements",
+      "responsibilities": "Responsibilities",
+      "deadline": "Application deadline",
+      "noDeadline": "No deadline specified",
+      "contact": "Contact email / phone"
+    },
+    "form": {
+      "title": "Job title",
+      "company": "Company name",
+      "location": "Location",
+      "salary": "Salary range",
+      "salaryPlaceholder": "e.g. $80,000 - $100,000",
+      "type": "Job type",
+      "experience": "Experience level",
+      "listingStatus": "Listing status",
+      "approvalStatus": "Approval status",
+      "description": "Job description",
+      "requirements": "Requirements"
+    },
+    "editModal": {
+      "title": "Edit job listing",
+      "submit": "Save changes"
+    },
+    "addModal": {
+      "title": "Add new job listing",
+      "submit": "Create job"
+    },
+    "delete": {
+      "aria": "Delete job listing confirmation",
+      "title": "Delete job listing",
+      "confirm": "Delete job",
+      "message": "Are you sure you want to permanently delete \"{{title}}\" at {{company}}? This action cannot be undone and will remove all applications submitted for this job."
+    }
+  },
+  "users": {
+    "title": "User management",
+    "subtitle": "Manage user accounts, roles and platform permissions with database-backed pagination.",
+    "searchPlaceholder": "Search by name, email or location...",
+    "filterRoleAria": "Filter users by role",
+    "filterStatusAria": "Filter users by status",
+    "allRoles": "All roles",
+    "allStatuses": "All statuses",
+    "loading": "Loading users...",
+    "loadFailedTitle": "Unable to load users",
+    "emptyTitle": "No users found",
+    "emptyFiltered": "No accounts match your filter criteria.",
+    "emptyNone": "No registered users found in the system.",
+    "noun": "users",
+    "never": "Never",
+    "status": {
+      "active": "Active",
+      "inactive": "Inactive",
+      "blocked": "Blocked"
+    },
+    "th": {
+      "user": "User",
+      "role": "Role",
+      "status": "Status",
+      "joined": "Joined",
+      "lastLogin": "Last login",
+      "actions": "Actions"
+    },
+    "actions": {
+      "viewAria": "View details for {{name}}",
+      "changeRoleAria": "Change role for {{name}}",
+      "changeStatusAria": "Change account status for {{name}}",
+      "deleteAria": "Delete user {{name}}"
+    },
+    "toast": {
+      "roleUpdated": "Role for {{name}} updated to {{role}}",
+      "statusUpdated": "Status for {{name}} updated to {{status}}",
+      "deleted": "User account {{name}} ({{email}}) was deleted"
+    },
+    "errors": {
+      "loadDb": "Failed to load users from the database",
+      "role": "Failed to update user role",
+      "status": "Failed to update user status",
+      "delete": "Failed to delete user account"
+    },
+    "details": {
+      "aria": "User details",
+      "subtitle": "User ID #{{id}}",
+      "loading": "Loading profile & activity...",
+      "email": "Email address",
+      "phone": "Phone number",
+      "location": "Location",
+      "memberSince": "Member since",
+      "role": "Account role",
+      "status": "Account status",
+      "bio": "Bio",
+      "companyProfile": "Company profile",
+      "companyName": "Company name",
+      "industry": "Industry",
+      "companySize": "Company size",
+      "website": "Website",
+      "skills": "Skills",
+      "noSkills": "No skills listed on this profile.",
+      "applicationHistory": "Application history",
+      "noApplications": "No applications recorded for this user.",
+      "jobFallback": "Job #{{id}}"
+    },
+    "roleModal": {
+      "aria": "Update user role",
+      "title": "Update user role",
+      "intro": "Select a new role for {{name}} ({{email}}).",
+      "label": "Assigned role",
+      "adminWarning": "Administrators have unrestricted access to all data, jobs and user management.",
+      "confirm": "Confirm role change"
+    },
+    "statusModal": {
+      "aria": "Update account status",
+      "title": "Update account status",
+      "intro": "Select an account status for {{name}}.",
+      "label": "Account status",
+      "options": {
+        "active": "Active (normal access)",
+        "inactive": "Inactive (limited access)",
+        "blocked": "Blocked (suspended account)"
+      },
+      "blockedWarning": "Blocked users cannot log in or submit applications or jobs.",
+      "confirm": "Confirm status"
+    },
+    "delete": {
+      "aria": "Delete user account confirmation",
+      "title": "Delete user account",
+      "confirm": "Delete account",
+      "message": "Are you sure you want to permanently delete {{name}} ({{email}})? This action cannot be undone and deletes all related platform records."
+    }
+  },
+  "applications": {
+    "title": "Application moderation & tracking",
+    "subtitle": "Review candidate applications across all jobs, update application statuses, inspect resumes and manage submissions.",
+    "searchPlaceholder": "Search by applicant name or email...",
+    "filterStatusAria": "Filter applications by status",
+    "filterJobAria": "Filter applications by job",
+    "allStatuses": "All statuses",
+    "allJobs": "All jobs",
+    "loading": "Loading applications...",
+    "loadFailedTitle": "Unable to load applications",
+    "emptyTitle": "No applications found",
+    "emptyFiltered": "No applications match your filter criteria.",
+    "emptyNone": "No applications have been submitted yet.",
+    "noun": "applications",
+    "jobFallback": "Job #{{id}}",
+    "unknownCompany": "Unknown company",
+    "download": "Download",
+    "noResume": "No resume",
+    "th": {
+      "applicant": "Applicant",
+      "jobCompany": "Job title & company",
+      "applied": "Applied date",
+      "status": "Status",
+      "resume": "Resume",
+      "actions": "Actions"
+    },
+    "actions": {
+      "viewAria": "View details for {{name}}",
+      "changeStatusAria": "Change status for {{name}}",
+      "deleteAria": "Delete application for {{name}}"
+    },
+    "toast": {
+      "statusUpdated": "Status for {{name}} updated to \"{{status}}\"",
+      "resumeDownloaded": "Resume downloaded for {{name}}",
+      "deleted": "Application from {{name}} was deleted"
+    },
+    "errors": {
+      "load": "Failed to load applications",
+      "update": "Failed to update status",
+      "noResume": "No resume file attached to this application.",
+      "download": "Failed to download candidate resume.",
+      "delete": "Failed to delete application"
+    },
+    "details": {
+      "aria": "Application details",
+      "subtitle": "Application #{{id}} • Applied on {{date}}",
+      "applicantInfo": "Applicant information",
+      "fullName": "Full name",
+      "email": "Email address",
+      "phone": "Phone number",
+      "expectedSalary": "Expected salary",
+      "availability": "Availability",
+      "immediate": "Immediate",
+      "targetJob": "Target job listing",
+      "jobTitle": "Job title",
+      "jobIdFallback": "Job ID #{{id}}",
+      "company": "Company",
+      "location": "Location",
+      "currentStatus": "Current status",
+      "skills": "Skills",
+      "noSkills": "None specified",
+      "coverLetter": "Cover letter",
+      "experience": "Experience summary",
+      "education": "Education background",
+      "notes": "Internal reviewer notes",
+      "resume": "Candidate resume",
+      "downloadFile": "Download actual file",
+      "noResumeFile": "No resume file was uploaded with this application.",
+      "changeStatus": "Change status"
+    },
+    "statusModal": {
+      "aria": "Update application status",
+      "title": "Update application status",
+      "intro": "Select a pipeline status for candidate {{name}}.",
+      "pipelineStatus": "Pipeline status",
+      "notes": "Reviewer notes (optional)",
+      "notesPlaceholder": "Add internal evaluation feedback or notes...",
+      "confirm": "Confirm status"
+    },
+    "delete": {
+      "aria": "Delete application confirmation",
+      "title": "Delete application",
+      "confirm": "Delete application",
+      "thisJob": "this job",
+      "message": "Are you sure you want to delete the application submitted by {{name}} for {{job}}? This action cannot be undone."
+    }
+  },
+  "addJob": {
+    "title": "Add new job",
+    "subtitle": "Create a new job posting for your company",
+    "back": "Back to jobs",
+    "sections": {
+      "basic": "Basic information",
+      "details": "Job details",
+      "application": "Application information"
+    },
+    "fields": {
+      "title": "Job title",
+      "company": "Company",
+      "location": "Location",
+      "type": "Job type",
+      "salary": "Salary range",
+      "experience": "Experience level",
+      "description": "Job description",
+      "responsibilities": "Responsibilities",
+      "requirements": "Requirements",
+      "education": "Education",
+      "skills": "Skills",
+      "benefits": "Benefits",
+      "applicationDeadline": "Application deadline",
+      "contactEmail": "Contact email",
+      "contactPhone": "Contact phone"
+    },
+    "placeholders": {
+      "title": "e.g. Senior React Developer",
+      "company": "e.g. Tech Corp",
+      "location": "e.g. San Francisco, CA or Remote",
+      "salary": "e.g. $80k - $120k",
+      "description": "Provide a detailed description of the role...",
+      "responsibilities": "List the key responsibilities for this role...",
+      "requirements": "List the required skills, qualifications and experience...",
+      "education": "e.g. Bachelor's in Computer Science",
+      "skills": "e.g. React, JavaScript, Node.js",
+      "benefits": "List the benefits and perks offered...",
+      "contactEmail": "hr@company.com",
+      "contactPhone": "+1 (555) 123-4567"
+    },
+    "errors": {
+      "title": "Job title is required",
+      "company": "Company is required",
+      "location": "Location is required",
+      "description": "Description is required",
+      "requirements": "Requirements are required",
+      "responsibilities": "Responsibilities are required"
+    },
+    "saveDraft": "Save as draft",
+    "create": "Create job",
+    "publish": "Publish job",
+    "alerts": {
+      "created": "Job created successfully!",
+      "postError": "Error posting job: {{error}}",
+      "draftSaved": "Draft saved successfully!",
+      "draftError": "Error saving draft: {{error}}",
+      "published": "Job published successfully!",
+      "publishError": "Error publishing job: {{error}}"
+    }
+  }
+}

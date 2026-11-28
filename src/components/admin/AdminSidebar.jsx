@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import {
   FiHome,
   FiBriefcase,
@@ -14,6 +15,40 @@ import {
   FiLogOut,
 } from "react-icons/fi";
 import useAuth from "../../hooks/useAuth";
+import { Brand, Button } from "../ui";
+
+// Sidebar structure. `id` doubles as the section key used by AdminLayout (routes) and the test id.
+// Items with `children` render as a collapsible group; labels live in admin.json under `nav.*`.
+const NAV_ITEMS = [
+  { id: "dashboard", icon: FiHome, labelKey: "nav.dashboard" },
+  {
+    group: "jobs",
+    icon: FiBriefcase,
+    labelKey: "nav.jobManagement",
+    children: [
+      { id: "jobs", labelKey: "nav.allJobs" },
+      { id: "add-job", labelKey: "nav.addJob" },
+    ],
+  },
+  {
+    group: "users",
+    icon: FiUsers,
+    labelKey: "nav.userManagement",
+    children: [
+      { id: "users", labelKey: "nav.allUsers" },
+      { id: "employers", labelKey: "nav.employers" },
+    ],
+  },
+  { id: "applications", icon: FiFileText, labelKey: "nav.applications" },
+  { id: "reports", icon: FiBarChart2, labelKey: "nav.reports" },
+  { id: "notifications", icon: FiBell, labelKey: "nav.notifications" },
+  { id: "settings", icon: FiSettings, labelKey: "nav.settings" },
+];
+
+const ROW_BASE =
+  "flex items-center w-full min-h-11 px-4 text-sm font-medium text-left rounded-control transition-colors duration-150";
+const ROW_ACTIVE = "bg-tint text-primary-text font-semibold";
+const ROW_IDLE = "text-ink hover:bg-tint";
 
 const AdminSidebar = ({
   isOpen = true,
@@ -21,8 +56,12 @@ const AdminSidebar = ({
   activeSection,
   onSectionChange,
 }) => {
+  const { t } = useTranslation("admin");
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+
+  // Track explicit manual toggles; a group defaults to open while one of its children is active.
+  const [userToggle, setUserToggle] = useState({});
 
   const handleLogout = () => {
     logout();
@@ -43,23 +82,14 @@ const AdminSidebar = ({
     return "AD";
   };
 
-  const isJobsActive = activeSection === "jobs" || activeSection === "add-job";
-  const isUsersActive =
-    activeSection === "users" || activeSection === "employers";
+  const isGroupOpen = (item) =>
+    userToggle[item.group] !== undefined
+      ? userToggle[item.group]
+      : item.children.some((child) => child.id === activeSection);
 
-  // Track explicit manual user toggles; defaults to activeSection state
-  const [userToggle, setUserToggle] = useState({});
-
-  const isJobsOpen =
-    userToggle.jobs !== undefined ? userToggle.jobs : isJobsActive;
-  const isUsersOpen =
-    userToggle.users !== undefined ? userToggle.users : isUsersActive;
-
-  const toggleDropdown = (menu) => {
-    setUserToggle((prev) => {
-      const current = menu === "jobs" ? isJobsOpen : isUsersOpen;
-      return { ...prev, [menu]: !current };
-    });
+  const toggleGroup = (item) => {
+    const current = isGroupOpen(item);
+    setUserToggle((prev) => ({ ...prev, [item.group]: !current }));
   };
 
   const handleSectionChange = (section) => {
@@ -68,241 +98,136 @@ const AdminSidebar = ({
     }
   };
 
+  const renderLeaf = (item) => {
+    const active = activeSection === item.id;
+    const Icon = item.icon;
+    return (
+      <button
+        type="button"
+        onClick={() => handleSectionChange(item.id)}
+        aria-current={active ? "page" : undefined}
+        data-testid={`admin-nav-${item.id}`}
+        className={`${ROW_BASE} ${active ? ROW_ACTIVE : ROW_IDLE}`}
+      >
+        <Icon className="w-5 h-5 mr-3 flex-shrink-0" aria-hidden="true" />
+        <span>{t(item.labelKey)}</span>
+      </button>
+    );
+  };
+
+  const renderGroup = (item) => {
+    const open = isGroupOpen(item);
+    const groupActive = item.children.some((child) => child.id === activeSection);
+    const submenuId = `admin-${item.group}-submenu`;
+    const Icon = item.icon;
+    return (
+      <>
+        <button
+          type="button"
+          onClick={() => toggleGroup(item)}
+          aria-expanded={open}
+          aria-controls={submenuId}
+          data-testid={`admin-nav-group-${item.group}`}
+          className={`${ROW_BASE} justify-between ${groupActive ? "text-primary-text bg-tint/60" : ROW_IDLE}`}
+        >
+          <span className="flex items-center">
+            <Icon className="w-5 h-5 mr-3 flex-shrink-0" aria-hidden="true" />
+            <span>{t(item.labelKey)}</span>
+          </span>
+          {open ? (
+            <FiChevronDown className="w-4 h-4" aria-hidden="true" />
+          ) : (
+            <FiChevronRight className="w-4 h-4" aria-hidden="true" />
+          )}
+        </button>
+        {open && (
+          <ul id={submenuId} className="mt-1 ml-6 space-y-1 pl-2 border-l border-line">
+            {item.children.map((child) => {
+              const active = activeSection === child.id;
+              return (
+                <li key={child.id}>
+                  <button
+                    type="button"
+                    onClick={() => handleSectionChange(child.id)}
+                    aria-current={active ? "page" : undefined}
+                    data-testid={`admin-nav-${child.id}`}
+                    className={`block w-full text-left px-3 py-2 min-h-10 text-sm rounded-control transition-colors duration-150 ${
+                      active ? ROW_ACTIVE : "text-muted hover:bg-tint hover:text-ink"
+                    }`}
+                  >
+                    {t(child.labelKey)}
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+        )}
+      </>
+    );
+  };
+
   return (
     <aside
       id="admin-navigation"
-      aria-label="Admin Navigation"
-      className={`fixed inset-y-0 left-0 transform ${
+      aria-label={t("nav.ariaLabel")}
+      data-testid="admin-sidebar"
+      className={`fixed top-1.5 bottom-0 left-0 transform ${
         isOpen ? "translate-x-0" : "-translate-x-full"
-      } w-64 bg-white dark:bg-gray-800 border-r border-slate-300 dark:border-gray-600 z-50 flex flex-col justify-between transition-transform duration-300 ease-in-out lg:translate-x-0`}
+      } w-64 bg-surface border-r border-line z-50 flex flex-col justify-between transition-transform duration-300 ease-in-out lg:translate-x-0`}
     >
-      <div className="flex items-center justify-between h-16 px-6 border-b border-slate-300 dark:border-gray-600 shrink-0">
-        <h1 className="text-lg font-bold text-blue-700 dark:text-blue-300">
-          Admin Panel
-        </h1>
+      <div className="flex items-center justify-between h-16 px-4 border-b border-line shrink-0">
+        <Brand />
         <button
+          type="button"
           onClick={toggleSidebar}
-          className="lg:hidden inline-flex h-11 w-11 items-center justify-center rounded-lg text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          aria-label="Close sidebar"
+          className="lg:hidden inline-flex h-11 w-11 items-center justify-center rounded-control text-muted hover:text-ink hover:bg-tint"
+          aria-label={t("nav.closeSidebar")}
         >
-          <FiX className="w-5 h-5" />
+          <FiX className="w-5 h-5" aria-hidden="true" />
         </button>
       </div>
 
       <nav className="flex-1 px-4 py-6 overflow-y-auto min-h-0">
+        <p className="px-4 mb-3 text-xs font-semibold uppercase tracking-wider text-muted">
+          {t("nav.panelTitle")}
+        </p>
         <ul className="space-y-1.5">
-          <li>
-            <button
-              onClick={() => handleSectionChange("dashboard")}
-              aria-current={activeSection === "dashboard" ? "page" : undefined}
-              className={`flex items-center w-full min-h-11 px-4 text-sm font-medium rounded-lg transition-colors duration-150 ${
-                activeSection === "dashboard"
-                  ? "bg-blue-50 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 font-semibold"
-                  : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700/60"
-              }`}
-            >
-              <FiHome className="w-5 h-5 mr-3 flex-shrink-0" />
-              <span>Dashboard</span>
-            </button>
-          </li>
-
-          <li>
-            <button
-              type="button"
-              onClick={() => toggleDropdown("jobs")}
-              aria-expanded={isJobsOpen}
-              aria-controls="admin-jobs-submenu"
-              className={`flex items-center justify-between w-full min-h-11 px-4 text-sm font-medium text-left rounded-lg transition-colors duration-150 ${
-                activeSection === "jobs" || activeSection === "add-job"
-                  ? "text-blue-600 dark:text-blue-400 bg-blue-50/50 dark:bg-blue-900/20"
-                  : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700/60"
-              } focus:outline-none`}
-            >
-              <div className="flex items-center">
-                <FiBriefcase className="w-5 h-5 mr-3 flex-shrink-0" />
-                <span>Job Management</span>
-              </div>
-              {isJobsOpen ? (
-                <FiChevronDown className="w-4 h-4" />
-              ) : (
-                <FiChevronRight className="w-4 h-4" />
-              )}
-            </button>
-            {isJobsOpen && (
-              <ul id="admin-jobs-submenu" className="mt-1 ml-6 space-y-1 pl-2 border-l border-slate-300 dark:border-gray-600">
-                <li>
-                  <button
-                    onClick={() => handleSectionChange("jobs")}
-                    aria-current={activeSection === "jobs" ? "page" : undefined}
-                    className={`block w-full text-left px-3 py-2 text-sm rounded-md transition-colors duration-150 ${
-                      activeSection === "jobs"
-                        ? "text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/40 font-semibold"
-                        : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700/50 hover:text-gray-900 dark:hover:text-gray-200"
-                    }`}
-                  >
-                    All Jobs
-                  </button>
-                </li>
-                <li>
-                  <button
-                    onClick={() => handleSectionChange("add-job")}
-                    aria-current={activeSection === "add-job" ? "page" : undefined}
-                    className={`block w-full text-left px-3 py-2 text-sm rounded-md transition-colors duration-150 ${
-                      activeSection === "add-job"
-                        ? "text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/40 font-semibold"
-                        : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700/50 hover:text-gray-900 dark:hover:text-gray-200"
-                    }`}
-                  >
-                    Add New Job
-                  </button>
-                </li>
-              </ul>
-            )}
-          </li>
-
-          <li>
-            <button
-              type="button"
-              onClick={() => toggleDropdown("users")}
-              aria-expanded={isUsersOpen}
-              aria-controls="admin-users-submenu"
-              className={`flex items-center justify-between w-full min-h-11 px-4 text-sm font-medium text-left rounded-lg transition-colors duration-150 ${
-                activeSection === "users" || activeSection === "employers"
-                  ? "text-blue-600 dark:text-blue-400 bg-blue-50/50 dark:bg-blue-900/20"
-                  : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700/60"
-              } focus:outline-none`}
-            >
-              <div className="flex items-center">
-                <FiUsers className="w-5 h-5 mr-3 flex-shrink-0" />
-                <span>User Management</span>
-              </div>
-              {isUsersOpen ? (
-                <FiChevronDown className="w-4 h-4" />
-              ) : (
-                <FiChevronRight className="w-4 h-4" />
-              )}
-            </button>
-            {isUsersOpen && (
-              <ul id="admin-users-submenu" className="mt-1 ml-6 space-y-1 pl-2 border-l border-slate-300 dark:border-gray-600">
-                <li>
-                  <button
-                    onClick={() => handleSectionChange("users")}
-                    aria-current={activeSection === "users" ? "page" : undefined}
-                    className={`block w-full text-left px-3 py-2 text-sm rounded-md transition-colors duration-150 ${
-                      activeSection === "users"
-                        ? "text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/40 font-semibold"
-                        : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700/50 hover:text-gray-900 dark:hover:text-gray-200"
-                    }`}
-                  >
-                    All Users
-                  </button>
-                </li>
-                <li>
-                  <button
-                    onClick={() => handleSectionChange("employers")}
-                    aria-current={activeSection === "employers" ? "page" : undefined}
-                    className={`block w-full text-left px-3 py-2 text-sm rounded-md transition-colors duration-150 ${
-                      activeSection === "employers"
-                        ? "text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/40 font-semibold"
-                        : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700/50 hover:text-gray-900 dark:hover:text-gray-200"
-                    }`}
-                  >
-                    Employers
-                  </button>
-                </li>
-              </ul>
-            )}
-          </li>
-
-          <li>
-            <button
-              onClick={() => handleSectionChange("applications")}
-              aria-current={activeSection === "applications" ? "page" : undefined}
-              className={`flex items-center w-full min-h-11 px-4 text-sm font-medium rounded-lg transition-colors duration-150 ${
-                activeSection === "applications"
-                  ? "bg-blue-50 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 font-semibold"
-                  : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700/60"
-              }`}
-            >
-              <FiFileText className="w-5 h-5 mr-3 flex-shrink-0" />
-              <span>Application Management</span>
-            </button>
-          </li>
-
-          <li>
-            <button
-              onClick={() => handleSectionChange("reports")}
-              aria-current={activeSection === "reports" ? "page" : undefined}
-              className={`flex items-center w-full min-h-11 px-4 text-sm font-medium rounded-lg transition-colors duration-150 ${
-                activeSection === "reports"
-                  ? "bg-blue-50 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 font-semibold"
-                  : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700/60"
-              }`}
-            >
-              <FiBarChart2 className="w-5 h-5 mr-3 flex-shrink-0" />
-              <span>Reports & Analytics</span>
-            </button>
-          </li>
-
-          <li>
-            <button
-              onClick={() => handleSectionChange("notifications")}
-              aria-current={activeSection === "notifications" ? "page" : undefined}
-              className={`flex items-center w-full min-h-11 px-4 text-sm font-medium rounded-lg transition-colors duration-150 ${
-                activeSection === "notifications"
-                  ? "bg-blue-50 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 font-semibold"
-                  : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700/60"
-              }`}
-            >
-              <FiBell className="w-5 h-5 mr-3 flex-shrink-0" />
-              <span>Notifications</span>
-            </button>
-          </li>
-
-          <li>
-            <button
-              onClick={() => handleSectionChange("settings")}
-              aria-current={activeSection === "settings" ? "page" : undefined}
-              className={`flex items-center w-full min-h-11 px-4 text-sm font-medium rounded-lg transition-colors duration-150 ${
-                activeSection === "settings"
-                  ? "bg-blue-50 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 font-semibold"
-                  : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700/60"
-              }`}
-            >
-              <FiSettings className="w-5 h-5 mr-3 flex-shrink-0" />
-              <span>System Settings</span>
-            </button>
-          </li>
+          {NAV_ITEMS.map((item) => (
+            <li key={item.id || item.group}>
+              {item.children ? renderGroup(item) : renderLeaf(item)}
+            </li>
+          ))}
         </ul>
       </nav>
 
-      {/* Profile & Logout Section at bottom of Sidebar */}
-      <div className="p-4 border-t border-slate-300 dark:border-gray-600 bg-gray-50/70 dark:bg-gray-900/40 shrink-0">
-        <div className="flex items-center space-x-3 mb-3 p-2.5 bg-white dark:bg-gray-800 rounded-xl border border-gray-200/80 dark:border-gray-700 ">
-          <div className="w-10 h-10 rounded-lg bg-blue-700 text-white flex items-center justify-center font-bold text-xs tracking-wider shrink-0 shadow-xs">
+      {/* Profile & logout at the bottom of the sidebar */}
+      <div className="p-4 border-t border-line bg-tint/50 shrink-0">
+        <div className="flex items-center space-x-3 mb-3 p-2.5 bg-surface rounded-xl border border-line">
+          <div className="w-10 h-10 rounded-lg bg-primary-600 text-white flex items-center justify-center font-bold text-xs tracking-wider shrink-0">
             {getInitials()}
           </div>
           <div className="min-w-0 flex-1">
-            <p className="text-xs font-bold text-gray-900 dark:text-gray-100 truncate">
-              {user?.name || "Administrator"}
+            <p className="text-sm font-bold text-ink truncate">
+              {user?.name || t("nav.adminFallback")}
             </p>
-            <p className="text-sm text-slate-600 dark:text-gray-300 truncate">
-              {user?.email || "admin@system.local"}
-            </p>
-            <span className="inline-block mt-0.5 px-1.5 py-0.2 text-[9px] uppercase font-bold tracking-wider rounded bg-blue-100 text-blue-700 dark:bg-blue-900/60 dark:text-blue-300">
-              Admin
+            <p className="text-xs text-muted truncate">{user?.email || "admin@system.local"}</p>
+            <span className="inline-block mt-0.5 px-1.5 text-[10px] uppercase font-bold tracking-wider rounded bg-tint text-primary-text">
+              {t("common:enums.userRole.admin")}
             </span>
           </div>
         </div>
 
-        <button
-          type="button"
+        <Button
+          variant="outline"
+          size="sm"
+          fullWidth
           onClick={handleLogout}
-          className="w-full flex items-center justify-center space-x-2 px-3 py-2 text-xs font-semibold text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 hover:bg-red-50 dark:hover:bg-red-950/40 rounded-lg transition-colors border border-red-200 dark:border-red-900/60"
+          data-testid="admin-logout"
+          leftIcon={<FiLogOut className="w-4 h-4" aria-hidden="true" />}
+          className="!border-danger/40 !text-danger hover:!bg-danger/10"
         >
-          <FiLogOut className="w-4 h-4" />
-          <span>Logout</span>
-        </button>
+          {t("common:nav.signOut")}
+        </Button>
       </div>
     </aside>
   );

@@ -1,17 +1,21 @@
 import { useEffect, useMemo, useState, useRef } from "react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import {
   FiBell,
   FiMenu,
   FiSearch,
   FiCheck,
   FiX,
-  FiActivity,
 } from "react-icons/fi";
 import notificationService from "../../services/notificationService";
 import ThemeToggle from "../common/ThemeToggle";
+import LanguageToggle from "../common/LanguageToggle";
+import { useLocale } from "../../i18n/helpers";
 
 const AdminHeader = ({ toggleSidebar, sidebarOpen = false }) => {
+  const { t } = useTranslation("admin");
+  const locale = useLocale();
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
   const [notifications, setNotifications] = useState([]);
   const [unreadCount, setUnreadCount] = useState(0);
@@ -72,87 +76,103 @@ const AdminHeader = ({ toggleSidebar, sidebarOpen = false }) => {
   const getNotificationIcon = (type) => {
     switch (type) {
       case "success":
-        return <FiCheck className="w-4 h-4 text-green-600 dark:text-green-400" />;
+        return <FiCheck className="w-4 h-4 text-success" />;
       case "error":
-        return <FiX className="w-4 h-4 text-red-600 dark:text-red-400" />;
+        return <FiX className="w-4 h-4 text-danger" />;
       default:
-        return <FiBell className="w-4 h-4 text-blue-600 dark:text-blue-400" />;
+        return <FiBell className="w-4 h-4 text-primary-text" />;
+    }
+  };
+
+  const markAsRead = async (notification) => {
+    if (notification.isRead) return;
+    try {
+      await notificationService.markAsRead(notification.id);
+      setNotifications((prev) =>
+        prev.map((n) => (n.id === notification.id ? { ...n, isRead: true } : n))
+      );
+      setUnreadCount((prev) => Math.max(0, prev - 1));
+    } catch (err) {
+      console.error("Failed to mark as read:", err);
     }
   };
 
   return (
-    <header className="bg-white dark:bg-gray-800 border-b border-slate-300 dark:border-gray-600 shadow-xs transition-colors duration-200">
+    <header className="bg-surface border-b border-line transition-colors duration-200">
       <div className="flex items-center justify-between px-4 sm:px-6 py-3">
         <div className="flex items-center">
           <button
+            type="button"
             onClick={toggleSidebar}
             aria-controls="admin-navigation"
             aria-expanded={sidebarOpen}
-            className="p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 lg:hidden"
-            aria-label="Toggle navigation sidebar"
+            data-testid="admin-sidebar-toggle"
+            className="inline-flex h-11 w-11 items-center justify-center text-muted hover:text-ink rounded-control hover:bg-tint lg:hidden"
+            aria-label={t("header.toggleSidebar")}
           >
             <FiMenu className="w-6 h-6" />
           </button>
-          <div className="relative mx-3 lg:mx-0">
+          <div className="relative mx-3 lg:mx-0 hidden sm:block">
             <span className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-              <FiSearch className="w-4 h-4 text-gray-400 dark:text-gray-500" />
+              <FiSearch className="w-4 h-4 text-muted" />
             </span>
             <input
               disabled
-              className="w-36 min-h-11 pl-9 pr-3 text-sm text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600 rounded-md cursor-not-allowed opacity-75 sm:w-64 focus:outline-none"
-              placeholder="Search disabled (use page search)"
-              title="Global search across all resources is currently disabled. Please use search filters within Job Management or User Management."
+              className="w-36 min-h-11 pl-9 pr-3 text-sm text-muted bg-tint border border-line rounded-control cursor-not-allowed opacity-75 sm:w-64 focus:outline-none"
+              placeholder={t("header.searchPlaceholder")}
+              title={t("header.searchDisabledHint")}
               type="text"
-              aria-label="Global search is disabled; use page-level search"
+              aria-label={t("header.searchAria")}
             />
           </div>
         </div>
 
-        <div className="flex items-center space-x-3 sm:space-x-4">
+        <div className="flex items-center space-x-2 sm:space-x-3">
+          <LanguageToggle size="sm" />
           <ThemeToggle size="sm" />
           <div className="relative" ref={notificationRef}>
             <button
               type="button"
-              onClick={() => {
-                setIsNotificationOpen(!isNotificationOpen);
-              }}
+              onClick={() => setIsNotificationOpen(!isNotificationOpen)}
               aria-expanded={isNotificationOpen}
               aria-controls="admin-notification-panel"
-              aria-label="Audit activity notifications"
-              className="inline-flex h-11 w-11 items-center justify-center text-slate-700 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 relative"
+              aria-label={t("header.notificationsAria")}
+              data-testid="admin-notifications-button"
+              className="inline-flex h-11 w-11 items-center justify-center text-ink rounded-control hover:bg-tint relative"
             >
               <FiBell className="w-5 h-5" />
               {computedUnreadCount > 0 && (
-                <span className="absolute top-1 right-1 block h-2 w-2 rounded-full bg-red-500 ring-2 ring-white dark:ring-gray-800"></span>
+                <span className="absolute top-1 right-1 block h-2 w-2 rounded-full bg-brand-red ring-2 ring-surface"></span>
               )}
             </button>
 
             {isNotificationOpen && (
-              <div id="admin-notification-panel" className="absolute right-0 w-80 sm:w-96 max-w-[calc(100vw-2rem)] mt-2 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-slate-300 dark:border-gray-600 z-50 max-h-96 overflow-hidden flex flex-col">
-                <div className="px-4 py-3 border-b border-slate-300 dark:border-gray-600 flex items-center justify-between">
+              <div id="admin-notification-panel" className="absolute right-0 w-80 sm:w-96 max-w-[calc(100vw-2rem)] mt-2 bg-surface rounded-card shadow-card border border-line z-50 max-h-96 overflow-hidden flex flex-col">
+                <div className="px-4 py-3 border-b border-line flex items-center justify-between">
                   <div>
-                    <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100">
-                      Notifications
+                    <h3 className="text-sm font-semibold text-ink">
+                      {t("header.notifications")}
                     </h3>
-                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
+                    <p className="text-xs text-muted mt-0.5">
                       {computedUnreadCount > 0
-                        ? `${computedUnreadCount} unread notification${computedUnreadCount === 1 ? "" : "s"}`
-                        : "All notifications are read"}
+                        ? t("header.unread", { n: computedUnreadCount })
+                        : t("header.allRead")}
                     </p>
                   </div>
                   <button
+                    type="button"
                     onClick={() => setIsNotificationOpen(false)}
-                    className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
-                    aria-label="Close notifications panel"
+                    className="inline-flex h-11 w-11 items-center justify-center rounded-control text-muted hover:text-ink hover:bg-tint"
+                    aria-label={t("header.closePanel")}
                   >
                     <FiX className="w-4 h-4" />
                   </button>
                 </div>
 
-                <div className="divide-y divide-gray-100 dark:divide-gray-700/60 overflow-y-auto max-h-64">
+                <div className="divide-y divide-line overflow-y-auto max-h-64">
                   {notifications.length === 0 ? (
-                    <div className="p-6 text-center text-xs text-gray-500 dark:text-gray-400">
-                      No notifications yet
+                    <div className="p-6 text-center text-xs text-muted">
+                      {t("header.empty")}
                     </div>
                   ) : (
                     notifications.map((notification) => {
@@ -160,24 +180,10 @@ const AdminHeader = ({ toggleSidebar, sidebarOpen = false }) => {
                       return (
                         <div
                           key={notification.id}
-                          onClick={async () => {
-                            if (isUnread) {
-                              try {
-                                await notificationService.markAsRead(notification.id);
-                                setNotifications((prev) =>
-                                  prev.map((n) =>
-                                    n.id === notification.id ? { ...n, isRead: true } : n
-                                  )
-                                );
-                                setUnreadCount((prev) => Math.max(0, prev - 1));
-                              } catch (err) {
-                                console.error("Failed to mark as read:", err);
-                              }
-                            }
-                          }}
-                          className={`px-4 py-3 cursor-pointer hover:bg-gray-50/80 dark:hover:bg-gray-700/40 ${
+                          onClick={() => markAsRead(notification)}
+                          className={`px-4 py-3 cursor-pointer hover:bg-tint ${
                             isUnread
-                              ? "bg-blue-50/50 dark:bg-blue-950/20 border-l-4 border-blue-600"
+                              ? "bg-tint/60 border-l-4 border-primary-600"
                               : "border-l-4 border-transparent"
                           } transition-colors`}
                         >
@@ -187,19 +193,17 @@ const AdminHeader = ({ toggleSidebar, sidebarOpen = false }) => {
                             </div>
                             <div className="flex-1 min-w-0">
                               <p
-                                className={`text-xs font-medium ${
-                                  isUnread
-                                    ? "text-gray-900 dark:text-gray-100 font-semibold"
-                                    : "text-gray-700 dark:text-gray-300"
+                                className={`text-xs ${
+                                  isUnread ? "text-ink font-semibold" : "text-ink font-medium"
                                 } line-clamp-1`}
                               >
                                 {notification.title}
                               </p>
-                              <p className="text-xs text-gray-500 dark:text-gray-400 line-clamp-2 mt-0.5">
+                              <p className="text-xs text-muted line-clamp-2 mt-0.5">
                                 {notification.message}
                               </p>
-                              <p className="text-[10px] text-gray-400 dark:text-gray-500 mt-1">
-                                {new Date(notification.createdAt).toLocaleDateString()}
+                              <p className="text-[10px] text-muted mt-1">
+                                {new Date(notification.createdAt).toLocaleDateString(locale)}
                               </p>
                             </div>
                           </div>
@@ -209,17 +213,17 @@ const AdminHeader = ({ toggleSidebar, sidebarOpen = false }) => {
                   )}
                 </div>
 
-                <div className="px-4 py-2.5 border-t border-slate-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-800/80 flex items-center justify-between">
-                  <span className="text-xs text-gray-500 dark:text-gray-400 flex items-center">
-                    <FiBell className="w-3.5 h-3.5 mr-1 text-blue-500" />
-                    Notifications
+                <div className="px-4 py-2.5 border-t border-line bg-tint flex items-center justify-between">
+                  <span className="text-xs text-muted flex items-center">
+                    <FiBell className="w-3.5 h-3.5 mr-1 text-primary-text" />
+                    {t("header.notifications")}
                   </span>
                   <Link
                     to="/admin/notifications"
                     onClick={() => setIsNotificationOpen(false)}
-                    className="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium"
+                    className="text-xs text-primary-text hover:underline font-semibold"
                   >
-                    View all notifications →
+                    {t("header.viewAll")}
                   </Link>
                 </div>
               </div>
