@@ -21,6 +21,8 @@
   },
   "header": {
     "toggleSidebar": "Mở hoặc đóng thanh điều hướng",
+    "collapseSidebar": "Thu gọn thanh bên",
+    "expandSidebar": "Mở rộng thanh bên",
     "searchPlaceholder": "Tìm kiếm chung đang tắt",
     "searchDisabledHint": "Tìm kiếm chung trên mọi mục hiện đang tắt. Hãy dùng bộ lọc trong trang Quản lý việc làm hoặc Quản lý người dùng.",
     "searchAria": "Tìm kiếm chung đang tắt; hãy dùng ô tìm kiếm của từng trang",

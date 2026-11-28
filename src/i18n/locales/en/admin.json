@@ -21,6 +21,8 @@
   },
   "header": {
     "toggleSidebar": "Toggle navigation sidebar",
+    "collapseSidebar": "Collapse sidebar",
+    "expandSidebar": "Expand sidebar",
     "searchPlaceholder": "Global search is off",
     "searchDisabledHint": "Global search across all resources is currently disabled. Please use the filters inside Job Management or User Management.",
     "searchAria": "Global search is disabled; use the page-level search",

@@ -420,6 +420,8 @@
     "tagline": "Tuyển dụng & nhân tài",
     "closeSidebar": "Đóng thanh bên",
     "openSidebar": "Mở thanh bên",
+    "collapseSidebar": "Thu gọn thanh bên",
+    "expandSidebar": "Mở rộng thanh bên",
     "workspace": "Không gian làm việc",
     "roleBadge": "Nhà tuyển dụng",
     "employerFallback": "Nhà tuyển dụng",

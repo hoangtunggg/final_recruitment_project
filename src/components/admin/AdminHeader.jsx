@@ -9,11 +9,17 @@ import {
   FiX,
 } from "react-icons/fi";
 import notificationService from "../../services/notificationService";
+import SidebarCollapseButton from "../common/SidebarCollapseButton";
 import ThemeToggle from "../common/ThemeToggle";
 import LanguageToggle from "../common/LanguageToggle";
 import { useLocale } from "../../i18n/helpers";
 
-const AdminHeader = ({ toggleSidebar, sidebarOpen = false }) => {
+const AdminHeader = ({
+  toggleSidebar,
+  sidebarOpen = false,
+  sidebarCollapsed = false,
+  onToggleCollapse,
+}) => {
   const { t } = useTranslation("admin");
   const locale = useLocale();
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
@@ -112,7 +118,14 @@ const AdminHeader = ({ toggleSidebar, sidebarOpen = false }) => {
           >
             <FiMenu className="w-6 h-6" />
           </button>
-          <div className="relative mx-3 lg:mx-0 hidden sm:block">
+          <SidebarCollapseButton
+            collapsed={sidebarCollapsed}
+            onToggle={onToggleCollapse}
+            controls="admin-navigation"
+            label={t(sidebarCollapsed ? "header.expandSidebar" : "header.collapseSidebar")}
+            testId="admin-sidebar-collapse"
+          />
+          <div className="relative mx-3 hidden sm:block">
             <span className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
               <FiSearch className="w-4 h-4 text-muted" />
             </span>

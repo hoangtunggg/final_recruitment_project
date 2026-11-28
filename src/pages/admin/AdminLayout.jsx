@@ -4,11 +4,14 @@ import AdminSidebar from "../../components/admin/AdminSidebar";
 import AdminHeader from "../../components/admin/AdminHeader";
 import { useTranslation } from "react-i18next";
 import { TopBar } from "../../components/ui";
+import useCollapsibleSidebar from "../../hooks/useCollapsibleSidebar";
 import "../../styles/workspace-ui.css";
 
 const AdminLayout = () => {
   const { t } = useTranslation("admin");
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  // Desktop collapse (icon rail), remembered in localStorage; the mobile drawer is unaffected.
+  const { collapsed, rail, toggleCollapsed } = useCollapsibleSidebar("sidebar:admin");
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -81,10 +84,20 @@ const AdminLayout = () => {
         toggleSidebar={toggleSidebar}
         activeSection={getActiveSection()}
         onSectionChange={handleSectionChange}
+        collapsed={rail}
       />
 
-      <div className="lg:pl-64 flex flex-col min-h-screen">
-        <AdminHeader toggleSidebar={toggleSidebar} sidebarOpen={sidebarOpen} />
+      <div
+        className={`flex flex-col min-h-screen transition-[padding] duration-300 ease-in-out motion-reduce:transition-none ${
+          collapsed ? "lg:pl-20" : "lg:pl-64"
+        }`}
+      >
+        <AdminHeader
+          toggleSidebar={toggleSidebar}
+          sidebarOpen={sidebarOpen}
+          sidebarCollapsed={collapsed}
+          onToggleCollapse={toggleCollapsed}
+        />
         <main id="admin-main-content" tabIndex="-1" className="p-4 sm:p-6 lg:p-8 flex-1">
           <div className="max-w-[1600px] mx-auto min-w-0"><Outlet /></div>
         </main>

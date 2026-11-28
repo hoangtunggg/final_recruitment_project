@@ -5,8 +5,10 @@ import { useTranslation } from "react-i18next";
 import useAuth from "../../hooks/useAuth";
 import ThemeToggle from "../../components/common/ThemeToggle";
 import LanguageToggle from "../../components/common/LanguageToggle";
+import SidebarCollapseButton from "../../components/common/SidebarCollapseButton";
 import { Button, TopBar } from "../../components/ui";
 import EmployerSidebar from "../../components/employer/EmployerSidebar";
+import useCollapsibleSidebar from "../../hooks/useCollapsibleSidebar";
 import "../../styles/workspace-ui.css";
 
 /** Two-letter avatar initials from the first available of name / company / email. */
@@ -38,6 +40,8 @@ const getTitleKey = (path) => {
 const EmployerLayout = () => {
   const { t } = useTranslation(["employer", "common"]);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  // Desktop collapse (icon rail), remembered in localStorage; the mobile drawer is unaffected.
+  const { collapsed, rail, toggleCollapsed } = useCollapsibleSidebar("sidebar:employer");
   const location = useLocation();
   const navigate = useNavigate();
   const { user, logout } = useAuth();
@@ -86,9 +90,14 @@ const EmployerLayout = () => {
         displayName={displayName}
         displayCompany={displayCompany}
         initials={getInitials(user)}
+        collapsed={rail}
       />
 
-      <div className="flex min-h-screen flex-col pt-2.5 lg:pl-64">
+      <div
+        className={`flex min-h-screen flex-col pt-2.5 transition-[padding] duration-300 ease-in-out motion-reduce:transition-none ${
+          collapsed ? "lg:pl-20" : "lg:pl-64"
+        }`}
+      >
         <header className="sticky top-2.5 z-30 flex h-16 shrink-0 items-center justify-between border-b border-line bg-surface px-4 sm:px-6 lg:px-8">
           <div className="flex min-w-0 items-center gap-3">
             <button
@@ -101,6 +110,13 @@ const EmployerLayout = () => {
             >
               <FiMenu className="h-5 w-5" />
             </button>
+            <SidebarCollapseButton
+              collapsed={collapsed}
+              onToggle={toggleCollapsed}
+              controls="employer-navigation"
+              label={t(collapsed ? "employer:layout.expandSidebar" : "employer:layout.collapseSidebar")}
+              testId="employer-sidebar-collapse"
+            />
             <div className="min-w-0">
               <p className="truncate text-base font-extrabold leading-tight text-ink sm:text-lg">
                 {t(`employer:layout.titles.${getTitleKey(location.pathname)}`)}

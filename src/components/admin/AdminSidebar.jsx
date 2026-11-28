@@ -46,7 +46,7 @@ const NAV_ITEMS = [
 ];
 
 const ROW_BASE =
-  "flex items-center w-full min-h-11 px-4 text-sm font-medium text-left rounded-control transition-colors duration-150";
+  "flex items-center w-full min-h-11 text-sm font-medium text-left rounded-control transition-colors duration-150";
 const ROW_ACTIVE = "bg-tint text-primary-text font-semibold";
 const ROW_IDLE = "text-ink hover:bg-tint";
 
@@ -55,6 +55,7 @@ const AdminSidebar = ({
   toggleSidebar,
   activeSection,
   onSectionChange,
+  collapsed = false, // icon-only rail (desktop only; AdminLayout passes false on mobile)
 }) => {
   const { t } = useTranslation("admin");
   const { user, logout } = useAuth();
@@ -82,6 +83,12 @@ const AdminSidebar = ({
     return "AD";
   };
 
+  // Row padding/alignment: full row in the expanded sidebar, centered icon in the rail.
+  const rowLayout = collapsed ? "justify-center px-0" : "px-4";
+  const iconClass = `w-5 h-5 flex-shrink-0 ${collapsed ? "" : "mr-3"}`;
+  // Rail rows show no text, so the label becomes the accessible name and the tooltip.
+  const railLabelProps = (label) => (collapsed ? { "aria-label": label, title: label } : {});
+
   const isGroupOpen = (item) =>
     userToggle[item.group] !== undefined
       ? userToggle[item.group]
@@ -107,10 +114,11 @@ const AdminSidebar = ({
         onClick={() => handleSectionChange(item.id)}
         aria-current={active ? "page" : undefined}
         data-testid={`admin-nav-${item.id}`}
-        className={`${ROW_BASE} ${active ? ROW_ACTIVE : ROW_IDLE}`}
+        className={`${ROW_BASE} ${rowLayout} ${active ? ROW_ACTIVE : ROW_IDLE}`}
+        {...railLabelProps(t(item.labelKey))}
       >
-        <Icon className="w-5 h-5 mr-3 flex-shrink-0" aria-hidden="true" />
-        <span>{t(item.labelKey)}</span>
+        <Icon className={iconClass} aria-hidden="true" />
+        {!collapsed && <span className="truncate">{t(item.labelKey)}</span>}
       </button>
     );
   };
@@ -124,23 +132,25 @@ const AdminSidebar = ({
       <>
         <button
           type="button"
-          onClick={() => toggleGroup(item)}
-          aria-expanded={open}
-          aria-controls={submenuId}
+          // The rail has no room for a submenu: go straight to the group's first page.
+          onClick={() => (collapsed ? handleSectionChange(item.children[0].id) : toggleGroup(item))}
+          {...(collapsed ? {} : { "aria-expanded": open, "aria-controls": submenuId })}
           data-testid={`admin-nav-group-${item.group}`}
-          className={`${ROW_BASE} justify-between ${groupActive ? "text-primary-text bg-tint/60" : ROW_IDLE}`}
+          className={`${ROW_BASE} ${collapsed ? rowLayout : "justify-between px-4"} ${groupActive ? "text-primary-text bg-tint/60" : ROW_IDLE}`}
+          {...railLabelProps(t(item.labelKey))}
         >
-          <span className="flex items-center">
-            <Icon className="w-5 h-5 mr-3 flex-shrink-0" aria-hidden="true" />
-            <span>{t(item.labelKey)}</span>
+          <span className="flex items-center min-w-0">
+            <Icon className={iconClass} aria-hidden="true" />
+            {!collapsed && <span className="truncate">{t(item.labelKey)}</span>}
           </span>
-          {open ? (
-            <FiChevronDown className="w-4 h-4" aria-hidden="true" />
-          ) : (
-            <FiChevronRight className="w-4 h-4" aria-hidden="true" />
-          )}
+          {!collapsed &&
+            (open ? (
+              <FiChevronDown className="w-4 h-4 shrink-0" aria-hidden="true" />
+            ) : (
+              <FiChevronRight className="w-4 h-4 shrink-0" aria-hidden="true" />
+            ))}
         </button>
-        {open && (
+        {open && !collapsed && (
           <ul id={submenuId} className="mt-1 ml-6 space-y-1 pl-2 border-l border-line">
             {item.children.map((child) => {
               const active = activeSection === child.id;
@@ -173,10 +183,17 @@ const AdminSidebar = ({
       data-testid="admin-sidebar"
       className={`fixed top-1.5 bottom-0 left-0 transform ${
         isOpen ? "translate-x-0" : "-translate-x-full"
-      } w-64 bg-surface border-r border-line z-50 flex flex-col justify-between transition-transform duration-300 ease-in-out lg:translate-x-0`}
+      } ${
+        collapsed ? "w-20" : "w-64"
+      } overflow-x-hidden bg-surface border-r border-line z-50 flex flex-col justify-between transition-[transform,width] duration-300 ease-in-out motion-reduce:transition-none lg:translate-x-0`}
     >
-      <div className="flex items-center justify-between h-16 px-4 border-b border-line shrink-0">
-        <Brand />
+      <div
+        className={`flex items-center h-16 border-b border-line shrink-0 ${
+          collapsed ? "justify-center px-0" : "justify-between px-4"
+        }`}
+      >
+        {/* The rail keeps only the logo mark: hide Brand's wordmark span */}
+        <Brand className={collapsed ? "[&>span]:hidden" : ""} />
         <button
           type="button"
           onClick={toggleSidebar}
@@ -187,10 +204,12 @@ const AdminSidebar = ({
         </button>
       </div>
 
-      <nav className="flex-1 px-4 py-6 overflow-y-auto min-h-0">
-        <p className="px-4 mb-3 text-xs font-semibold uppercase tracking-wider text-muted">
-          {t("nav.panelTitle")}
-        </p>
+      <nav className="flex-1 px-4 py-6 overflow-y-auto overflow-x-hidden min-h-0">
+        {!collapsed && (
+          <p className="px-4 mb-3 text-xs font-semibold uppercase tracking-wider text-muted truncate">
+            {t("nav.panelTitle")}
+          </p>
+        )}
         <ul className="space-y-1.5">
           {NAV_ITEMS.map((item) => (
             <li key={item.id || item.group}>
@@ -201,32 +220,44 @@ const AdminSidebar = ({
       </nav>
 
       {/* Profile & logout at the bottom of the sidebar */}
-      <div className="p-4 border-t border-line bg-tint/50 shrink-0">
-        <div className="flex items-center space-x-3 mb-3 p-2.5 bg-surface rounded-xl border border-line">
-          <div className="w-10 h-10 rounded-lg bg-primary-600 text-white flex items-center justify-center font-bold text-xs tracking-wider shrink-0">
+      <div className={`border-t border-line bg-tint/50 shrink-0 ${collapsed ? "p-3" : "p-4"}`}>
+        <div
+          className={
+            collapsed
+              ? "flex justify-center mb-3"
+              : "flex items-center space-x-3 mb-3 p-2.5 bg-surface rounded-xl border border-line"
+          }
+        >
+          <div
+            title={collapsed ? user?.name || t("nav.adminFallback") : undefined}
+            className="w-10 h-10 rounded-lg bg-primary-600 text-white flex items-center justify-center font-bold text-xs tracking-wider shrink-0"
+          >
             {getInitials()}
           </div>
-          <div className="min-w-0 flex-1">
-            <p className="text-sm font-bold text-ink truncate">
-              {user?.name || t("nav.adminFallback")}
-            </p>
-            <p className="text-xs text-muted truncate">{user?.email || "admin@system.local"}</p>
-            <span className="inline-block mt-0.5 px-1.5 text-[10px] uppercase font-bold tracking-wider rounded bg-tint text-primary-text">
-              {t("common:enums.userRole.admin")}
-            </span>
-          </div>
+          {!collapsed && (
+            <div className="min-w-0 flex-1">
+              <p className="text-sm font-bold text-ink truncate">
+                {user?.name || t("nav.adminFallback")}
+              </p>
+              <p className="text-xs text-muted truncate">{user?.email || "admin@system.local"}</p>
+              <span className="inline-block mt-0.5 px-1.5 text-[10px] uppercase font-bold tracking-wider rounded bg-tint text-primary-text">
+                {t("common:enums.userRole.admin")}
+              </span>
+            </div>
+          )}
         </div>
 
         <Button
           variant="outline"
-          size="sm"
+          size={collapsed ? "md" : "sm"}
           fullWidth
           onClick={handleLogout}
           data-testid="admin-logout"
           leftIcon={<FiLogOut className="w-4 h-4" aria-hidden="true" />}
-          className="!border-danger/40 !text-danger hover:!bg-danger/10"
+          className={`!border-danger/40 !text-danger hover:!bg-danger/10 ${collapsed ? "!px-0" : ""}`}
+          {...railLabelProps(t("common:nav.signOut"))}
         >
-          {t("common:nav.signOut")}
+          {!collapsed && t("common:nav.signOut")}
         </Button>
       </div>
     </aside>

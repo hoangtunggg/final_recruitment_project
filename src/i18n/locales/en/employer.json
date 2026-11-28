@@ -420,6 +420,8 @@
     "tagline": "Talent & Recruitment",
     "closeSidebar": "Close sidebar",
     "openSidebar": "Open sidebar",
+    "collapseSidebar": "Collapse sidebar",
+    "expandSidebar": "Expand sidebar",
     "workspace": "Workspace",
     "roleBadge": "Employer",
     "employerFallback": "Employer",
