@@ -1,1 +1,634 @@
-{}
+{
+  "analytics": {
+    "title": "Employer analytics",
+    "subtitle": "Genuine metrics computed directly from your published postings and applicant records",
+    "refresh": "Refresh metrics",
+    "refreshing": "Refreshing...",
+    "honestTitle": "Honest metrics guarantee:",
+    "honestText": "All figures shown below are aggregated in real time from database records. Page views and web cookies are not simulated to avoid misleading recruitment insights.",
+    "loadFailed": "Failed to load analytics data. Please check your network connection.",
+    "loadingStats": "Loading statistics",
+    "kpi": {
+      "activeChip": "{{n}} active",
+      "totalJobs": "Total job postings",
+      "jobsFootnote": "{{draft}} draft / {{closed}} closed",
+      "applicationsChip": "Applications",
+      "totalSubmissions": "Total submissions",
+      "submissionsFootnote": "Across all posted listings",
+      "submissionsTruncated": "Across all posted listings ({{loaded}} loaded)",
+      "ratioChip": "Ratio",
+      "avgPerJob": "Avg per active job",
+      "avgFootnote": "Applicants / active opening",
+      "stagesChip": "Stages",
+      "funnelStages": "Active funnel stages",
+      "stagesFootnote": "Populated workflow stages"
+    },
+    "pipeline": {
+      "pending": "Pending review",
+      "underReview": "Under review",
+      "shortlisted": "Shortlisted",
+      "interview": "Interview stage",
+      "hired": "Offers / hired",
+      "rejected": "Archived / rejected"
+    },
+    "funnel": {
+      "title": "Application pipeline funnel",
+      "subtitle": "Live status distribution of all candidate submissions",
+      "subtitleTruncated": "Status distribution across latest {{loaded}} candidate submissions ({{total}} total in database)",
+      "track": "Track applicants",
+      "empty": "No candidate submissions recorded yet. Post active jobs to start building your talent pipeline."
+    },
+    "leaderboard": {
+      "title": "Applications by job posting",
+      "subtitle": "Positions ordered by candidate application volume",
+      "subtitleTruncated": "Positions ordered by volume (from latest {{loaded}} applications)",
+      "manage": "Manage jobs →",
+      "empty": "No jobs posted yet. Create your first opening from the Post Job tab.",
+      "remote": "Remote",
+      "applicants_one": "{{count}} applicant",
+      "applicants_other": "{{count}} applicants",
+      "viewApplicants": "View applicants"
+    },
+    "types": {
+      "title": "Job type breakdown",
+      "subtitle": "Distribution across employment classifications",
+      "empty": "No job types to display."
+    }
+  },
+  "applicants": {
+    "eyebrow": "Candidate pipeline",
+    "title": "Applicant tracking",
+    "subtitle": "Screen applications, inspect qualifications, advance stages, and review resumes.",
+    "manageJobs": "Manage jobs",
+    "jobApplicants": "Job applicants",
+    "viewAll": "View all applicants",
+    "refreshing": "Updating...",
+    "loadFailed": "Failed to load applications. Please check your network connection.",
+    "retryLoading": "Retry loading",
+    "roleFallback": "Role #{{id}}",
+    "yourCompany": "Your company",
+    "downloading": "Downloading...",
+    "resume": "Resume",
+    "noResumeShort": "None",
+    "review": "Review",
+    "statusButton": "Status",
+    "searchLabel": "Search applicants",
+    "searchPlaceholder": "Search name, email, skills",
+    "filterStatus": "Filter applicants by status",
+    "filterJob": "Filter applicants by job",
+    "allStatuses": "All statuses",
+    "allJobs": "All jobs",
+    "showing": "Showing {{shown}} of {{total}} candidates",
+    "kpi": {
+      "total": "Total",
+      "pending": "Pending",
+      "reviewing": "Reviewing",
+      "shortlisted": "Shortlisted",
+      "interview": "Interview",
+      "hired": "Hired"
+    },
+    "table": {
+      "candidate": "Candidate",
+      "position": "Position",
+      "status": "Status",
+      "submitted": "Submitted",
+      "resume": "Resume",
+      "actions": "Actions"
+    },
+    "empty": {
+      "noneTitle": "No applications received yet",
+      "noneText": "Once candidates apply to your posted vacancies, their profiles will appear here for review.",
+      "noMatchTitle": "No matching candidates",
+      "noMatchText": "No applications match your selected filter or keyword search. Try clearing filters.",
+      "resetFilters": "Reset filters"
+    },
+    "toast": {
+      "statusMarked": "Candidate marked as \"{{status}}\".",
+      "statusFailed": "Failed to update application status.",
+      "noResumeAttached": "No resume file was attached to this application.",
+      "resumeDownloaded": "Resume downloaded successfully.",
+      "downloadFailed": "Unable to download resume. File may be unavailable on storage."
+    },
+    "detail": {
+      "ariaLabel": "Applicant details",
+      "close": "Close applicant modal",
+      "applyingFor": "Applying for",
+      "email": "Email address",
+      "phone": "Phone number",
+      "notProvided": "Not provided",
+      "appliedOn": "Application date",
+      "availability": "Availability",
+      "immediate": "Immediate",
+      "expectedSalary": "Expected salary",
+      "notSpecified": "Not specified",
+      "currentStatus": "Current status",
+      "experience": "Relevant experience",
+      "education": "Education background",
+      "skills": "Key skills & competencies",
+      "coverLetter": "Cover letter",
+      "notes": "Internal employer notes",
+      "downloadResume": "Download candidate resume",
+      "downloadingResume": "Downloading resume...",
+      "noResume": "No resume attached",
+      "updateStatus": "Update status"
+    },
+    "statusModal": {
+      "title": "Update candidate status",
+      "close": "Close modal",
+      "selectStage": "Select pipeline stage",
+      "notes": "Internal evaluation notes (saved with status)",
+      "notesPlaceholder": "Candidate feedback, screening impressions, salary requirements, interview highlights...",
+      "savingNotes": "Saving notes...",
+      "saveNotes": "Save notes only"
+    }
+  },
+  "company": {
+    "imageType": "Choose a JPG, PNG, or WebP image.",
+    "imageSize": "Image size must not exceed 3 MB.",
+    "loadFailed": "Unable to load company profile.",
+    "nameMin": "Company name must contain at least 2 characters.",
+    "saved": "Company profile and images were saved successfully.",
+    "saveFailed": "Unable to save the company profile.",
+    "loading": "Loading company profile",
+    "title": "Company profile & media",
+    "subtitle": "These details and images appear on company and job cards across the public experience.",
+    "coverAlt": "Company cover preview",
+    "replaceCover": "Replace cover",
+    "addCover": "Add cover",
+    "yourCompany": "Your company",
+    "addLocation": "Add a company location",
+    "replaceLogo": "Replace logo",
+    "addLogo": "Add logo",
+    "imageHint": "JPG, PNG, or WebP · Maximum 3 MB each. Recommended: square logo and 1600 × 500 px cover.",
+    "name": "Company name",
+    "location": "Location",
+    "locationPlaceholder": "Ho Chi Minh City, Vietnam",
+    "website": "Website",
+    "about": "About the company",
+    "aboutPlaceholder": "Describe your mission, culture, and team.",
+    "saving": "Saving company profile...",
+    "save": "Save company profile"
+  },
+  "dashboard": {
+    "title": "Employer dashboard",
+    "subtitle": "Real-time overview of active vacancies, applicant pipeline, and recruitment metrics.",
+    "refreshing": "Updating...",
+    "loadFailed": "Failed to load dashboard data. Please verify your connection.",
+    "loadingStats": "Loading statistics",
+    "loadingList": "Loading list",
+    "workflowAria": "Hiring workflow guide",
+    "workflowTitle": "Step-by-step hiring workflow",
+    "workflowSubtitle": "Visual guide to the candidate progression pipeline",
+    "closeModal": "Close modal",
+    "stats": {
+      "activeJobs": "Active jobs",
+      "jobsTotal": "{{total}} total",
+      "jobsFootnote": "{{draft}} draft / {{closed}} closed",
+      "totalApplicants": "Total applicants",
+      "allTime": "All-time",
+      "applicantsFootnote": "{{shortlisted}} shortlisted / {{hired}} hired",
+      "applicantsTruncated": "{{shortlisted}} shortlisted / {{hired}} hired (from latest {{loaded}})",
+      "pendingReviews": "Pending reviews",
+      "actionNeeded": "Action needed",
+      "caughtUp": "Caught up",
+      "pendingFootnote": "Awaiting initial candidate screening",
+      "interviewsActive": "Interviews active",
+      "pipeline": "Pipeline",
+      "interviewsFootnote": "Scheduled or completed rounds"
+    },
+    "recent": {
+      "title": "Recent applicants",
+      "subtitle": "Latest submissions across all your posted positions",
+      "subtitleTruncated": "Showing latest {{loaded}} of {{total}} candidate submissions",
+      "viewAll": "View all",
+      "emptyTitle": "No applicants received yet",
+      "emptyNoJobs": "Post your first job vacancy to start receiving qualified candidate applications.",
+      "emptyWithJobs": "Your active job postings are live. Once candidates apply, their profiles will appear here.",
+      "createFirstJob": "Create first job",
+      "recently": "Recently",
+      "anonymous": "Anonymous candidate",
+      "roleFallback": "Role #{{id}}",
+      "applied": "Applied {{date}}",
+      "review": "Review"
+    },
+    "postings": {
+      "title": "Active postings",
+      "subtitle": "Real application volume by position",
+      "manage": "Manage",
+      "emptyTitle": "No job postings yet",
+      "emptyText": "Create a position to start receiving genuine candidate applications.",
+      "postJob": "Post job",
+      "applications": "applications",
+      "pending": "{{n}} pending"
+    },
+    "quick": {
+      "title": "Recruitment quick actions",
+      "subtitle": "Direct access to essential hiring workflows and pipeline tools",
+      "workflowDemo": "Workflow demo",
+      "postJob": {
+        "title": "Post new job",
+        "text": "Create and publish a vacancy"
+      },
+      "manageJobs": {
+        "title": "Manage jobs",
+        "text": "View all postings and statuses"
+      },
+      "tracking": {
+        "title": "Applicant tracking",
+        "text": "Screen, shortlist, and review"
+      },
+      "interviews": {
+        "title": "Interview schedule",
+        "text": "Manage candidate interviews"
+      },
+      "analytics": {
+        "title": "Employer analytics",
+        "text": "Hiring funnel and metrics"
+      }
+    }
+  },
+  "editJob": {
+    "eyebrow": "Job maintenance",
+    "loadingTitle": "Loading job details...",
+    "title": "Edit: {{title}}",
+    "fallbackTitle": "Job posting",
+    "subtitle": "Update role descriptions, requirements, compensation, or publication status.",
+    "backToJobs": "Back to jobs",
+    "errorTitle": "Failed to load job posting",
+    "notFound": "Job posting could not be found.",
+    "loadFailed": "Unable to load job details. You may not have permission to edit this job.",
+    "backToManage": "Back to manage jobs"
+  },
+  "interviews": {
+    "title": "Interview management",
+    "subtitle": "Track, evaluate, and advance applicants in the interview stage",
+    "allApplicants": "All applicants",
+    "refreshing": "Refreshing...",
+    "loadFailed": "Failed to load interview data. Please check your connection.",
+    "candidate": "Candidate",
+    "noEmail": "No email",
+    "recently": "Recently",
+    "jobPosting": "Job posting",
+    "applied": "Applied: {{date}}",
+    "notesLabel": "Notes / evaluation:",
+    "resume": "Resume",
+    "downloading": "Downloading...",
+    "updateStatus": "Update status",
+    "searchLabel": "Search interview candidates",
+    "searchPlaceholder": "Search name, email, job title",
+    "stageFilter": "Filter by interview stage",
+    "jobFilter": "Filter by job",
+    "allJobs": "All jobs",
+    "tabs": {
+      "all": "All ({{n}})",
+      "scheduled": "Scheduled ({{n}})",
+      "completed": "Completed ({{n}})"
+    },
+    "stats": {
+      "pipelineChip": "Pipeline",
+      "total": "Total in pipeline",
+      "totalFootnote": "Candidates in an interview stage",
+      "upcomingChip": "Upcoming",
+      "scheduled": "Scheduled interviews",
+      "scheduledFootnote": "Waiting to be interviewed",
+      "doneChip": "Done",
+      "completed": "Completed / interviewed",
+      "completedFootnote": "Evaluation recorded"
+    },
+    "empty": {
+      "noneTitle": "No interview candidates yet",
+      "noneText": "Review candidates in Applicant Tracking and advance shortlisted applicants to \"Interview scheduled\" to manage their evaluation here.",
+      "noMatchTitle": "No matching interview candidates",
+      "noMatchText": "Try adjusting your search keyword or selected job filter.",
+      "viewTracking": "View applicant tracking"
+    },
+    "toast": {
+      "resumeDownloaded": "Resume downloaded for {{name}}",
+      "noResume": "No resume file available for this applicant.",
+      "moved": "Candidate moved to \"{{status}}\"",
+      "updateFailed": "Failed to update candidate status. Reverted changes."
+    },
+    "modal": {
+      "title": "Update candidate pipeline stage",
+      "close": "Close modal",
+      "nextStatus": "Next status",
+      "options": {
+        "interview_scheduled": "Interview scheduled",
+        "interviewed": "Interviewed (evaluation complete)",
+        "offered": "Extend job offer",
+        "accepted": "Accepted / hired",
+        "rejected": "Reject candidate"
+      },
+      "notes": "Interviewer feedback / schedule notes",
+      "notesPlaceholder": "E.g., Candidate performed well on algorithmic questions; recommend for next interview round on Friday at 2:00 PM.",
+      "updating": "Updating...",
+      "save": "Save status"
+    }
+  },
+  "jobEditor": {
+    "banner": {
+      "created": "Job posted successfully! Redirecting to Manage Jobs...",
+      "updated": "Job posting updated successfully! Redirecting to Manage Jobs...",
+      "fixFields": "Please correct the highlighted fields before submitting.",
+      "saveFailed": "An unexpected error occurred while saving the job posting."
+    },
+    "core": {
+      "title": "Core position details",
+      "subtitle": "Specify the primary role attributes that will appear in search results."
+    },
+    "fields": {
+      "title": "Job title",
+      "titlePlaceholder": "e.g. Senior Full-Stack Engineer",
+      "company": "Hiring organization / company",
+      "companyPlaceholder": "e.g. Acme Innovations",
+      "location": "Location",
+      "locationPlaceholder": "e.g. San Francisco, CA or Remote",
+      "type": "Employment type",
+      "experience": "Experience level",
+      "salary": "Salary or compensation range",
+      "salaryPlaceholder": "e.g. $120,000 - $150,000 USD",
+      "deadline": "Application deadline",
+      "status": "Job posting status",
+      "description": "Job overview & description",
+      "descriptionPlaceholder": "Provide a thorough overview of the role, company mission, team culture, and day-to-day impact...",
+      "requirements": "Qualifications & requirements",
+      "requirementsPlaceholder": "List required technical skills, minimum years of experience, relevant degrees or certifications...",
+      "responsibilities": "Key responsibilities (optional)",
+      "responsibilitiesPlaceholder": "Core day-to-day duties, architectural leadership, code reviews, mentoring...",
+      "benefits": "Benefits & perks (optional)",
+      "benefitsPlaceholder": "Health insurance, 401(k) matching, flexible PTO, remote office stipend, education budget...",
+      "skills": "Key skills & technologies (up to {{max}})",
+      "skillsPlaceholder": "e.g. React, TypeScript, PostgreSQL (press Enter to add)",
+      "contactEmail": "Contact / notification email",
+      "contactPhone": "Contact phone (optional)"
+    },
+    "statusHint": {
+      "live": "Public & live",
+      "internal": "Internal only",
+      "archived": "Archived"
+    },
+    "image": {
+      "title": "Position image",
+      "subtitle": "Add a workplace, team, or role image. It appears on job cards and the job detail page.",
+      "replace": "Replace image",
+      "choose": "Choose image",
+      "constraints": "JPG, PNG, or WebP · Maximum 3 MB · Recommended 1200 × 525 px.",
+      "previewAlt": "Position image preview",
+      "preview": "Image preview"
+    },
+    "details": {
+      "title": "Role overview & requirements",
+      "subtitle": "Clear requirements and expectations attract the most qualified talent."
+    },
+    "contact": {
+      "title": "Contact & notification routing",
+      "subtitle": "Specify where internal candidate notifications or direct inquiries should be sent."
+    },
+    "counter": "{{current}}/{{max}}",
+    "counterMin": "{{current}}/{{max}} (min {{min}})",
+    "removeSkill": "Remove {{skill}}",
+    "saveDraft": "Save as draft",
+    "publish": "Publish job posting",
+    "publishing": "Publishing...",
+    "update": "Update job posting",
+    "updating": "Updating...",
+    "validation": {
+      "titleRequired": "Job title is required.",
+      "titleMin": "Title must be at least 3 characters.",
+      "titleMax": "Title cannot exceed 100 characters.",
+      "companyRequired": "Company name is required.",
+      "companyMin": "Company name must be at least 2 characters.",
+      "companyMax": "Company cannot exceed 100 characters.",
+      "locationRequired": "Location is required (e.g., 'San Francisco, CA' or 'Remote').",
+      "locationMin": "Location must be at least 2 characters.",
+      "descriptionRequired": "Job description is required.",
+      "descriptionMin": "Description must be at least 30 characters ({{current}}/30).",
+      "descriptionMax": "Description cannot exceed 5000 characters.",
+      "requirementsRequired": "Job requirements are required.",
+      "requirementsMin": "Requirements must be at least 20 characters ({{current}}/20).",
+      "requirementsMax": "Requirements cannot exceed 3000 characters.",
+      "emailInvalid": "Please enter a valid email address.",
+      "skillsMax": "Maximum {{max}} skills allowed.",
+      "imageType": "Choose a JPG, PNG, or WebP image.",
+      "imageSize": "Image size must not exceed 3 MB."
+    }
+  },
+  "layout": {
+    "skipToMain": "Skip to main content",
+    "sidebarLabel": "Employer navigation",
+    "brand": "Employer Hub",
+    "tagline": "Talent & Recruitment",
+    "closeSidebar": "Close sidebar",
+    "openSidebar": "Open sidebar",
+    "workspace": "Workspace",
+    "roleBadge": "Employer",
+    "employerFallback": "Employer",
+    "portal": "Employer Portal",
+    "welcome": "Welcome back, {{name}}",
+    "nav": {
+      "overview": "Overview",
+      "postJob": "Post job",
+      "myJobs": "My jobs",
+      "applicants": "Applicants",
+      "interviews": "Interviews",
+      "analytics": "Analytics",
+      "settings": "Settings"
+    },
+    "titles": {
+      "overview": "Employer overview",
+      "postJob": "Post a new job",
+      "editJob": "Edit job posting",
+      "jobApplicants": "Job applicants",
+      "myJobs": "My job listings",
+      "applicantTracking": "Applicant tracking",
+      "interviews": "Interview schedule",
+      "analytics": "Recruitment analytics",
+      "settings": "Employer settings",
+      "hub": "Employer Hub"
+    }
+  },
+  "manageJobs": {
+    "eyebrow": "Job inventory",
+    "title": "Manage jobs",
+    "subtitle": "Review live postings, inspect candidate volume, update lifecycle statuses, or edit job specifications.",
+    "refreshing": "Updating...",
+    "postNew": "Post new job",
+    "loadFailed": "Failed to load job listings. Please check your network connection.",
+    "retryLoading": "Retry loading",
+    "searchLabel": "Search jobs",
+    "searchPlaceholder": "Search title, skills, location",
+    "filterStatus": "Filter jobs by status",
+    "filterType": "Filter jobs by employment type",
+    "allStatuses": "All statuses",
+    "allTypes": "All employment types",
+    "showing": "Showing {{shown}} of {{total}} positions",
+    "toast": {
+      "statusUpdated": "Job status updated to \"{{status}}\".",
+      "statusFailed": "Failed to update job status.",
+      "deleted": "\"{{title}}\" was successfully deleted.",
+      "deleteFailed": "Failed to delete job posting."
+    },
+    "empty": {
+      "noneTitle": "No job postings yet",
+      "noneText": "Create your first job posting to start attracting and interviewing candidates.",
+      "noMatchTitle": "No matching jobs found",
+      "noMatchText": "No jobs match your current filter criteria. Try resetting filters or search terms.",
+      "postFirst": "Post your first job",
+      "resetFilters": "Reset filters"
+    },
+    "table": {
+      "position": "Position & details",
+      "typeLevel": "Type & level",
+      "status": "Status",
+      "applications": "Applications",
+      "timeline": "Timeline",
+      "actions": "Actions",
+      "total": "total",
+      "awaitingReview": "{{n}} awaiting review",
+      "noPending": "0 pending",
+      "posted": "Posted {{date}}",
+      "deadline": "Deadline: {{date}}",
+      "actionsMenu": "Job actions menu"
+    },
+    "menu": {
+      "viewApplicants": "View applicants ({{n}})",
+      "edit": "Edit job details",
+      "changeStatus": "Change status",
+      "setActive": "Set as active",
+      "moveToDraft": "Move to draft",
+      "closeJob": "Close job",
+      "delete": "Delete job posting"
+    },
+    "delete": {
+      "ariaLabel": "Delete job posting confirmation",
+      "title": "Delete job posting?",
+      "confirmPrefix": "Are you sure you want to delete",
+      "confirmSuffix": "? This action cannot be undone and will permanently remove this job posting and its applicant references.",
+      "deleting": "Deleting...",
+      "confirm": "Delete job"
+    }
+  },
+  "notifications": {
+    "view": "View notifications",
+    "title": "Live notifications",
+    "newCount": "{{n}} new",
+    "emptyTitle": "No new alerts",
+    "emptyText": "Real-time application submissions will appear here",
+    "newApplicationTitle": "New application received",
+    "newApplicationMessage": "{{name}} applied for {{job}}",
+    "aCandidate": "A candidate",
+    "yourPosition": "your open position",
+    "dismiss": "Dismiss notification",
+    "daysAgo": "{{n}}d ago",
+    "openTracking": "Open applicant tracking →"
+  },
+  "postJob": {
+    "eyebrow": "New requisition",
+    "title": "Create job posting",
+    "subtitle": "Publish an open vacancy to attract, screen, and interview qualified talent.",
+    "viewAll": "View all jobs"
+  },
+  "settings": {
+    "title": "Employer settings",
+    "subtitle": "Review authenticated credentials and organization permissions",
+    "organizationFallback": "Employer organization",
+    "mediaTitle": "Public company presence:",
+    "mediaText": "Add a logo and cover image in Workspace & Role. They will be reused consistently on company and job cards.",
+    "tabs": {
+      "profile": "Account profile",
+      "organization": "Workspace & role",
+      "security": "Security & sessions"
+    },
+    "profile": {
+      "title": "Profile information",
+      "subtitle": "Verified attributes associated with your user session",
+      "name": "Full name / contact",
+      "email": "Email address",
+      "userId": "User identifier (ID)",
+      "copyId": "Copy user ID",
+      "status": "Account status",
+      "statusValue": "Active & verified"
+    },
+    "org": {
+      "title": "Organization & workspace access",
+      "subtitle": "Roles and permissions assigned to your employer portal account",
+      "roleTitle": "System role: {{role}}",
+      "roleText": "Full authority to post, edit, close, and review jobs and applicants",
+      "granted": "Granted",
+      "orgTitle": "Employer organization",
+      "associated": "Associated",
+      "dataTitle": "Candidate data protection",
+      "dataText": "Scoped strictly to applicants who applied to your owned listings",
+      "enforced": "Enforced"
+    },
+    "security": {
+      "title": "Security & authentication",
+      "subtitle": "Information regarding current session and authentication tokens",
+      "jwtTitle": "JWT token authentication",
+      "jwtText": "Protected with cryptographic signature & Bearer authentication",
+      "active": "Active",
+      "passwordTitle": "Password storage",
+      "passwordText": "Hashed securely with bcrypt on the server",
+      "secured": "Secured"
+    },
+    "shortcuts": {
+      "title": "Employer Hub shortcuts",
+      "postJob": "Post a new job",
+      "manageJobs": "Manage job listings",
+      "trackApplicants": "Track applicants"
+    }
+  },
+  "workflowDemo": {
+    "phaseApply": "Apply",
+    "phaseReview": "Review",
+    "phaseInterview": "Interview",
+    "phaseOffer": "Offer",
+    "stepOf": "Step {{current}} of {{total}}",
+    "nextStep": "Next step",
+    "done": "Done",
+    "steps": {
+      "apply": {
+        "title": "Job seeker applies",
+        "desc": "Application received and appears in the dashboard with an attached resume.",
+        "line1": "Timestamp: near real-time updates",
+        "line2": "Status: Pending"
+      },
+      "review": {
+        "title": "Review application",
+        "desc": "Inspect candidate contact info, cover note, and verified PDF resume.",
+        "line1": "Resume: direct file download",
+        "line2": "Authorization: only the employer of this job"
+      },
+      "notes": {
+        "title": "Internal notes & communication",
+        "desc": "Log recruiter notes and screening feedback stored securely with the application.",
+        "line1": "\"Candidate demonstrates strong technical background; proceed to initial screening.\"",
+        "line2": "Notes are visible to the employer only"
+      },
+      "underReview": {
+        "title": "Mark under review",
+        "desc": "Application status changes through the API.",
+        "line1": "",
+        "line2": ""
+      },
+      "interview": {
+        "title": "Schedule interview",
+        "desc": "Move to the interview-scheduled status with meeting details logged in notes.",
+        "line1": "Stage: Technical & culture fit",
+        "line2": "Status: Interview scheduled"
+      },
+      "notify": {
+        "title": "Candidate notified",
+        "desc": "The candidate's dashboard reflects the updated pipeline stage immediately.",
+        "line1": "✓ Timeline updated",
+        "line2": "✓ Real-time status badge sync"
+      },
+      "decision": {
+        "title": "Hiring decision",
+        "desc": "Extend an offer or gracefully close the application.",
+        "line1": "Valid final statuses: accepted, rejected, withdrawn",
+        "line2": "All transitions are recorded in the database"
+      }
+    }
+  }
+}

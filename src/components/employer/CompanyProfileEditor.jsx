@@ -1,32 +1,25 @@
 import { useEffect, useMemo, useState } from "react";
-import {
-  FiAlertCircle,
-  FiCheckCircle,
-  FiImage,
-  FiMapPin,
-  FiSave,
-  FiUpload,
-} from "react-icons/fi";
+import { FiAlertCircle, FiCheckCircle, FiImage, FiMapPin, FiSave, FiUpload } from "react-icons/fi";
+import { useTranslation } from "react-i18next";
 import { companyService } from "../../services/companyService";
 import { resolveMediaUrl } from "../../utils/mediaUrl";
 import CompanyLogo from "../common/CompanyLogo";
+import { Button, Input, Textarea } from "../ui";
 
-const emptyForm = {
-  name: "",
-  location: "",
-  website: "",
-  description: "",
-};
+const emptyForm = { name: "", location: "", website: "", description: "" };
 
+// Returns an employer:company.* message key, or null when the file is acceptable.
 const validateImage = (file) => {
-  if (!["image/jpeg", "image/png", "image/webp"].includes(file.type)) {
-    return "Choose a JPG, PNG, or WebP image.";
-  }
-  if (file.size > 3 * 1024 * 1024) return "Image size must not exceed 3 MB.";
+  if (!["image/jpeg", "image/png", "image/webp"].includes(file.type)) return "company.imageType";
+  if (file.size > 3 * 1024 * 1024) return "company.imageSize";
   return null;
 };
 
+const FILE_LABEL =
+  "inline-flex min-h-11 cursor-pointer items-center justify-center gap-2 px-4 text-sm font-semibold focus-within:outline focus-within:outline-2 focus-within:outline-primary-500";
+
 const CompanyProfileEditor = ({ user }) => {
+  const { t } = useTranslation("employer");
   const [company, setCompany] = useState(null);
   const [form, setForm] = useState(emptyForm);
   const [logoFile, setLogoFile] = useState(null);
@@ -35,8 +28,9 @@ const CompanyProfileEditor = ({ user }) => {
   const [coverPreview, setCoverPreview] = useState(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
+  // Messages are { key } (built-in, translated at render) or { raw } (server text)
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(null);
 
   useEffect(() => {
     let active = true;
@@ -54,14 +48,12 @@ const CompanyProfileEditor = ({ user }) => {
                 website: profile.website || "",
                 description: profile.description || "",
               }
-            : {
-                ...emptyForm,
-                name: user?.company || user?.name || "",
-              }
+            : { ...emptyForm, name: user?.company || user?.name || "" }
         );
       })
       .catch((requestError) => {
-        if (active) setError(requestError.response?.data?.error || "Unable to load company profile.");
+        const raw = requestError.response?.data?.error;
+        if (active) setError(raw ? { raw } : { key: "company.loadFailed" });
       })
       .finally(() => {
         if (active) setLoading(false);
@@ -86,13 +78,13 @@ const CompanyProfileEditor = ({ user }) => {
 
   const selectImage = (type, file) => {
     if (!file) return;
-    const validationError = validateImage(file);
-    if (validationError) {
-      setError(validationError);
+    const validationKey = validateImage(file);
+    if (validationKey) {
+      setError({ key: validationKey });
       return;
     }
-    setError("");
-    setSuccess("");
+    setError(null);
+    setSuccess(null);
     const preview = URL.createObjectURL(file);
     if (type === "logo") {
       setLogoFile(file);
@@ -106,12 +98,12 @@ const CompanyProfileEditor = ({ user }) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (form.name.trim().length < 2) {
-      setError("Company name must contain at least 2 characters.");
+      setError({ key: "company.nameMin" });
       return;
     }
     setSaving(true);
-    setError("");
-    setSuccess("");
+    setError(null);
+    setSuccess(null);
     try {
       const payload = {
         name: form.name.trim(),
@@ -129,19 +121,23 @@ const CompanyProfileEditor = ({ user }) => {
       setCoverFile(null);
       setLogoPreview(null);
       setCoverPreview(null);
-      setSuccess("Company profile and images were saved successfully.");
+      setSuccess({ key: "company.saved" });
     } catch (requestError) {
-      setError(requestError.response?.data?.error || "Unable to save the company profile.");
+      const raw = requestError.response?.data?.error;
+      setError(raw ? { raw } : { key: "company.saveFailed" });
     } finally {
       setSaving(false);
     }
   };
 
+  const text = (message) => message.raw || t(message.key);
+  const setField = (name) => (event) => setForm((current) => ({ ...current, [name]: event.target.value }));
+
   if (loading) {
     return (
-      <div className="animate-pulse space-y-4" aria-label="Loading company profile">
-        <div className="aspect-[16/5] rounded-xl bg-slate-200 dark:bg-gray-700" />
-        <div className="h-11 rounded-lg bg-slate-200 dark:bg-gray-700" />
+      <div className="animate-pulse space-y-4" role="status" aria-label={t("company.loading")}>
+        <div className="aspect-[16/5] rounded-card bg-line" />
+        <div className="h-11 rounded-control bg-line" />
       </div>
     );
   }
@@ -149,31 +145,35 @@ const CompanyProfileEditor = ({ user }) => {
   return (
     <form onSubmit={handleSubmit} className="space-y-6" noValidate>
       <div>
-        <h2 className="text-base font-bold text-gray-900 dark:text-white">Company profile & media</h2>
-        <p className="mt-1 text-sm text-slate-600 dark:text-gray-300">
-          These details and images appear on company and job cards across the public experience.
-        </p>
+        <h2 className="text-base font-extrabold text-ink">{t("company.title")}</h2>
+        <p className="mt-1 text-sm text-muted">{t("company.subtitle")}</p>
       </div>
 
       {error && (
-        <div className="flex items-start gap-2 rounded-lg border border-rose-200 bg-rose-50 p-3 text-sm text-rose-800 dark:border-rose-900 dark:bg-rose-950/40 dark:text-rose-300" role="alert">
+        <div
+          className="flex items-start gap-2 rounded-control border border-danger/30 bg-danger/10 p-3 text-sm text-danger"
+          role="alert"
+        >
           <FiAlertCircle className="mt-0.5 shrink-0" aria-hidden="true" />
-          {error}
+          {text(error)}
         </div>
       )}
       {success && (
-        <div className="flex items-start gap-2 rounded-lg border border-emerald-200 bg-emerald-50 p-3 text-sm text-emerald-800 dark:border-emerald-900 dark:bg-emerald-950/40 dark:text-emerald-300" role="status">
+        <div
+          className="flex items-start gap-2 rounded-control border border-success/30 bg-success/10 p-3 text-sm text-success"
+          role="status"
+        >
           <FiCheckCircle className="mt-0.5 shrink-0" aria-hidden="true" />
-          {success}
+          {text(success)}
         </div>
       )}
 
-      <div className="overflow-hidden rounded-xl border border-slate-300 dark:border-gray-600">
-        <div className="relative aspect-[16/5] bg-gradient-to-br from-blue-100 via-indigo-50 to-slate-100 dark:from-blue-950 dark:via-indigo-950/70 dark:to-gray-800">
-          {coverSrc && <img src={coverSrc} alt="Company cover preview" className="h-full w-full object-cover" />}
-          <label className="absolute bottom-3 right-3 inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-lg bg-white/95 px-3 text-sm font-semibold text-slate-900 shadow-sm hover:bg-white focus-within:outline focus-within:outline-2 focus-within:outline-blue-700 dark:bg-gray-900/95 dark:text-white">
+      <div className="overflow-hidden rounded-card border border-line">
+        <div className="relative aspect-[16/5] bg-tint">
+          {coverSrc && <img src={coverSrc} alt={t("company.coverAlt")} className="h-full w-full object-cover" />}
+          <label className={`${FILE_LABEL} absolute bottom-3 right-3 rounded-pill bg-surface/95 text-ink shadow-card hover:bg-surface`}>
             <FiImage aria-hidden="true" />
-            {coverSrc ? "Replace cover" : "Add cover"}
+            {coverSrc ? t("company.replaceCover") : t("company.addCover")}
             <input
               type="file"
               accept="image/jpeg,image/png,image/webp"
@@ -184,21 +184,17 @@ const CompanyProfileEditor = ({ user }) => {
         </div>
         <div className="relative flex flex-col gap-4 p-4 pt-9 sm:flex-row sm:items-end sm:justify-between sm:px-6">
           <div className="absolute -top-8 left-4 sm:left-6">
-            <CompanyLogo
-              name={form.name}
-              src={logoPreview || company?.logoUrl}
-              className="h-16 w-16"
-            />
+            <CompanyLogo name={form.name} src={logoPreview || company?.logoUrl} className="h-16 w-16" />
           </div>
           <div>
-            <p className="font-bold text-slate-900 dark:text-white">{form.name || "Your company"}</p>
-            <p className="mt-1 flex items-center gap-1.5 text-sm text-slate-600 dark:text-gray-300">
-              <FiMapPin aria-hidden="true" /> {form.location || "Add a company location"}
+            <p className="font-bold text-ink">{form.name || t("company.yourCompany")}</p>
+            <p className="mt-1 flex items-center gap-1.5 text-sm text-muted">
+              <FiMapPin aria-hidden="true" /> {form.location || t("company.addLocation")}
             </p>
           </div>
-          <label className="inline-flex min-h-11 cursor-pointer items-center justify-center gap-2 rounded-lg border border-slate-300 px-3 text-sm font-semibold text-slate-800 hover:bg-slate-50 focus-within:outline focus-within:outline-2 focus-within:outline-blue-700 dark:border-gray-600 dark:text-gray-100 dark:hover:bg-gray-700">
+          <label className={`${FILE_LABEL} rounded-pill border border-line-strong text-ink hover:bg-tint`}>
             <FiUpload aria-hidden="true" />
-            {logoPreview || company?.logoUrl ? "Replace logo" : "Add logo"}
+            {logoPreview || company?.logoUrl ? t("company.replaceLogo") : t("company.addLogo")}
             <input
               type="file"
               accept="image/jpeg,image/png,image/webp"
@@ -209,66 +205,48 @@ const CompanyProfileEditor = ({ user }) => {
         </div>
       </div>
 
-      <p className="-mt-3 text-xs text-slate-600 dark:text-gray-300">
-        JPG, PNG, or WebP · Maximum 3 MB each. Recommended: square logo and 1600 × 500 px cover.
-      </p>
+      <p className="-mt-3 text-xs text-muted">{t("company.imageHint")}</p>
 
       <div className="grid gap-4 sm:grid-cols-2">
-        <div>
-          <label htmlFor="company-name" className="mb-1.5 block text-sm font-semibold text-slate-800 dark:text-gray-100">
-            Company name <span className="text-rose-600">*</span>
-          </label>
-          <input
-            id="company-name"
-            value={form.name}
-            onChange={(event) => setForm((current) => ({ ...current, name: event.target.value }))}
-            className="min-h-11 w-full rounded-lg border border-slate-300 bg-white px-3 text-base text-slate-900 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500/30 dark:border-gray-600 dark:bg-gray-800 dark:text-white"
-            maxLength={100}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="company-location" className="mb-1.5 block text-sm font-semibold text-slate-800 dark:text-gray-100">Location</label>
-          <input
-            id="company-location"
-            value={form.location}
-            onChange={(event) => setForm((current) => ({ ...current, location: event.target.value }))}
-            className="min-h-11 w-full rounded-lg border border-slate-300 bg-white px-3 text-base text-slate-900 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500/30 dark:border-gray-600 dark:bg-gray-800 dark:text-white"
-            placeholder="Ho Chi Minh City, Vietnam"
-          />
-        </div>
-        <div className="sm:col-span-2">
-          <label htmlFor="company-website" className="mb-1.5 block text-sm font-semibold text-slate-800 dark:text-gray-100">Website</label>
-          <input
-            id="company-website"
-            type="url"
-            value={form.website}
-            onChange={(event) => setForm((current) => ({ ...current, website: event.target.value }))}
-            className="min-h-11 w-full rounded-lg border border-slate-300 bg-white px-3 text-base text-slate-900 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500/30 dark:border-gray-600 dark:bg-gray-800 dark:text-white"
-            placeholder="https://example.com"
-          />
-        </div>
-        <div className="sm:col-span-2">
-          <label htmlFor="company-description" className="mb-1.5 block text-sm font-semibold text-slate-800 dark:text-gray-100">About the company</label>
-          <textarea
-            id="company-description"
-            value={form.description}
-            onChange={(event) => setForm((current) => ({ ...current, description: event.target.value }))}
-            className="min-h-28 w-full rounded-lg border border-slate-300 bg-white p-3 text-base text-slate-900 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500/30 dark:border-gray-600 dark:bg-gray-800 dark:text-white"
-            maxLength={1500}
-            placeholder="Describe your mission, culture, and team."
-          />
-        </div>
+        <Input
+          id="company-name"
+          label={t("company.name")}
+          required
+          value={form.name}
+          onChange={setField("name")}
+          maxLength={100}
+        />
+        <Input
+          id="company-location"
+          label={t("company.location")}
+          value={form.location}
+          onChange={setField("location")}
+          placeholder={t("company.locationPlaceholder")}
+        />
+        <Input
+          id="company-website"
+          className="sm:col-span-2"
+          label={t("company.website")}
+          type="url"
+          value={form.website}
+          onChange={setField("website")}
+          placeholder="https://example.com"
+        />
+        <Textarea
+          id="company-description"
+          className="sm:col-span-2"
+          label={t("company.about")}
+          rows={5}
+          value={form.description}
+          onChange={setField("description")}
+          maxLength={1500}
+          placeholder={t("company.aboutPlaceholder")}
+        />
       </div>
 
-      <button
-        type="submit"
-        disabled={saving}
-        className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-blue-700 px-5 text-sm font-semibold text-white hover:bg-blue-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
-      >
-        <FiSave aria-hidden="true" />
-        {saving ? "Saving company profile..." : "Save company profile"}
-      </button>
+      <Button type="submit" loading={saving} leftIcon={saving ? undefined : <FiSave />}>
+        {saving ? t("company.saving") : t("company.save")}
+      </Button>
     </form>
   );
 };

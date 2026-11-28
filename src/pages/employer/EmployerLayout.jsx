@@ -1,22 +1,42 @@
 import React, { useState, useEffect } from "react";
-import { Outlet, Link, useLocation, useNavigate } from "react-router-dom";
-import {
-  FiBriefcase,
-  FiUsers,
-  FiBarChart2,
-  FiSettings,
-  FiMenu,
-  FiX,
-  FiHome,
-  FiPlus,
-  FiCalendar,
-  FiLogOut,
-} from "react-icons/fi";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
+import { FiMenu, FiPlus } from "react-icons/fi";
+import { useTranslation } from "react-i18next";
 import useAuth from "../../hooks/useAuth";
 import ThemeToggle from "../../components/common/ThemeToggle";
-import "../../styles/management.css";
+import LanguageToggle from "../../components/common/LanguageToggle";
+import { Button, TopBar } from "../../components/ui";
+import EmployerSidebar from "../../components/employer/EmployerSidebar";
+import "../../styles/workspace-ui.css";
+
+/** Two-letter avatar initials from the first available of name / company / email. */
+const getInitials = (user) => {
+  const source = user?.name || user?.company;
+  if (source) {
+    const parts = source.trim().split(/\s+/);
+    return parts.length >= 2
+      ? (parts[0][0] + parts[1][0]).toUpperCase()
+      : source.slice(0, 2).toUpperCase();
+  }
+  return user?.email ? user.email.slice(0, 2).toUpperCase() : "EM";
+};
+
+/** Section title key (employer:layout.titles.<key>) for the current path. */
+const getTitleKey = (path) => {
+  if (path === "/employer" || path === "/employer/") return "overview";
+  if (path.startsWith("/employer/post-job")) return "postJob";
+  if (path.startsWith("/employer/jobs/edit")) return "editJob";
+  if (path.includes("/applicants") && path.includes("/jobs/")) return "jobApplicants";
+  if (path.startsWith("/employer/jobs")) return "myJobs";
+  if (path.startsWith("/employer/applicants")) return "applicantTracking";
+  if (path.startsWith("/employer/interviews")) return "interviews";
+  if (path.startsWith("/employer/analytics")) return "analytics";
+  if (path.startsWith("/employer/settings")) return "settings";
+  return "hub";
+};
 
 const EmployerLayout = () => {
+  const { t } = useTranslation(["employer", "common"]);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
@@ -25,9 +45,7 @@ const EmployerLayout = () => {
   // Support Escape key to close mobile drawer
   useEffect(() => {
     const handleKeyDown = (e) => {
-      if (e.key === "Escape" && sidebarOpen) {
-        setSidebarOpen(false);
-      }
+      if (e.key === "Escape" && sidebarOpen) setSidebarOpen(false);
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
@@ -41,226 +59,83 @@ const EmployerLayout = () => {
   const displayName =
     user?.name ||
     user?.company ||
-    (user?.email ? user.email.split("@")[0] : "Employer");
-  const displayCompany = user?.company || "Employer Portal";
-  const displayEmail = user?.email || "";
-
-  const getInitials = () => {
-    if (user?.name) {
-      const parts = user.name.trim().split(/\s+/);
-      if (parts.length >= 2) {
-        return (parts[0][0] + parts[1][0]).toUpperCase();
-      }
-      return user.name.slice(0, 2).toUpperCase();
-    }
-    if (user?.company) {
-      const parts = user.company.trim().split(/\s+/);
-      if (parts.length >= 2) {
-        return (parts[0][0] + parts[1][0]).toUpperCase();
-      }
-      return user.company.slice(0, 2).toUpperCase();
-    }
-    if (user?.email) {
-      return user.email.slice(0, 2).toUpperCase();
-    }
-    return "EM";
-  };
-
-  const navigation = [
-    { name: "Overview", href: "/employer", icon: FiHome, exact: true },
-    { name: "Post Job", href: "/employer/post-job", icon: FiPlus, exact: true },
-    { name: "My Jobs", href: "/employer/jobs", icon: FiBriefcase, exact: false },
-    { name: "Applicants", href: "/employer/applicants", icon: FiUsers, exact: false },
-    { name: "Interviews", href: "/employer/interviews", icon: FiCalendar, exact: false },
-    { name: "Analytics", href: "/employer/analytics", icon: FiBarChart2, exact: false },
-    { name: "Settings", href: "/employer/settings", icon: FiSettings, exact: false },
-  ];
-
-  const isActive = (item) => {
-    if (item.exact || item.href === "/employer") {
-      return location.pathname === "/employer" || location.pathname === "/employer/";
-    }
-    return location.pathname.startsWith(item.href);
-  };
-
-  const getCurrentSectionTitle = () => {
-    const path = location.pathname;
-    if (path === "/employer" || path === "/employer/") return "Employer Overview";
-    if (path.startsWith("/employer/post-job")) return "Post New Job";
-    if (path.startsWith("/employer/jobs/edit")) return "Edit Job Posting";
-    if (path.includes("/applicants") && path.includes("/jobs/"))
-      return "Job Applicants";
-    if (path.startsWith("/employer/jobs")) return "My Job Listings";
-    if (path.startsWith("/employer/applicants")) return "Applicant Tracking";
-    if (path.startsWith("/employer/interviews")) return "Interview Schedule";
-    if (path.startsWith("/employer/analytics")) return "Recruitment Analytics";
-    if (path.startsWith("/employer/settings")) return "Employer Settings";
-    return "Employer Hub";
-  };
+    (user?.email ? user.email.split("@")[0] : t("employer:layout.employerFallback"));
+  const displayCompany = user?.company || user?.email || t("employer:layout.portal");
 
   return (
-    <div className="management-ui min-h-screen bg-slate-50 dark:bg-gray-900 text-slate-900 dark:text-gray-100 transition-colors duration-200">
-      <a className="management-skip-link" href="#employer-main-content">
-        Skip to main content
+    <div className="workspace-ui min-h-screen bg-canvas text-ink transition-colors duration-200">
+      <a className="workspace-skip-link" href="#employer-main-content">
+        {t("employer:layout.skipToMain")}
       </a>
-      {/* Mobile Drawer Backdrop Overlay */}
+      <div className="fixed inset-x-0 top-0 z-[60]">
+        <TopBar />
+      </div>
+
       {sidebarOpen && (
         <div
-          className="fixed inset-0 z-40 bg-gray-600/50 dark:bg-gray-900/80 backdrop-blur-sm lg:hidden transition-opacity"
+          className="fixed inset-0 z-40 bg-ink/50 backdrop-blur-sm transition-opacity lg:hidden"
           onClick={() => setSidebarOpen(false)}
           aria-hidden="true"
         />
       )}
 
-      {/* Professional Employer Sidebar */}
-      <aside
-        id="employer-navigation"
-        aria-label="Employer Navigation"
-        className={`fixed inset-y-0 left-0 transform ${
-          sidebarOpen ? "translate-x-0" : "-translate-x-full"
-        } w-64 bg-white dark:bg-gray-800 border-r border-slate-300 dark:border-gray-600 z-50 flex flex-col justify-between transition-transform duration-300 ease-in-out lg:translate-x-0`}
-      >
-        {/* Brand Header */}
-        <div>
-          <div className="flex items-center justify-between h-16 px-6 border-b border-slate-300 dark:border-gray-600 shrink-0">
-            <Link
-              to="/employer"
-              onClick={() => setSidebarOpen(false)}
-              aria-controls="employer-navigation"
-              aria-expanded={sidebarOpen}
-              className="flex items-center space-x-3 group"
-            >
-              <div className="w-9 h-9 rounded-lg bg-blue-700 flex items-center justify-center text-white shrink-0">
-                <FiBriefcase className="w-5 h-5" />
-              </div>
-              <div className="min-w-0">
-                <span className="text-base font-bold text-gray-900 dark:text-white tracking-tight block truncate">
-                  Employer Hub
-                </span>
-                <span className="text-[11px] text-blue-600 dark:text-blue-400 font-medium block">
-                  Talent & Recruitment
-                </span>
-              </div>
-            </Link>
-            <button
-              onClick={() => setSidebarOpen(false)}
-              className="lg:hidden inline-flex h-11 w-11 items-center justify-center rounded-lg text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              aria-label="Close sidebar"
-            >
-              <FiX className="w-5 h-5" />
-            </button>
-          </div>
+      <EmployerSidebar
+        open={sidebarOpen}
+        onClose={() => setSidebarOpen(false)}
+        onLogout={handleLogout}
+        displayName={displayName}
+        displayCompany={displayCompany}
+        initials={getInitials(user)}
+      />
 
-          {/* Navigation Items */}
-          <nav className="px-3 py-4 overflow-y-auto">
-            <p className="px-3 text-xs font-semibold text-slate-600 dark:text-gray-300 uppercase tracking-wider mb-2">
-              Workspace
-            </p>
-            <ul className="space-y-1">
-              {navigation.map((item) => {
-                const Icon = item.icon;
-                const active = isActive(item);
-                return (
-                  <li key={item.name}>
-                    <Link
-                      to={item.href}
-                      onClick={() => setSidebarOpen(false)}
-                      aria-current={active ? "page" : undefined}
-                      className={`flex min-h-11 items-center w-full px-3.5 text-sm font-medium rounded-lg transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-700 ${
-                        active
-                          ? "bg-blue-50 text-blue-700 dark:bg-blue-950/60 dark:text-blue-300 font-semibold border-l-4 border-blue-600 dark:border-blue-500"
-                          : "text-gray-700 dark:text-gray-300 hover:bg-gray-100/80 dark:hover:bg-gray-700/60 hover:text-gray-900 dark:hover:text-white"
-                      }`}
-                    >
-                      <Icon
-                        className={`w-4 h-4 mr-3 shrink-0 ${
-                          active
-                            ? "text-blue-600 dark:text-blue-400"
-                            : "text-gray-400 dark:text-gray-400"
-                        }`}
-                      />
-                      <span>{item.name}</span>
-                    </Link>
-                  </li>
-                );
-              })}
-            </ul>
-          </nav>
-        </div>
-
-        {/* Profile & Logout Section at Bottom */}
-        <div className="p-4 border-t border-slate-300 dark:border-gray-600 bg-gray-50/70 dark:bg-gray-900/40 shrink-0">
-          <div className="flex items-center space-x-3 mb-3 p-2.5 bg-white dark:bg-gray-800 rounded-xl border border-gray-200/80 dark:border-gray-700 ">
-            <div className="w-10 h-10 rounded-lg bg-blue-700 text-white flex items-center justify-center font-bold text-xs tracking-wider shrink-0 shadow-xs">
-              {getInitials()}
-            </div>
-            <div className="min-w-0 flex-1">
-              <p className="text-xs font-bold text-gray-900 dark:text-gray-100 truncate">
-                {displayName}
-              </p>
-              <p className="text-sm text-slate-600 dark:text-gray-300 truncate">
-                {displayCompany || displayEmail}
-              </p>
-              <span className="inline-block mt-0.5 px-1.5 py-0.2 text-[9px] uppercase font-bold tracking-wider rounded bg-blue-100 text-blue-700 dark:bg-blue-900/60 dark:text-blue-300">
-                Employer
-              </span>
-            </div>
-          </div>
-
-          <button
-            type="button"
-            onClick={handleLogout}
-            className="w-full min-h-11 flex items-center justify-center space-x-2 px-3 text-sm font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-red-700 text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 hover:bg-red-50 dark:hover:bg-red-950/40 rounded-lg transition-colors border border-red-200 dark:border-red-900/60"
-          >
-            <FiLogOut className="w-4 h-4" />
-            <span>Logout</span>
-          </button>
-        </div>
-      </aside>
-
-      {/* Main Content Area */}
-      <div className="lg:pl-64 flex flex-col min-h-screen">
-        {/* Top Header Bar */}
-        <header className="sticky top-0 z-30 flex items-center justify-between h-16 px-4 sm:px-6 lg:px-8 bg-white dark:bg-gray-800 border-b border-slate-300 dark:border-gray-600 shrink-0 ">
-          <div className="flex items-center gap-3">
+      <div className="flex min-h-screen flex-col pt-2.5 lg:pl-64">
+        <header className="sticky top-2.5 z-30 flex h-16 shrink-0 items-center justify-between border-b border-line bg-surface px-4 sm:px-6 lg:px-8">
+          <div className="flex min-w-0 items-center gap-3">
             <button
               type="button"
               onClick={() => setSidebarOpen(true)}
               aria-controls="employer-navigation"
               aria-expanded={sidebarOpen}
-              className="lg:hidden inline-flex h-11 w-11 items-center justify-center rounded-lg text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none"
-              aria-label="Open sidebar"
+              className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-control text-muted hover:bg-tint hover:text-ink lg:hidden"
+              aria-label={t("employer:layout.openSidebar")}
             >
-              <FiMenu className="w-5 h-5" />
+              <FiMenu className="h-5 w-5" />
             </button>
-            <div>
-              <h1 className="text-base sm:text-lg font-bold text-gray-900 dark:text-white leading-tight">
-                {getCurrentSectionTitle()}
-              </h1>
-              <p className="text-sm text-slate-600 dark:text-gray-300 hidden sm:block">
-                Welcome back, {displayName}
+            <div className="min-w-0">
+              <p className="truncate text-base font-extrabold leading-tight text-ink sm:text-lg">
+                {t(`employer:layout.titles.${getTitleKey(location.pathname)}`)}
+              </p>
+              <p className="hidden text-sm text-muted sm:block">
+                {t("employer:layout.welcome", { name: displayName })}
               </p>
             </div>
           </div>
 
-          {/* Header Right Actions */}
-          <div className="flex items-center gap-3">
+          <div className="flex shrink-0 items-center gap-2 sm:gap-3">
+            <LanguageToggle size="sm" />
             <ThemeToggle size="sm" />
             {location.pathname !== "/employer/post-job" && (
-              <Link
+              <Button
+                as={Link}
                 to="/employer/post-job"
-                className="inline-flex min-h-11 items-center gap-1.5 px-4 rounded-lg text-sm font-semibold text-white bg-blue-700 hover:bg-blue-800 active:bg-blue-900 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700"
+                size="sm"
+                leftIcon={<FiPlus />}
+                className="hidden whitespace-nowrap sm:inline-flex"
               >
-                <FiPlus className="text-sm" />
-                <span>Post Job</span>
-              </Link>
+                {t("employer:layout.nav.postJob")}
+              </Button>
             )}
           </div>
         </header>
 
-        {/* Page Body */}
-        <main id="employer-main-content" tabIndex="-1" className="flex-1 bg-slate-50 dark:bg-gray-900 p-4 sm:p-6 lg:p-8 transition-colors">
-          <div className="max-w-[1600px] mx-auto min-w-0"><Outlet /></div>
+        <main
+          id="employer-main-content"
+          tabIndex="-1"
+          className="flex-1 bg-canvas p-4 transition-colors sm:p-6 lg:p-8"
+        >
+          <div className="mx-auto min-w-0 max-w-[1600px]">
+            <Outlet />
+          </div>
         </main>
       </div>
     </div>

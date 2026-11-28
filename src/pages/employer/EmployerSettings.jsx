@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   FiUser,
-  FiMail,
   FiBriefcase,
   FiShield,
   FiKey,
@@ -11,21 +10,57 @@ import {
   FiArrowRight,
   FiCopy,
   FiCheck,
-  FiLayers,
 } from "react-icons/fi";
+import { useTranslation } from "react-i18next";
 import useAuth from "../../hooks/useAuth";
 import CompanyProfileEditor from "../../components/employer/CompanyProfileEditor";
+import { Card, Input, PageHeader } from "../../components/ui";
+import { useEnumLabel } from "../../i18n/helpers";
+
+const TABS = [
+  { id: "profile", icon: FiUser },
+  { id: "organization", icon: FiBriefcase },
+  { id: "security", icon: FiShield },
+];
+
+const CHIP_TONES = {
+  primary: "bg-tint text-primary-text",
+  success: "bg-success/10 text-success",
+};
+
+/** One permission / security row: title + description on the left, status chip on the right. */
+const InfoRow = ({ icon: Icon, title, description, chip, tone = "success" }) => (
+  <div className="flex items-center justify-between rounded-card border border-line bg-tint/50 p-4">
+    <div className="flex items-center space-x-3">
+      {Icon && (
+        <div className="flex h-10 w-10 items-center justify-center rounded-card bg-tint text-primary-text">
+          <Icon className="h-5 w-5" aria-hidden="true" />
+        </div>
+      )}
+      <div>
+        <p className="text-sm font-semibold text-ink">{title}</p>
+        <p className="mt-0.5 text-xs text-muted">{description}</p>
+      </div>
+    </div>
+    <span className={`ml-3 shrink-0 rounded-pill px-2.5 py-1 text-xs font-semibold ${CHIP_TONES[tone]}`}>
+      {chip}
+    </span>
+  </div>
+);
+
+const SectionTitle = ({ title, subtitle }) => (
+  <div>
+    <h2 className="text-base font-extrabold text-ink">{title}</h2>
+    <p className="mt-0.5 text-xs text-muted">{subtitle}</p>
+  </div>
+);
 
 const EmployerSettings = () => {
+  const { t } = useTranslation(["employer", "common"]);
+  const label = useEnumLabel();
   const { user } = useAuth();
   const [activeTab, setActiveTab] = useState("profile");
   const [copiedId, setCopiedId] = useState(false);
-
-  const tabs = [
-    { id: "profile", name: "Account Profile", icon: FiUser },
-    { id: "organization", name: "Workspace & Role", icon: FiBriefcase },
-    { id: "security", name: "Security & Sessions", icon: FiShield },
-  ];
 
   const handleCopyId = () => {
     if (user?.id) {
@@ -38,286 +73,165 @@ const EmployerSettings = () => {
   const displayName =
     user?.name ||
     user?.company ||
-    (user?.email ? user.email.split("@")[0] : "Employer");
+    (user?.email ? user.email.split("@")[0] : t("employer:layout.employerFallback"));
   const displayEmail = user?.email || "employer@example.com";
-  const displayRole = user?.role || "employer";
-  const displayCompany = user?.company || "Employer Organization";
+  const displayRole = label("userRole", user?.role || "employer");
+  const displayCompany = user?.company || t("employer:settings.organizationFallback");
+
+  const shortcuts = [
+    { to: "/employer/post-job", key: "postJob" },
+    { to: "/employer/jobs", key: "manageJobs" },
+    { to: "/employer/applicants", key: "trackApplicants" },
+  ];
 
   return (
-    <div className="space-y-5">
-      {/* Header */}
-      <div>
-        <h1 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white tracking-tight">
-          Employer Settings
-        </h1>
-        <p className="text-sm text-slate-600 dark:text-gray-300 mt-1">
-          Review authenticated credentials and organization permissions
+    <div className="space-y-6">
+      <PageHeader title={t("employer:settings.title")} subtitle={t("employer:settings.subtitle")} />
+
+      <div className="flex items-start space-x-3 rounded-card border border-tint-line bg-tint p-4 text-sm text-primary-text">
+        <FiInfo className="mt-0.5 h-5 w-5 shrink-0" aria-hidden="true" />
+        <p>
+          <strong className="font-semibold">{t("employer:settings.mediaTitle")}</strong>{" "}
+          {t("employer:settings.mediaText")}
         </p>
       </div>
 
-      {/* Company media guidance */}
-      <div className="p-4 rounded-xl bg-blue-50/60 dark:bg-blue-950/30 border border-blue-200/60 dark:border-blue-900/40 flex items-start space-x-3 text-sm text-blue-800 dark:text-blue-300">
-        <FiInfo className="w-5 h-5 shrink-0 mt-0.5 text-blue-600 dark:text-blue-400" />
-        <div>
-          <strong className="font-semibold">Public company presence:</strong> Add a logo and
-          cover image in Workspace &amp; Role. They will be reused consistently on company and job cards.
-        </div>
-      </div>
-
-      {/* Main Settings Card */}
-      <div className="bg-white dark:bg-gray-800 rounded-xl border border-slate-300 dark:border-gray-600 overflow-hidden">
-        {/* Navigation Tabs */}
-        <div className="border-b border-slate-300 dark:border-gray-600 px-4 sm:px-6">
-          <nav className="flex space-x-4 sm:space-x-8 overflow-x-auto">
-            {tabs.map((tab) => (
-              <button
-                key={tab.id}
-                type="button"
-                onClick={() => setActiveTab(tab.id)}
-                className={`py-4 px-1 border-b-2 font-semibold text-sm flex items-center space-x-2 shrink-0 transition-colors ${
-                  activeTab === tab.id
-                    ? "border-blue-600 text-blue-600 dark:text-blue-400 dark:border-blue-400"
-                    : "border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 hover:border-gray-300"
-                }`}
-              >
-                <tab.icon className="w-4 h-4" />
-                <span>{tab.name}</span>
-              </button>
-            ))}
+      <Card padding="none" className="overflow-hidden">
+        <div className="border-b border-line px-4 sm:px-6">
+          <nav className="flex space-x-4 overflow-x-auto sm:space-x-8" aria-label={t("employer:settings.title")}>
+            {TABS.map((tab) => {
+              const Icon = tab.icon;
+              const selected = activeTab === tab.id;
+              return (
+                <button
+                  key={tab.id}
+                  type="button"
+                  onClick={() => setActiveTab(tab.id)}
+                  aria-current={selected ? "page" : undefined}
+                  className={`flex shrink-0 items-center space-x-2 border-b-2 px-1 py-4 text-sm font-semibold transition-colors ${
+                    selected
+                      ? "border-primary-500 text-primary-text"
+                      : "border-transparent text-muted hover:border-line-strong hover:text-ink"
+                  }`}
+                >
+                  <Icon className="h-4 w-4" aria-hidden="true" />
+                  <span>{t(`employer:settings.tabs.${tab.id}`)}</span>
+                </button>
+              );
+            })}
           </nav>
         </div>
 
-        {/* Tab Content */}
         <div className="p-6">
-          {/* Account Profile Tab */}
           {activeTab === "profile" && (
-            <div className="space-y-6 max-w-2xl">
-              <div>
-                <h2 className="text-base font-bold text-gray-900 dark:text-white">
-                  Profile Information
-                </h2>
-                <p className="text-xs text-slate-600 dark:text-gray-300 mt-0.5">
-                  Verified attributes associated with your user session
-                </p>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-gray-300 mb-1.5">
-                    Full Name / Contact
-                  </label>
-                  <input
-                    type="text"
-                    value={displayName}
+            <div className="max-w-2xl space-y-6">
+              <SectionTitle
+                title={t("employer:settings.profile.title")}
+                subtitle={t("employer:settings.profile.subtitle")}
+              />
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <Input label={t("employer:settings.profile.name")} value={displayName} readOnly />
+                <Input label={t("employer:settings.profile.email")} type="email" value={displayEmail} readOnly />
+                <div className="flex items-end space-x-2">
+                  <Input
+                    className="flex-1"
+                    label={t("employer:settings.profile.userId")}
+                    value={user?.id || "N/A"}
                     readOnly
-                    className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-slate-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-gray-200 cursor-not-allowed"
+                    inputClassName="font-mono"
                   />
+                  <button
+                    type="button"
+                    onClick={handleCopyId}
+                    className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-control border border-line text-muted transition-colors hover:bg-tint hover:text-ink"
+                    title={t("employer:settings.profile.copyId")}
+                    aria-label={t("employer:settings.profile.copyId")}
+                  >
+                    {copiedId ? <FiCheck className="h-4 w-4 text-success" /> : <FiCopy className="h-4 w-4" />}
+                  </button>
                 </div>
-
                 <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-gray-300 mb-1.5">
-                    Email Address
-                  </label>
-                  <input
-                    type="email"
-                    value={displayEmail}
-                    readOnly
-                    className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-slate-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-gray-200 cursor-not-allowed"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-gray-300 mb-1.5">
-                    User Identifier (ID)
-                  </label>
-                  <div className="flex space-x-2">
-                    <input
-                      type="text"
-                      value={user?.id || "N/A"}
-                      readOnly
-                      className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-slate-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-gray-200 font-mono cursor-not-allowed"
-                    />
-                    <button
-                      type="button"
-                      onClick={handleCopyId}
-                      className="p-2.5 rounded-xl border border-slate-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors text-gray-600 dark:text-gray-300"
-                      title="Copy User ID"
-                    >
-                      {copiedId ? (
-                        <FiCheck className="w-4 h-4 text-emerald-500" />
-                      ) : (
-                        <FiCopy className="w-4 h-4" />
-                      )}
-                    </button>
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-gray-300 mb-1.5">
-                    Account Status
-                  </label>
-                  <div className="flex items-center space-x-2 px-3.5 py-2.5 rounded-xl border border-emerald-200 dark:border-emerald-900/60 bg-emerald-50/50 dark:bg-emerald-950/30 text-emerald-800 dark:text-emerald-300 text-sm font-semibold">
-                    <FiCheckCircle className="w-4 h-4" />
-                    <span>Active & Verified</span>
+                  <p className="mb-1 text-sm font-medium text-ink">{t("employer:settings.profile.status")}</p>
+                  <div className="flex min-h-11 items-center space-x-2 rounded-control border border-success/30 bg-success/10 px-3.5 text-sm font-semibold text-success">
+                    <FiCheckCircle className="h-4 w-4" aria-hidden="true" />
+                    <span>{t("employer:settings.profile.statusValue")}</span>
                   </div>
                 </div>
               </div>
             </div>
           )}
 
-          {/* Organization Tab */}
           {activeTab === "organization" && (
-            <div className="space-y-8 max-w-3xl">
+            <div className="max-w-3xl space-y-8">
               <CompanyProfileEditor user={user} />
-
-              <div className="border-t border-slate-200 pt-7 dark:border-gray-700">
-              <div>
-                <h2 className="text-base font-bold text-gray-900 dark:text-white">
-                  Organization & Workspace Access
-                </h2>
-                <p className="text-xs text-slate-600 dark:text-gray-300 mt-0.5">
-                  Roles and permissions assigned to your employer portal account
-                </p>
-              </div>
-
-              <div className="space-y-3">
-                <div className="p-4 rounded-xl border border-slate-300 dark:border-gray-600 bg-gray-50/50 dark:bg-gray-800/40 flex items-center justify-between">
-                  <div>
-                    <p className="text-sm font-semibold text-gray-900 dark:text-white">
-                      System Role: <span className="capitalize text-blue-600 dark:text-blue-400">{displayRole}</span>
-                    </p>
-                    <p className="text-xs text-slate-600 dark:text-gray-300 mt-0.5">
-                      Full authority to post, edit, close, and review jobs and applicants
-                    </p>
-                  </div>
-                  <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-blue-100 dark:bg-blue-900/60 text-blue-800 dark:text-blue-300">
-                    Granted
-                  </span>
-                </div>
-
-                <div className="p-4 rounded-xl border border-slate-300 dark:border-gray-600 bg-gray-50/50 dark:bg-gray-800/40 flex items-center justify-between">
-                  <div>
-                    <p className="text-sm font-semibold text-gray-900 dark:text-white">
-                      Employer Organization
-                    </p>
-                    <p className="text-xs text-slate-600 dark:text-gray-300 mt-0.5">
-                      {displayCompany}
-                    </p>
-                  </div>
-                  <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-100 dark:bg-emerald-900/60 text-emerald-800 dark:text-emerald-300">
-                    Associated
-                  </span>
-                </div>
-
-                <div className="p-4 rounded-xl border border-slate-300 dark:border-gray-600 bg-gray-50/50 dark:bg-gray-800/40 flex items-center justify-between">
-                  <div>
-                    <p className="text-sm font-semibold text-gray-900 dark:text-white">
-                      Candidate Data Protection
-                    </p>
-                    <p className="text-xs text-slate-600 dark:text-gray-300 mt-0.5">
-                      Scoped strictly to applicants who applied to your owned listings
-                    </p>
-                  </div>
-                  <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-purple-100 dark:bg-purple-900/60 text-purple-800 dark:text-purple-300">
-                    Enforced
-                  </span>
-                </div>
-              </div>
+              <div className="space-y-3 border-t border-line pt-7">
+                <SectionTitle
+                  title={t("employer:settings.org.title")}
+                  subtitle={t("employer:settings.org.subtitle")}
+                />
+                <InfoRow
+                  title={t("employer:settings.org.roleTitle", { role: displayRole })}
+                  description={t("employer:settings.org.roleText")}
+                  chip={t("employer:settings.org.granted")}
+                  tone="primary"
+                />
+                <InfoRow
+                  title={t("employer:settings.org.orgTitle")}
+                  description={displayCompany}
+                  chip={t("employer:settings.org.associated")}
+                />
+                <InfoRow
+                  title={t("employer:settings.org.dataTitle")}
+                  description={t("employer:settings.org.dataText")}
+                  chip={t("employer:settings.org.enforced")}
+                  tone="primary"
+                />
               </div>
             </div>
           )}
 
-          {/* Security Tab */}
           {activeTab === "security" && (
-            <div className="space-y-6 max-w-2xl">
-              <div>
-                <h2 className="text-base font-bold text-gray-900 dark:text-white">
-                  Security & Authentication
-                </h2>
-                <p className="text-xs text-slate-600 dark:text-gray-300 mt-0.5">
-                  Information regarding current session and authentication tokens
-                </p>
-              </div>
-
+            <div className="max-w-2xl space-y-6">
+              <SectionTitle
+                title={t("employer:settings.security.title")}
+                subtitle={t("employer:settings.security.subtitle")}
+              />
               <div className="space-y-3">
-                <div className="p-4 rounded-xl border border-slate-300 dark:border-gray-600 bg-gray-50/50 dark:bg-gray-800/40 flex items-center justify-between">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 flex items-center justify-center">
-                      <FiKey className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <p className="text-sm font-semibold text-gray-900 dark:text-white">
-                        JWT Token Authentication
-                      </p>
-                      <p className="text-xs text-slate-600 dark:text-gray-300">
-                        Protected with cryptographic signature & Bearer authentication
-                      </p>
-                    </div>
-                  </div>
-                  <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400">
-                    Active
-                  </span>
-                </div>
-
-                <div className="p-4 rounded-xl border border-slate-300 dark:border-gray-600 bg-gray-50/50 dark:bg-gray-800/40 flex items-center justify-between">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-10 h-10 rounded-xl bg-purple-50 dark:bg-purple-950/60 text-purple-600 dark:text-purple-400 flex items-center justify-center">
-                      <FiShield className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <p className="text-sm font-semibold text-gray-900 dark:text-white">
-                        Password Storage
-                      </p>
-                      <p className="text-xs text-slate-600 dark:text-gray-300">
-                        Hashed securely with bcrypt on the server
-                      </p>
-                    </div>
-                  </div>
-                  <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400">
-                    Secured
-                  </span>
-                </div>
+                <InfoRow
+                  icon={FiKey}
+                  title={t("employer:settings.security.jwtTitle")}
+                  description={t("employer:settings.security.jwtText")}
+                  chip={t("employer:settings.security.active")}
+                />
+                <InfoRow
+                  icon={FiShield}
+                  title={t("employer:settings.security.passwordTitle")}
+                  description={t("employer:settings.security.passwordText")}
+                  chip={t("employer:settings.security.secured")}
+                />
               </div>
             </div>
           )}
         </div>
-      </div>
+      </Card>
 
-      {/* Quick Navigation Shortcuts */}
-      <div className="p-6 rounded-xl bg-white dark:bg-gray-800 border border-slate-300 dark:border-gray-600 ">
-        <h3 className="text-sm font-bold text-gray-900 dark:text-white mb-3">
-          Employer Hub Shortcuts
-        </h3>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-          <Link
-            to="/employer/post-job"
-            className="p-3 rounded-xl border border-slate-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors flex items-center justify-between group"
-          >
-            <span className="text-xs font-semibold text-gray-700 dark:text-gray-300 group-hover:text-blue-600 dark:group-hover:text-blue-400">
-              Post a New Job
-            </span>
-            <FiArrowRight className="w-3.5 h-3.5 text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-400" />
-          </Link>
-          <Link
-            to="/employer/jobs"
-            className="p-3 rounded-xl border border-slate-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors flex items-center justify-between group"
-          >
-            <span className="text-xs font-semibold text-gray-700 dark:text-gray-300 group-hover:text-blue-600 dark:group-hover:text-blue-400">
-              Manage Job Listings
-            </span>
-            <FiArrowRight className="w-3.5 h-3.5 text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-400" />
-          </Link>
-          <Link
-            to="/employer/applicants"
-            className="p-3 rounded-xl border border-slate-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors flex items-center justify-between group"
-          >
-            <span className="text-xs font-semibold text-gray-700 dark:text-gray-300 group-hover:text-blue-600 dark:group-hover:text-blue-400">
-              Track Applicants
-            </span>
-            <FiArrowRight className="w-3.5 h-3.5 text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-400" />
-          </Link>
+      <Card>
+        <h3 className="mb-3 text-sm font-extrabold text-ink">{t("employer:settings.shortcuts.title")}</h3>
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+          {shortcuts.map(({ to, key }) => (
+            <Link
+              key={key}
+              to={to}
+              className="group flex items-center justify-between rounded-card border border-line p-3 transition-colors hover:bg-tint"
+            >
+              <span className="text-xs font-semibold text-ink group-hover:text-primary-text">
+                {t(`employer:settings.shortcuts.${key}`)}
+              </span>
+              <FiArrowRight className="h-3.5 w-3.5 text-muted group-hover:text-primary-text" aria-hidden="true" />
+            </Link>
+          ))}
         </div>
-      </div>
+      </Card>
     </div>
   );
 };

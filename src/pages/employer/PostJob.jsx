@@ -1,36 +1,24 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { FiBriefcase, FiArrowLeft } from "react-icons/fi";
+import { FiArrowLeft } from "react-icons/fi";
+import { useTranslation } from "react-i18next";
 import JobEditorForm from "../../components/employer/JobEditorForm";
+import { Button, PageHeader } from "../../components/ui";
 
 const PostJob = () => {
+  const { t } = useTranslation("employer");
   return (
-    <div className="space-y-5">
-      {/* Page Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-300 dark:border-gray-600 pb-6">
-        <div>
-          <div className="flex items-center space-x-2 text-xs font-semibold uppercase tracking-wider text-blue-600 dark:text-blue-400 mb-1">
-            <FiBriefcase className="w-3.5 h-3.5" />
-            <span>New Requisition</span>
-          </div>
-          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-            Create Job Posting
-          </h1>
-          <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-            Publish an open vacancy to attract, screen, and interview qualified talent.
-          </p>
-        </div>
-
-        <Link
-          to="/employer/jobs"
-          className="inline-flex items-center space-x-2 px-4 py-2 rounded-xl border border-slate-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 text-sm font-semibold transition-colors  self-start sm:self-auto"
-        >
-          <FiArrowLeft className="w-4 h-4" />
-          <span>View All Jobs</span>
-        </Link>
-      </div>
-
-      {/* Editor Form */}
+    <div className="space-y-6">
+      <PageHeader
+        eyebrow={t("postJob.eyebrow")}
+        title={t("postJob.title")}
+        subtitle={t("postJob.subtitle")}
+        actions={
+          <Button as={Link} to="/employer/jobs" variant="outline" size="sm" leftIcon={<FiArrowLeft />}>
+            {t("postJob.viewAll")}
+          </Button>
+        }
+      />
       <JobEditorForm isEdit={false} />
     </div>
   );

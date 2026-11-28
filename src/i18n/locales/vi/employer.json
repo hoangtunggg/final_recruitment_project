@@ -1,1 +1,634 @@
-{}
+{
+  "analytics": {
+    "title": "Phân tích tuyển dụng",
+    "subtitle": "Số liệu thực tế được tính trực tiếp từ các tin đã đăng và hồ sơ ứng viên",
+    "refresh": "Làm mới số liệu",
+    "refreshing": "Đang làm mới...",
+    "honestTitle": "Cam kết số liệu trung thực:",
+    "honestText": "Mọi con số bên dưới được tổng hợp theo thời gian thực từ cơ sở dữ liệu. Lượt xem trang và cookie không bị giả lập để tránh làm sai lệch nhận định tuyển dụng.",
+    "loadFailed": "Không thể tải dữ liệu phân tích. Vui lòng kiểm tra kết nối mạng.",
+    "loadingStats": "Đang tải số liệu",
+    "kpi": {
+      "activeChip": "{{n}} đang tuyển",
+      "totalJobs": "Tổng số tin tuyển dụng",
+      "jobsFootnote": "{{draft}} bản nháp / {{closed}} đã đóng",
+      "applicationsChip": "Đơn ứng tuyển",
+      "totalSubmissions": "Tổng số hồ sơ nộp",
+      "submissionsFootnote": "Trên tất cả tin đã đăng",
+      "submissionsTruncated": "Trên tất cả tin đã đăng (đã tải {{loaded}})",
+      "ratioChip": "Tỷ lệ",
+      "avgPerJob": "Trung bình mỗi tin đang tuyển",
+      "avgFootnote": "Ứng viên / vị trí đang tuyển",
+      "stagesChip": "Giai đoạn",
+      "funnelStages": "Giai đoạn phễu đang có hồ sơ",
+      "stagesFootnote": "Số giai đoạn quy trình có hồ sơ"
+    },
+    "pipeline": {
+      "pending": "Chờ xem xét",
+      "underReview": "Đang xem xét",
+      "shortlisted": "Vào danh sách rút gọn",
+      "interview": "Giai đoạn phỏng vấn",
+      "hired": "Đề nghị / Đã tuyển",
+      "rejected": "Lưu trữ / Từ chối"
+    },
+    "funnel": {
+      "title": "Phễu xử lý đơn ứng tuyển",
+      "subtitle": "Phân bố trạng thái theo thời gian thực của tất cả hồ sơ ứng viên",
+      "subtitleTruncated": "Phân bố trạng thái trên {{loaded}} hồ sơ mới nhất (tổng {{total}} hồ sơ trong cơ sở dữ liệu)",
+      "track": "Theo dõi ứng viên",
+      "empty": "Chưa ghi nhận hồ sơ ứng viên nào. Hãy đăng tin đang tuyển để bắt đầu xây dựng nguồn ứng viên."
+    },
+    "leaderboard": {
+      "title": "Đơn ứng tuyển theo tin",
+      "subtitle": "Các vị trí xếp theo số lượng hồ sơ ứng viên",
+      "subtitleTruncated": "Các vị trí xếp theo số lượng (từ {{loaded}} đơn mới nhất)",
+      "manage": "Quản lý tin →",
+      "empty": "Chưa có tin nào được đăng. Hãy tạo vị trí đầu tiên ở mục Đăng tin.",
+      "remote": "Làm từ xa",
+      "applicants_one": "{{count}} ứng viên",
+      "applicants_other": "{{count}} ứng viên",
+      "viewApplicants": "Xem ứng viên"
+    },
+    "types": {
+      "title": "Phân bố hình thức làm việc",
+      "subtitle": "Tỷ lệ theo từng loại hình làm việc",
+      "empty": "Chưa có loại hình nào để hiển thị."
+    }
+  },
+  "applicants": {
+    "eyebrow": "Quy trình ứng viên",
+    "title": "Theo dõi ứng viên",
+    "subtitle": "Sàng lọc hồ sơ, xem trình độ, chuyển giai đoạn và xem CV của ứng viên.",
+    "manageJobs": "Quản lý tin",
+    "jobApplicants": "Ứng viên của tin",
+    "viewAll": "Xem tất cả ứng viên",
+    "refreshing": "Đang cập nhật...",
+    "loadFailed": "Không thể tải danh sách ứng tuyển. Vui lòng kiểm tra kết nối mạng.",
+    "retryLoading": "Tải lại",
+    "roleFallback": "Vị trí #{{id}}",
+    "yourCompany": "Công ty của bạn",
+    "downloading": "Đang tải...",
+    "resume": "CV",
+    "noResumeShort": "Không có",
+    "review": "Xem hồ sơ",
+    "statusButton": "Trạng thái",
+    "searchLabel": "Tìm ứng viên",
+    "searchPlaceholder": "Tìm tên, email, kỹ năng",
+    "filterStatus": "Lọc ứng viên theo trạng thái",
+    "filterJob": "Lọc ứng viên theo tin tuyển dụng",
+    "allStatuses": "Tất cả trạng thái",
+    "allJobs": "Tất cả tin tuyển dụng",
+    "showing": "Hiển thị {{shown}} / {{total}} ứng viên",
+    "kpi": {
+      "total": "Tổng",
+      "pending": "Chờ xử lý",
+      "reviewing": "Đang xem xét",
+      "shortlisted": "Rút gọn",
+      "interview": "Phỏng vấn",
+      "hired": "Đã tuyển"
+    },
+    "table": {
+      "candidate": "Ứng viên",
+      "position": "Vị trí",
+      "status": "Trạng thái",
+      "submitted": "Ngày nộp",
+      "resume": "CV",
+      "actions": "Thao tác"
+    },
+    "empty": {
+      "noneTitle": "Chưa nhận được đơn ứng tuyển nào",
+      "noneText": "Khi ứng viên ứng tuyển vào các vị trí bạn đăng, hồ sơ của họ sẽ xuất hiện tại đây để xem xét.",
+      "noMatchTitle": "Không tìm thấy ứng viên phù hợp",
+      "noMatchText": "Không có đơn nào khớp với bộ lọc hoặc từ khóa. Hãy thử xóa bộ lọc.",
+      "resetFilters": "Đặt lại bộ lọc"
+    },
+    "toast": {
+      "statusMarked": "Đã chuyển ứng viên sang \"{{status}}\".",
+      "statusFailed": "Không thể cập nhật trạng thái đơn ứng tuyển.",
+      "noResumeAttached": "Đơn ứng tuyển này không đính kèm CV.",
+      "resumeDownloaded": "Đã tải CV thành công.",
+      "downloadFailed": "Không thể tải CV. Tệp có thể không còn trên kho lưu trữ."
+    },
+    "detail": {
+      "ariaLabel": "Chi tiết ứng viên",
+      "close": "Đóng hồ sơ ứng viên",
+      "applyingFor": "Ứng tuyển vị trí",
+      "email": "Địa chỉ email",
+      "phone": "Số điện thoại",
+      "notProvided": "Chưa cung cấp",
+      "appliedOn": "Ngày ứng tuyển",
+      "availability": "Thời gian có thể đi làm",
+      "immediate": "Ngay lập tức",
+      "expectedSalary": "Mức lương mong muốn",
+      "notSpecified": "Chưa nêu rõ",
+      "currentStatus": "Trạng thái hiện tại",
+      "experience": "Kinh nghiệm liên quan",
+      "education": "Học vấn",
+      "skills": "Kỹ năng & năng lực chính",
+      "coverLetter": "Thư giới thiệu",
+      "notes": "Ghi chú nội bộ của nhà tuyển dụng",
+      "downloadResume": "Tải CV ứng viên",
+      "downloadingResume": "Đang tải CV...",
+      "noResume": "Không có CV đính kèm",
+      "updateStatus": "Cập nhật trạng thái"
+    },
+    "statusModal": {
+      "title": "Cập nhật trạng thái ứng viên",
+      "close": "Đóng cửa sổ",
+      "selectStage": "Chọn giai đoạn",
+      "notes": "Ghi chú đánh giá nội bộ (lưu cùng trạng thái)",
+      "notesPlaceholder": "Nhận xét về ứng viên, ấn tượng khi sàng lọc, mức lương mong muốn, điểm nổi bật khi phỏng vấn...",
+      "savingNotes": "Đang lưu ghi chú...",
+      "saveNotes": "Chỉ lưu ghi chú"
+    }
+  },
+  "company": {
+    "imageType": "Vui lòng chọn ảnh JPG, PNG hoặc WebP.",
+    "imageSize": "Dung lượng ảnh không được vượt quá 3 MB.",
+    "loadFailed": "Không thể tải hồ sơ công ty.",
+    "nameMin": "Tên công ty cần có ít nhất 2 ký tự.",
+    "saved": "Đã lưu hồ sơ công ty và hình ảnh.",
+    "saveFailed": "Không thể lưu hồ sơ công ty.",
+    "loading": "Đang tải hồ sơ công ty",
+    "title": "Hồ sơ công ty & hình ảnh",
+    "subtitle": "Thông tin và hình ảnh này hiển thị trên thẻ công ty và thẻ việc làm ở trang công khai.",
+    "coverAlt": "Xem trước ảnh bìa công ty",
+    "replaceCover": "Đổi ảnh bìa",
+    "addCover": "Thêm ảnh bìa",
+    "yourCompany": "Công ty của bạn",
+    "addLocation": "Thêm địa điểm công ty",
+    "replaceLogo": "Đổi logo",
+    "addLogo": "Thêm logo",
+    "imageHint": "JPG, PNG hoặc WebP · Tối đa 3 MB mỗi ảnh. Khuyến nghị: logo vuông và ảnh bìa 1600 × 500 px.",
+    "name": "Tên công ty",
+    "location": "Địa điểm",
+    "locationPlaceholder": "TP. Hồ Chí Minh, Việt Nam",
+    "website": "Website",
+    "about": "Giới thiệu công ty",
+    "aboutPlaceholder": "Mô tả sứ mệnh, văn hóa và đội ngũ của công ty.",
+    "saving": "Đang lưu hồ sơ công ty...",
+    "save": "Lưu hồ sơ công ty"
+  },
+  "dashboard": {
+    "title": "Bảng điều khiển nhà tuyển dụng",
+    "subtitle": "Tổng quan theo thời gian thực về tin đang tuyển, quy trình ứng viên và các chỉ số tuyển dụng.",
+    "refreshing": "Đang cập nhật...",
+    "loadFailed": "Không thể tải dữ liệu bảng điều khiển. Vui lòng kiểm tra kết nối.",
+    "loadingStats": "Đang tải số liệu",
+    "loadingList": "Đang tải danh sách",
+    "workflowAria": "Hướng dẫn quy trình tuyển dụng",
+    "workflowTitle": "Quy trình tuyển dụng từng bước",
+    "workflowSubtitle": "Hướng dẫn trực quan về các bước ứng viên đi qua trong quy trình",
+    "closeModal": "Đóng cửa sổ",
+    "stats": {
+      "activeJobs": "Tin đang tuyển",
+      "jobsTotal": "{{total}} tổng cộng",
+      "jobsFootnote": "{{draft}} bản nháp / {{closed}} đã đóng",
+      "totalApplicants": "Tổng số ứng viên",
+      "allTime": "Từ trước đến nay",
+      "applicantsFootnote": "{{shortlisted}} vào danh sách rút gọn / {{hired}} được tuyển",
+      "applicantsTruncated": "{{shortlisted}} vào danh sách rút gọn / {{hired}} được tuyển (từ {{loaded}} đơn mới nhất)",
+      "pendingReviews": "Đơn chờ xem xét",
+      "actionNeeded": "Cần xử lý",
+      "caughtUp": "Đã xử lý hết",
+      "pendingFootnote": "Đang chờ sàng lọc ban đầu",
+      "interviewsActive": "Phỏng vấn đang diễn ra",
+      "pipeline": "Quy trình",
+      "interviewsFootnote": "Các vòng đã lên lịch hoặc hoàn thành"
+    },
+    "recent": {
+      "title": "Ứng viên mới nhất",
+      "subtitle": "Hồ sơ mới nhất trên tất cả vị trí bạn đã đăng",
+      "subtitleTruncated": "Hiển thị {{loaded}} trên {{total}} hồ sơ ứng tuyển mới nhất",
+      "viewAll": "Xem tất cả",
+      "emptyTitle": "Chưa có ứng viên nào ứng tuyển",
+      "emptyNoJobs": "Hãy đăng vị trí tuyển dụng đầu tiên để bắt đầu nhận hồ sơ ứng viên phù hợp.",
+      "emptyWithJobs": "Các tin tuyển dụng của bạn đang hiển thị. Khi có ứng viên ứng tuyển, hồ sơ sẽ xuất hiện tại đây.",
+      "createFirstJob": "Tạo tin đầu tiên",
+      "recently": "Gần đây",
+      "anonymous": "Ứng viên ẩn danh",
+      "roleFallback": "Vị trí #{{id}}",
+      "applied": "Ứng tuyển {{date}}",
+      "review": "Xem xét"
+    },
+    "postings": {
+      "title": "Tin đang đăng",
+      "subtitle": "Số lượng ứng tuyển thực tế theo từng vị trí",
+      "manage": "Quản lý",
+      "emptyTitle": "Chưa có tin tuyển dụng nào",
+      "emptyText": "Hãy tạo một vị trí để bắt đầu nhận hồ sơ ứng viên thực tế.",
+      "postJob": "Đăng tin",
+      "applications": "đơn ứng tuyển",
+      "pending": "{{n}} chờ xử lý"
+    },
+    "quick": {
+      "title": "Thao tác nhanh",
+      "subtitle": "Truy cập nhanh các quy trình tuyển dụng và công cụ theo dõi thiết yếu",
+      "workflowDemo": "Xem quy trình mẫu",
+      "postJob": {
+        "title": "Đăng tin mới",
+        "text": "Tạo và đăng một vị trí tuyển dụng"
+      },
+      "manageJobs": {
+        "title": "Quản lý tin",
+        "text": "Xem tất cả tin và trạng thái"
+      },
+      "tracking": {
+        "title": "Theo dõi ứng viên",
+        "text": "Sàng lọc, chọn và đánh giá hồ sơ"
+      },
+      "interviews": {
+        "title": "Lịch phỏng vấn",
+        "text": "Quản lý các buổi phỏng vấn ứng viên"
+      },
+      "analytics": {
+        "title": "Phân tích tuyển dụng",
+        "text": "Phễu tuyển dụng và các chỉ số"
+      }
+    }
+  },
+  "editJob": {
+    "eyebrow": "Quản lý tin tuyển dụng",
+    "loadingTitle": "Đang tải thông tin tin tuyển dụng...",
+    "title": "Chỉnh sửa: {{title}}",
+    "fallbackTitle": "Tin tuyển dụng",
+    "subtitle": "Cập nhật mô tả, yêu cầu, mức lương hoặc trạng thái đăng tin.",
+    "backToJobs": "Quay lại danh sách tin",
+    "errorTitle": "Không thể tải tin tuyển dụng",
+    "notFound": "Không tìm thấy tin tuyển dụng.",
+    "loadFailed": "Không thể tải thông tin tin tuyển dụng. Có thể bạn không có quyền chỉnh sửa tin này.",
+    "backToManage": "Về trang quản lý tin"
+  },
+  "interviews": {
+    "title": "Quản lý phỏng vấn",
+    "subtitle": "Theo dõi, đánh giá và đưa ứng viên ở giai đoạn phỏng vấn sang bước tiếp theo",
+    "allApplicants": "Tất cả ứng viên",
+    "refreshing": "Đang làm mới...",
+    "loadFailed": "Không thể tải dữ liệu phỏng vấn. Vui lòng kiểm tra kết nối.",
+    "candidate": "Ứng viên",
+    "noEmail": "Chưa có email",
+    "recently": "Gần đây",
+    "jobPosting": "Tin tuyển dụng",
+    "applied": "Ứng tuyển: {{date}}",
+    "notesLabel": "Ghi chú / Đánh giá:",
+    "resume": "CV",
+    "downloading": "Đang tải...",
+    "updateStatus": "Cập nhật trạng thái",
+    "searchLabel": "Tìm ứng viên đang phỏng vấn",
+    "searchPlaceholder": "Tìm tên, email, chức danh",
+    "stageFilter": "Lọc theo giai đoạn phỏng vấn",
+    "jobFilter": "Lọc theo tin tuyển dụng",
+    "allJobs": "Tất cả tin tuyển dụng",
+    "tabs": {
+      "all": "Tất cả ({{n}})",
+      "scheduled": "Đã lên lịch ({{n}})",
+      "completed": "Hoàn tất ({{n}})"
+    },
+    "stats": {
+      "pipelineChip": "Quy trình",
+      "total": "Tổng số trong quy trình",
+      "totalFootnote": "Ứng viên ở giai đoạn phỏng vấn",
+      "upcomingChip": "Sắp tới",
+      "scheduled": "Phỏng vấn đã lên lịch",
+      "scheduledFootnote": "Đang chờ phỏng vấn",
+      "doneChip": "Xong",
+      "completed": "Hoàn tất / Đã phỏng vấn",
+      "completedFootnote": "Đã có đánh giá"
+    },
+    "empty": {
+      "noneTitle": "Chưa có ứng viên phỏng vấn nào",
+      "noneText": "Hãy xem xét hồ sơ ở mục Theo dõi ứng viên và chuyển ứng viên phù hợp sang \"Đã lên lịch phỏng vấn\" để quản lý đánh giá tại đây.",
+      "noMatchTitle": "Không tìm thấy ứng viên phù hợp",
+      "noMatchText": "Hãy thử đổi từ khóa tìm kiếm hoặc bộ lọc tin tuyển dụng.",
+      "viewTracking": "Xem theo dõi ứng viên"
+    },
+    "toast": {
+      "resumeDownloaded": "Đã tải CV của {{name}}",
+      "noResume": "Ứng viên này chưa có tệp CV.",
+      "moved": "Đã chuyển ứng viên sang \"{{status}}\"",
+      "updateFailed": "Không thể cập nhật trạng thái ứng viên. Đã hoàn tác thay đổi."
+    },
+    "modal": {
+      "title": "Cập nhật giai đoạn của ứng viên",
+      "close": "Đóng cửa sổ",
+      "nextStatus": "Trạng thái tiếp theo",
+      "options": {
+        "interview_scheduled": "Đã lên lịch phỏng vấn",
+        "interviewed": "Đã phỏng vấn (hoàn tất đánh giá)",
+        "offered": "Gửi đề nghị việc làm",
+        "accepted": "Đã chấp nhận / Đã tuyển",
+        "rejected": "Từ chối ứng viên"
+      },
+      "notes": "Nhận xét của người phỏng vấn / Ghi chú lịch hẹn",
+      "notesPlaceholder": "VD: Ứng viên làm tốt phần câu hỏi thuật toán; đề xuất mời vòng phỏng vấn tiếp theo vào thứ Sáu lúc 14:00.",
+      "updating": "Đang cập nhật...",
+      "save": "Lưu trạng thái"
+    }
+  },
+  "jobEditor": {
+    "banner": {
+      "created": "Đăng tin thành công! Đang chuyển đến trang quản lý tin...",
+      "updated": "Cập nhật tin thành công! Đang chuyển đến trang quản lý tin...",
+      "fixFields": "Vui lòng sửa các trường được đánh dấu trước khi gửi.",
+      "saveFailed": "Không thể lưu tin tuyển dụng. Vui lòng thử lại."
+    },
+    "core": {
+      "title": "Thông tin vị trí",
+      "subtitle": "Các thông tin chính sẽ hiển thị trong kết quả tìm kiếm."
+    },
+    "fields": {
+      "title": "Chức danh",
+      "titlePlaceholder": "VD: Kỹ sư Full-stack cao cấp",
+      "company": "Công ty / Đơn vị tuyển dụng",
+      "companyPlaceholder": "VD: Công ty TNHH Công nghệ ABC",
+      "location": "Địa điểm làm việc",
+      "locationPlaceholder": "VD: Hà Nội, TP. Hồ Chí Minh hoặc Làm từ xa",
+      "type": "Hình thức làm việc",
+      "experience": "Cấp bậc kinh nghiệm",
+      "salary": "Mức lương hoặc khoảng thu nhập",
+      "salaryPlaceholder": "VD: 25.000.000 - 35.000.000 VND",
+      "deadline": "Hạn nộp hồ sơ",
+      "status": "Trạng thái tin tuyển dụng",
+      "description": "Mô tả công việc",
+      "descriptionPlaceholder": "Giới thiệu tổng quan về vị trí, sứ mệnh công ty, văn hóa đội ngũ và tác động hằng ngày của công việc...",
+      "requirements": "Yêu cầu & trình độ",
+      "requirementsPlaceholder": "Liệt kê kỹ năng chuyên môn, số năm kinh nghiệm tối thiểu, bằng cấp hoặc chứng chỉ liên quan...",
+      "responsibilities": "Trách nhiệm chính (không bắt buộc)",
+      "responsibilitiesPlaceholder": "Nhiệm vụ cốt lõi hằng ngày, định hướng kiến trúc, review code, kèm cặp thành viên...",
+      "benefits": "Quyền lợi & đãi ngộ (không bắt buộc)",
+      "benefitsPlaceholder": "Bảo hiểm sức khỏe, thưởng tháng 13, nghỉ phép linh hoạt, hỗ trợ làm việc từ xa, ngân sách đào tạo...",
+      "skills": "Kỹ năng & công nghệ chính (tối đa {{max}})",
+      "skillsPlaceholder": "VD: React, TypeScript, PostgreSQL (nhấn Enter để thêm)",
+      "contactEmail": "Email liên hệ / nhận thông báo",
+      "contactPhone": "Số điện thoại liên hệ (không bắt buộc)"
+    },
+    "statusHint": {
+      "live": "Công khai & đang hiển thị",
+      "internal": "Chỉ dùng nội bộ",
+      "archived": "Đã lưu trữ"
+    },
+    "image": {
+      "title": "Ảnh vị trí",
+      "subtitle": "Thêm ảnh nơi làm việc, đội ngũ hoặc vị trí. Ảnh hiển thị trên thẻ việc làm và trang chi tiết.",
+      "replace": "Đổi ảnh",
+      "choose": "Chọn ảnh",
+      "constraints": "JPG, PNG hoặc WebP · Tối đa 3 MB · Khuyến nghị 1200 × 525 px.",
+      "previewAlt": "Xem trước ảnh vị trí",
+      "preview": "Xem trước ảnh"
+    },
+    "details": {
+      "title": "Mô tả & yêu cầu công việc",
+      "subtitle": "Yêu cầu và kỳ vọng rõ ràng giúp thu hút ứng viên phù hợp nhất."
+    },
+    "contact": {
+      "title": "Liên hệ & nhận thông báo",
+      "subtitle": "Chọn nơi nhận thông báo ứng viên hoặc các câu hỏi trực tiếp."
+    },
+    "counter": "{{current}}/{{max}}",
+    "counterMin": "{{current}}/{{max}} (tối thiểu {{min}})",
+    "removeSkill": "Xóa kỹ năng {{skill}}",
+    "saveDraft": "Lưu bản nháp",
+    "publish": "Đăng tin tuyển dụng",
+    "publishing": "Đang đăng tin...",
+    "update": "Cập nhật tin tuyển dụng",
+    "updating": "Đang cập nhật...",
+    "validation": {
+      "titleRequired": "Vui lòng nhập chức danh.",
+      "titleMin": "Chức danh cần có ít nhất 3 ký tự.",
+      "titleMax": "Chức danh không được vượt quá 100 ký tự.",
+      "companyRequired": "Vui lòng nhập tên công ty.",
+      "companyMin": "Tên công ty cần có ít nhất 2 ký tự.",
+      "companyMax": "Tên công ty không được vượt quá 100 ký tự.",
+      "locationRequired": "Vui lòng nhập địa điểm (VD: Hà Nội hoặc Làm từ xa).",
+      "locationMin": "Địa điểm cần có ít nhất 2 ký tự.",
+      "descriptionRequired": "Vui lòng nhập mô tả công việc.",
+      "descriptionMin": "Mô tả cần có ít nhất 30 ký tự (hiện có {{current}}/30).",
+      "descriptionMax": "Mô tả không được vượt quá 5000 ký tự.",
+      "requirementsRequired": "Vui lòng nhập yêu cầu công việc.",
+      "requirementsMin": "Yêu cầu cần có ít nhất 20 ký tự (hiện có {{current}}/20).",
+      "requirementsMax": "Yêu cầu không được vượt quá 3000 ký tự.",
+      "emailInvalid": "Vui lòng nhập địa chỉ email hợp lệ.",
+      "skillsMax": "Tối đa {{max}} kỹ năng.",
+      "imageType": "Vui lòng chọn ảnh JPG, PNG hoặc WebP.",
+      "imageSize": "Dung lượng ảnh không được vượt quá 3 MB."
+    }
+  },
+  "layout": {
+    "skipToMain": "Chuyển đến nội dung chính",
+    "sidebarLabel": "Điều hướng nhà tuyển dụng",
+    "brand": "Cổng nhà tuyển dụng",
+    "tagline": "Tuyển dụng & nhân tài",
+    "closeSidebar": "Đóng thanh bên",
+    "openSidebar": "Mở thanh bên",
+    "workspace": "Không gian làm việc",
+    "roleBadge": "Nhà tuyển dụng",
+    "employerFallback": "Nhà tuyển dụng",
+    "portal": "Cổng nhà tuyển dụng",
+    "welcome": "Chào mừng trở lại, {{name}}",
+    "nav": {
+      "overview": "Tổng quan",
+      "postJob": "Đăng tin",
+      "myJobs": "Tin tuyển dụng",
+      "applicants": "Ứng viên",
+      "interviews": "Phỏng vấn",
+      "analytics": "Phân tích",
+      "settings": "Cài đặt"
+    },
+    "titles": {
+      "overview": "Tổng quan nhà tuyển dụng",
+      "postJob": "Đăng tin tuyển dụng mới",
+      "editJob": "Chỉnh sửa tin tuyển dụng",
+      "jobApplicants": "Ứng viên của tin tuyển dụng",
+      "myJobs": "Tin tuyển dụng của tôi",
+      "applicantTracking": "Theo dõi ứng viên",
+      "interviews": "Lịch phỏng vấn",
+      "analytics": "Phân tích tuyển dụng",
+      "settings": "Cài đặt nhà tuyển dụng",
+      "hub": "Cổng nhà tuyển dụng"
+    }
+  },
+  "manageJobs": {
+    "eyebrow": "Kho tin tuyển dụng",
+    "title": "Quản lý tin tuyển dụng",
+    "subtitle": "Xem các tin đang đăng, theo dõi số lượng ứng viên, cập nhật trạng thái hoặc chỉnh sửa nội dung tin.",
+    "refreshing": "Đang cập nhật...",
+    "postNew": "Đăng tin mới",
+    "loadFailed": "Không thể tải danh sách tin tuyển dụng. Vui lòng kiểm tra kết nối mạng.",
+    "retryLoading": "Tải lại",
+    "searchLabel": "Tìm tin tuyển dụng",
+    "searchPlaceholder": "Tìm chức danh, kỹ năng, địa điểm",
+    "filterStatus": "Lọc tin theo trạng thái",
+    "filterType": "Lọc tin theo hình thức làm việc",
+    "allStatuses": "Tất cả trạng thái",
+    "allTypes": "Tất cả hình thức làm việc",
+    "showing": "Hiển thị {{shown}} / {{total}} vị trí",
+    "toast": {
+      "statusUpdated": "Đã cập nhật trạng thái tin thành \"{{status}}\".",
+      "statusFailed": "Không thể cập nhật trạng thái tin.",
+      "deleted": "Đã xóa tin \"{{title}}\".",
+      "deleteFailed": "Không thể xóa tin tuyển dụng."
+    },
+    "empty": {
+      "noneTitle": "Chưa có tin tuyển dụng nào",
+      "noneText": "Hãy tạo tin tuyển dụng đầu tiên để bắt đầu thu hút và phỏng vấn ứng viên.",
+      "noMatchTitle": "Không tìm thấy tin phù hợp",
+      "noMatchText": "Không có tin nào khớp với bộ lọc hiện tại. Hãy thử đặt lại bộ lọc hoặc đổi từ khóa tìm kiếm.",
+      "postFirst": "Đăng tin đầu tiên",
+      "resetFilters": "Đặt lại bộ lọc"
+    },
+    "table": {
+      "position": "Vị trí & chi tiết",
+      "typeLevel": "Hình thức & cấp bậc",
+      "status": "Trạng thái",
+      "applications": "Đơn ứng tuyển",
+      "timeline": "Thời gian",
+      "actions": "Thao tác",
+      "total": "tổng",
+      "awaitingReview": "{{n}} đơn chờ xem xét",
+      "noPending": "0 đơn chờ xử lý",
+      "posted": "Đăng {{date}}",
+      "deadline": "Hạn nộp: {{date}}",
+      "actionsMenu": "Menu thao tác với tin tuyển dụng"
+    },
+    "menu": {
+      "viewApplicants": "Xem ứng viên ({{n}})",
+      "edit": "Chỉnh sửa tin",
+      "changeStatus": "Đổi trạng thái",
+      "setActive": "Đặt là đang tuyển",
+      "moveToDraft": "Chuyển về bản nháp",
+      "closeJob": "Đóng tin",
+      "delete": "Xóa tin tuyển dụng"
+    },
+    "delete": {
+      "ariaLabel": "Xác nhận xóa tin tuyển dụng",
+      "title": "Xóa tin tuyển dụng?",
+      "confirmPrefix": "Bạn có chắc muốn xóa",
+      "confirmSuffix": "? Thao tác này không thể hoàn tác và sẽ xóa vĩnh viễn tin tuyển dụng cùng các liên kết ứng viên.",
+      "deleting": "Đang xóa...",
+      "confirm": "Xóa tin"
+    }
+  },
+  "notifications": {
+    "view": "Xem thông báo",
+    "title": "Thông báo trực tiếp",
+    "newCount": "{{n}} mới",
+    "emptyTitle": "Chưa có thông báo mới",
+    "emptyText": "Hồ sơ ứng tuyển mới sẽ xuất hiện tại đây theo thời gian thực",
+    "newApplicationTitle": "Có đơn ứng tuyển mới",
+    "newApplicationMessage": "{{name}} đã ứng tuyển vào {{job}}",
+    "aCandidate": "Một ứng viên",
+    "yourPosition": "vị trí đang tuyển của bạn",
+    "dismiss": "Bỏ qua thông báo",
+    "daysAgo": "{{n}} ngày trước",
+    "openTracking": "Mở trang theo dõi ứng viên →"
+  },
+  "postJob": {
+    "eyebrow": "Vị trí tuyển dụng mới",
+    "title": "Tạo tin tuyển dụng",
+    "subtitle": "Đăng vị trí đang tuyển để thu hút, sàng lọc và phỏng vấn ứng viên phù hợp.",
+    "viewAll": "Xem tất cả tin"
+  },
+  "settings": {
+    "title": "Cài đặt nhà tuyển dụng",
+    "subtitle": "Xem thông tin xác thực và quyền hạn của tổ chức",
+    "organizationFallback": "Tổ chức tuyển dụng",
+    "mediaTitle": "Hiện diện công khai của công ty:",
+    "mediaText": "Thêm logo và ảnh bìa trong mục Không gian & vai trò. Hình ảnh sẽ được dùng thống nhất trên thẻ công ty và thẻ việc làm.",
+    "tabs": {
+      "profile": "Hồ sơ tài khoản",
+      "organization": "Không gian & vai trò",
+      "security": "Bảo mật & phiên đăng nhập"
+    },
+    "profile": {
+      "title": "Thông tin hồ sơ",
+      "subtitle": "Các thông tin đã xác minh gắn với phiên đăng nhập của bạn",
+      "name": "Họ tên / Người liên hệ",
+      "email": "Địa chỉ email",
+      "userId": "Mã người dùng (ID)",
+      "copyId": "Sao chép mã người dùng",
+      "status": "Trạng thái tài khoản",
+      "statusValue": "Đang hoạt động & đã xác minh"
+    },
+    "org": {
+      "title": "Quyền truy cập tổ chức & không gian làm việc",
+      "subtitle": "Vai trò và quyền hạn được gán cho tài khoản nhà tuyển dụng của bạn",
+      "roleTitle": "Vai trò hệ thống: {{role}}",
+      "roleText": "Toàn quyền đăng, chỉnh sửa, đóng tin và xem xét ứng viên",
+      "granted": "Đã cấp",
+      "orgTitle": "Tổ chức tuyển dụng",
+      "associated": "Đã liên kết",
+      "dataTitle": "Bảo vệ dữ liệu ứng viên",
+      "dataText": "Chỉ giới hạn trong những ứng viên đã ứng tuyển vào tin của bạn",
+      "enforced": "Đang áp dụng"
+    },
+    "security": {
+      "title": "Bảo mật & xác thực",
+      "subtitle": "Thông tin về phiên đăng nhập và mã xác thực hiện tại",
+      "jwtTitle": "Xác thực bằng JWT",
+      "jwtText": "Được bảo vệ bằng chữ ký mật mã và xác thực Bearer",
+      "active": "Đang bật",
+      "passwordTitle": "Lưu trữ mật khẩu",
+      "passwordText": "Được băm an toàn bằng bcrypt trên máy chủ",
+      "secured": "An toàn"
+    },
+    "shortcuts": {
+      "title": "Lối tắt trong cổng nhà tuyển dụng",
+      "postJob": "Đăng tin mới",
+      "manageJobs": "Quản lý tin tuyển dụng",
+      "trackApplicants": "Theo dõi ứng viên"
+    }
+  },
+  "workflowDemo": {
+    "phaseApply": "Ứng tuyển",
+    "phaseReview": "Xem xét",
+    "phaseInterview": "Phỏng vấn",
+    "phaseOffer": "Đề nghị",
+    "stepOf": "Bước {{current}} / {{total}}",
+    "nextStep": "Bước tiếp theo",
+    "done": "Hoàn tất",
+    "steps": {
+      "apply": {
+        "title": "Ứng viên nộp hồ sơ",
+        "desc": "Đơn ứng tuyển được nhận và hiển thị trên bảng điều khiển; ứng viên đính kèm CV.",
+        "line1": "Thời điểm: cập nhật gần như theo thời gian thực",
+        "line2": "Trạng thái: Chờ xử lý"
+      },
+      "review": {
+        "title": "Xem hồ sơ ứng viên",
+        "desc": "Xem thông tin liên hệ, thư giới thiệu và CV dạng PDF của ứng viên.",
+        "line1": "CV: tải trực tiếp tệp gốc",
+        "line2": "Phân quyền: chỉ nhà tuyển dụng của tin này được xem"
+      },
+      "notes": {
+        "title": "Ghi chú nội bộ & trao đổi",
+        "desc": "Lưu ghi chú của nhà tuyển dụng và nhận xét sàng lọc, được bảo mật cùng đơn ứng tuyển.",
+        "line1": "\"Ứng viên có nền tảng kỹ thuật tốt; chuyển sang vòng sàng lọc đầu tiên.\"",
+        "line2": "Ghi chú chỉ hiển thị với nhà tuyển dụng"
+      },
+      "underReview": {
+        "title": "Chuyển sang đang xem xét",
+        "desc": "Cập nhật trạng thái đơn ứng tuyển qua API.",
+        "line1": "",
+        "line2": ""
+      },
+      "interview": {
+        "title": "Lên lịch phỏng vấn",
+        "desc": "Chuyển sang trạng thái đã lên lịch phỏng vấn, kèm thông tin buổi hẹn trong ghi chú.",
+        "line1": "Vòng: Kỹ thuật & Phù hợp văn hóa",
+        "line2": "Trạng thái: Đã lên lịch phỏng vấn"
+      },
+      "notify": {
+        "title": "Ứng viên được thông báo",
+        "desc": "Trang cá nhân của ứng viên cập nhật ngay giai đoạn mới trong quy trình.",
+        "line1": "✓ Dòng thời gian được cập nhật",
+        "line2": "✓ Nhãn trạng thái đồng bộ theo thời gian thực"
+      },
+      "decision": {
+        "title": "Quyết định tuyển dụng",
+        "desc": "Gửi đề nghị cho ứng viên hoặc khép lại đơn ứng tuyển một cách lịch sự.",
+        "line1": "Trạng thái cuối hợp lệ: đã chấp nhận, bị từ chối, đã rút đơn",
+        "line2": "Mọi thay đổi đều được ghi lại trong cơ sở dữ liệu"
+      }
+    }
+  }
+}
