@@ -3,15 +3,13 @@
 // so SSE turns (text/event-stream) and TTS audio reach the client as they are produced.
 const { Readable } = require("node:stream");
 
-// Only the endpoints the interview page needs; everything else is 404 so this service is not an open relay.
+// Stateless endpoints the interview page needs; everything else is 404 so this service is not an open relay.
+// NEVER add start / next-turn / finalize here: they have explicit routes with quota + ownership checks (server.js).
 const ROUTES = {
   ai: {
     "GET stt/phrases": "/api/stt/phrases",
     "POST cv/parse": "/api/cv/parse",
     "POST jd/parse": "/api/jd/parse",
-    "POST start": "/api/start",
-    "POST next-turn": "/api/next-turn",
-    "POST finalize": "/api/finalize",
   },
   voice: {
     "GET health": "/api/health",
@@ -67,6 +65,15 @@ async function forward(req, res, target, upstreamPath) {
     return res.status(timedOut ? 504 : 502).json({
       success: false, error: timedOut ? `${target}-service timed out` : `${target}-service unreachable`,
     });
+  }
+  // 401/403 from an AI service means OUR internal token is missing or wrong, not that the user's login expired:
+  // passing it through would make the web app log the candidate out.
+  if (response.status === 401 || response.status === 403) {
+    clearTimeout(timer);
+    await response.body?.cancel().catch(() => {});
+    req.log?.error({ target, status: response.status }, "AI service rejected the internal token");
+    res.status(502).json({ success: false, error: `${target}-service rejected the gateway credentials`, code: "upstream_misconfigured" });
+    return { ok: false, status: 502 };
   }
   res.status(response.status);
   for (const name of ["content-type", "cache-control"]) {
