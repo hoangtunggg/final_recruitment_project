@@ -223,3 +223,13 @@
 .dark select:focus {
   border-color: rgb(var(--ring));
 }
+
+/* Error state must win over the dark-mode control colours above (primitives set aria-invalid). */
+.dark input[aria-invalid="true"],
+.dark textarea[aria-invalid="true"],
+.dark select[aria-invalid="true"],
+.dark input[aria-invalid="true"]:focus,
+.dark textarea[aria-invalid="true"]:focus,
+.dark select[aria-invalid="true"]:focus {
+  border-color: rgb(var(--danger));
+}

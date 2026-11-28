@@ -9,7 +9,7 @@ Defined in `tailwind.config.js` (static scales) and `src/index.css` (theme varia
 | Role | Tailwind class | Light | Dark |
 | --- | --- | --- | --- |
 | Brand teal (fills without text, rings, top bar, icons) | `primary-500` / `brand-teal` | `#00A398` | `#00A398` |
-| Filled button, link on white | `primary-600` (`bg-primary` default) | `#008077` (white text 4.8:1) | `#008077` |
+| Filled button background | `primary-600` (`bg-primary` default) | `#008077` (white text 4.8:1) | `#008077` |
 | Teal text / hover | `text-primary-text` | `#006B64` | `#4DBDB5` |
 | Teal tint (cards, hover rows) | `bg-tint` / `primary-50` | `#F7FCFC` | `#172A29` |
 | Teal line (card border) | `border-tint-line` | `#D1EEEC` | `#1F4A47` |
