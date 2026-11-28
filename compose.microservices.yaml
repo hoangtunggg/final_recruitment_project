@@ -8,7 +8,7 @@ x-node-service: &node-service
     INTERNAL_SERVICE_TOKEN: ${INTERNAL_SERVICE_TOKEN:?set INTERNAL_SERVICE_TOKEN}
     REDIS_URL: redis://redis:6379
     EVENT_STREAM: jobportal.events.v1
-    ALLOWED_ORIGINS: http://localhost:5173,http://localhost:8080
+    ALLOWED_ORIGINS: ${ALLOWED_ORIGINS:-http://localhost:5173,http://localhost:8080}
     DB_POOL_MAX: 8
   deploy:
     resources:

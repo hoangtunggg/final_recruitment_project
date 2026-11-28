@@ -1,0 +1,19 @@
+# Staging override: shared GCP VM with the AI repo (minhtuann1102/ai-recruitment-platform, spec 014 US6).
+# Caddy from that repo terminates TLS at api.<host> and proxies to api-gateway:8080 over the external Docker network
+# hireready-edge (created on the VM by its bootstrap script). Only the gateway joins that network; Postgres, Redis,
+# MinIO and the services stay on `internal`. The frontend is deployed separately (Vercel).
+#
+#   docker compose -p jobportal --env-file /opt/jobportal/staging.env #     -f compose.microservices.yaml -f compose.microservices.staging.yaml up -d --build
+#
+# staging.env = microservices/.env.example values plus ALLOWED_ORIGINS=https://<frontend-host>.
+services:
+  api-gateway:
+    ports: !reset []
+    networks: [public, internal, edge]
+  frontend:
+    profiles: ["disabled-in-staging-frontend-on-vercel"]
+
+networks:
+  edge:
+    name: hireready-edge
+    external: true
