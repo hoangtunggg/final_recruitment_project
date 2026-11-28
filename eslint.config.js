@@ -5,7 +5,14 @@ import reactRefresh from 'eslint-plugin-react-refresh'
 import { defineConfig, globalIgnores } from 'eslint/config'
 
 export default defineConfig([
-  globalIgnores(['dist', 'backend/**', 'node_modules/**', '*.mjs']),
+  globalIgnores([
+    'dist',
+    'backend/**',
+    'node_modules/**',
+    '*.mjs',
+    'playwright-report/**',
+    'test-results/**',
+  ]),
   {
     files: ['**/*.{js,jsx}'],
     extends: [
@@ -25,6 +32,16 @@ export default defineConfig([
     rules: {
       'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
       'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
+    },
+  },
+  {
+    // Playwright config and specs run in Node (not the browser bundle)
+    files: ['playwright.config.js', 'e2e/**/*.js'],
+    languageOptions: {
+      globals: { ...globals.node, ...globals.browser },
+    },
+    rules: {
+      'react-hooks/rules-of-hooks': 'off', // Playwright fixtures use `use(...)`, not React hooks
     },
   },
   {
