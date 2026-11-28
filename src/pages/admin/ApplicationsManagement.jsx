@@ -42,6 +42,7 @@ import {
 import ApplicationDetailsModal from "../../components/admin/applications/ApplicationDetailsModal";
 import ApplicationStatusModal from "../../components/admin/applications/ApplicationStatusModal";
 import { APPLICATION_STATUSES } from "../../components/admin/applications/application-status-options";
+import { extractApplications, extractPagination } from "../../services/application-list-response";
 
 const ApplicationsManagement = () => {
   const { t } = useTranslation("admin");
@@ -118,15 +119,9 @@ const ApplicationsManagement = () => {
         });
 
         if (response.success) {
-          const list = response.data || [];
-          setApplications(list);
-          setPagination({
-            currentPage: response.pagination?.page || targetPage,
-            totalPages: response.pagination?.pages || 1,
-            totalApplications: response.pagination?.total ?? list.length,
-            hasNext: (response.pagination?.page || targetPage) < (response.pagination?.pages || 1),
-            hasPrev: (response.pagination?.page || targetPage) > 1,
-          });
+          // The microservices API nests the list ({ data: { applications, pagination } }): read it tolerantly.
+          setApplications(extractApplications(response));
+          setPagination(extractPagination(response, { page: targetPage, limit }));
         } else {
           throw new Error(response.error || "");
         }

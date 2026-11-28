@@ -1,18 +1,5 @@
-/**
- * Tolerant readers for GET /applications. Depending on the deployment the list is either
- * `{ data: [...], pagination: { total } }` or `{ data: { applications: [...], pagination } }`.
- */
-export const extractApplications = (response) => {
-  if (!response?.success) return [];
-  if (Array.isArray(response.data)) return response.data;
-  return Array.isArray(response.data?.applications) ? response.data.applications : [];
-};
-
-/** Employer-scoped total from pagination metadata, or null when the API does not send one. */
-export const extractTotal = (response) => {
-  const total = response?.pagination?.total ?? response?.data?.pagination?.total;
-  return typeof total === "number" ? total : null;
-};
+// List readers live in a shared module (admin uses them too); re-exported for existing employer imports.
+export { extractApplications, extractTotal } from "../../services/application-list-response";
 
 /**
  * Message worth showing verbatim: the server's `error` text. Transport failures (Axios "Network Error",
