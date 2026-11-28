@@ -1,1 +1,239 @@
-{}
+{
+  "page": {
+    "title": "Luyện phỏng vấn cùng AI",
+    "lead": "Trả lời bằng giọng nói như một buổi phỏng vấn thật, rồi nhận đánh giá chi tiết.",
+    "documentTitle": "Luyện phỏng vấn cùng AI | JobPortal"
+  },
+  "header": {
+    "backHome": "Về trang chủ",
+    "timerTitle": "Thời gian còn lại của buổi phỏng vấn"
+  },
+  "setup": {
+    "title": "Thiết lập buổi phỏng vấn",
+    "track": "Vị trí",
+    "trackPlaceholder": "Chọn vị trí…",
+    "level": "Cấp độ",
+    "duration": "Thời lượng",
+    "durationOption": "{{minutes}} phút",
+    "cv": "CV của bạn",
+    "cvChoose": "Chọn tệp",
+    "cvNone": "Chưa chọn tệp",
+    "cvRemove": "Gỡ tệp CV",
+    "cvHint": "Không bắt buộc, định dạng PDF hoặc DOCX. Câu hỏi sẽ bám theo kinh nghiệm của bạn.",
+    "jd": "Mô tả công việc",
+    "jdHint": "Không bắt buộc: dán mô tả công việc (JD) của vị trí bạn ứng tuyển.",
+    "jdPlaceholder": "Dán mô tả công việc vào đây",
+    "continue": "Tiếp tục",
+    "pickTrack": "Bạn chọn vị trí muốn luyện phỏng vấn trước nhé.",
+    "parsingCv": "Đang đọc CV của bạn…",
+    "parsingJd": "Đang đọc mô tả công việc…",
+    "startFailed": "Chưa bắt đầu được buổi phỏng vấn.",
+    "quotaRemaining": "Hôm nay bạn còn {{remaining}}/{{limit}} buổi luyện phỏng vấn",
+    "jobLoading": "Đang tải thông tin việc làm…",
+    "jobFailed": "Không tải được tin tuyển dụng này. Bạn có thể tự dán mô tả công việc vào ô bên dưới.",
+    "jobBadge": "Luyện cho việc làm",
+    "jobRequirements": "Yêu cầu:"
+  },
+  "tracks": {
+    "python_backend": "Backend Python",
+    "nodejs_backend": "Backend Node.js",
+    "java_backend": "Backend Java",
+    "frontend_react": "Frontend React",
+    "devops_engineer": "Kỹ sư DevOps",
+    "ai_engineer": "Kỹ sư AI"
+  },
+  "levels": {
+    "fresher": "Fresher – mới ra trường",
+    "junior": "Junior – có ít kinh nghiệm",
+    "middle": "Middle – kinh nghiệm vững",
+    "senior": "Senior – giàu kinh nghiệm"
+  },
+  "permission": {
+    "title": "Chuẩn bị micro",
+    "lead": "AI sẽ đọc câu hỏi, bạn trả lời bằng micro. Giọng nói được chuyển thành chữ để AI đánh giá, âm thanh không được lưu lại.",
+    "micTitle": "Cho phép dùng micro",
+    "micText": "Đồng ý để giọng nói được chuyển thành chữ",
+    "micSwitch": "Bật micro",
+    "serviceTitle": "Dịch vụ giọng nói",
+    "serviceUnchecked": "Chưa kiểm tra",
+    "serviceChecking": "Đang kiểm tra…",
+    "serviceReady": "Sẵn sàng",
+    "serviceDown": "Chưa sẵn sàng. Bấm công tắc để kiểm tra lại.",
+    "serviceSwitch": "Kiểm tra lại dịch vụ giọng nói",
+    "back": "Quay lại",
+    "startVoice": "Bắt đầu phỏng vấn",
+    "startTyping": "Bắt đầu (trả lời bằng chữ)",
+    "micDenied": "Trình duyệt chưa cho dùng micro. Bấm biểu tượng ổ khóa trên thanh địa chỉ để cho phép, hoặc bắt đầu và trả lời bằng cách gõ."
+  },
+  "question": {
+    "region": "Buổi phỏng vấn",
+    "end": "Kết thúc & xem đánh giá",
+    "progress": "Chủ đề {{index}}/{{total}}",
+    "progressWithTurn": "Chủ đề {{index}}/{{total}} • câu {{turn}}/{{cap}}",
+    "progressLabel": "Tiến độ theo chủ đề",
+    "answerLabel": "Câu trả lời của bạn",
+    "answerPlaceholder": "Gõ câu trả lời rồi bấm Gửi (Ctrl/⌘ + Enter)",
+    "replay": "Nghe lại câu hỏi",
+    "useVoice": "Trả lời bằng giọng nói",
+    "useTyping": "Gõ thay vì nói",
+    "send": "Gửi và tiếp tục",
+    "retry": "Gửi lại",
+    "note": "Lưu ý: đừng tải lại trang trong lúc phỏng vấn để không mất buổi."
+  },
+  "chat": {
+    "aiTag": "AI phỏng vấn",
+    "meText": "Bạn • gõ chữ",
+    "meVoice": "Bạn • giọng nói",
+    "transcribing": "Đang chuyển giọng nói thành chữ…",
+    "preparing": "AI đang chuẩn bị buổi phỏng vấn cho bạn…",
+    "listening": "AI đang nghe câu trả lời của bạn…",
+    "emptyAnswer": "Bạn chưa nhập câu trả lời.",
+    "notCounted": "Câu này chưa được ghi nhận, bạn trả lời lại nhé.",
+    "notSent": "Câu này chưa gửi được.",
+    "stopped": "Bạn đã dừng buổi phỏng vấn.",
+    "delivery": {
+      "thinking": "Suy nghĩ {{value}} giây",
+      "speaking": "nói {{value}} giây",
+      "rate": "{{value}} âm tiết/phút",
+      "pauses": "{{value}} lần ngập ngừng",
+      "fillers": "từ đệm {{value}}%"
+    }
+  },
+  "rec": {
+    "recording": "Đang ghi {{time}} • bấm micro lần nữa để dừng và gửi",
+    "transcribing": "Đang chuyển giọng nói thành chữ…",
+    "reading": "AI đang đọc câu hỏi…",
+    "pressMic": "Bấm micro để trả lời",
+    "voiceUnavailable": "Chưa dùng được giọng nói lúc này. Bạn đọc câu hỏi ở trên và gõ câu trả lời bên dưới.",
+    "speakFailed": "Chưa phát được tiếng câu hỏi. Bạn đọc câu hỏi ở trên rồi bấm micro để trả lời.",
+    "noSpeech": "Không nghe thấy tiếng nói. Kiểm tra micro rồi ghi lại, hoặc gõ câu trả lời.",
+    "noSpeechCounted": "Không nghe rõ câu trả lời nên chưa được tính. Bạn trả lời lại nhé.",
+    "micOffTyping": "Micro chưa được bật, bạn gõ câu trả lời bên dưới nhé.",
+    "serviceDownTyping": "Dịch vụ giọng nói đang gặp sự cố, bạn gõ câu trả lời bên dưới nhé.",
+    "startLabel": "Bấm để ghi âm câu trả lời",
+    "stopLabel": "Dừng ghi âm và gửi câu trả lời"
+  },
+  "meters": {
+    "label": "Mức micro và trạng thái dịch vụ giọng nói",
+    "mic": "Micro",
+    "service": "Dịch vụ giọng nói"
+  },
+  "phase": {
+    "intro": "Giới thiệu",
+    "technical": "Kiến thức chuyên môn",
+    "scenario": "Tình huống"
+  },
+  "action": {
+    "hint": "Gợi ý",
+    "clarify": "Hỏi lại",
+    "follow_up": "Hỏi thêm",
+    "wrap_up": "Kết thúc"
+  },
+  "stop": {
+    "title": "Bạn muốn dừng buổi phỏng vấn?",
+    "text": "Mình nghe như bạn muốn kết thúc. Bạn có thể dừng ngay và xem đánh giá cho các câu đã trả lời.",
+    "ok": "Kết thúc & xem đánh giá",
+    "cancel": "Không, đây là câu trả lời của tôi"
+  },
+  "end": {
+    "title": "Kết thúc buổi phỏng vấn?",
+    "textWithAnswers": "AI sẽ tổng hợp đánh giá cho các câu bạn đã trả lời.",
+    "textNoAnswers": "Bạn chưa trả lời câu nào nên sẽ chưa có đánh giá.",
+    "ok": "Kết thúc & xem đánh giá",
+    "cancel": "Tiếp tục phỏng vấn"
+  },
+  "result": {
+    "region": "Kết quả buổi phỏng vấn",
+    "title": "Hoàn thành",
+    "lead": "Cảm ơn bạn đã tham gia buổi phỏng vấn.",
+    "loading": "AI đang tổng hợp đánh giá cho bạn…",
+    "empty": "Bạn kết thúc trước khi trả lời câu nào nên chưa có đánh giá. Bấm “Buổi mới” để thử lại nhé.",
+    "done": "Buổi phỏng vấn dài {{minutes}} phút, {{answers}} câu trả lời. Đánh giá chi tiết ở bên dưới.",
+    "retry": "Thử lại",
+    "restart": "Buổi mới",
+    "reportFailed": "Chưa tạo được đánh giá."
+  },
+  "report": {
+    "verdict": {
+      "exceeds": "Vượt kỳ vọng",
+      "meets": "Đạt kỳ vọng",
+      "near": "Gần đạt",
+      "below": "Chưa đạt"
+    },
+    "verdictUnknown": "Chưa đủ dữ liệu",
+    "levelSignal": "Bạn có thể thử sức ở level {{level}}.",
+    "partial": "Một phần nhận xét chưa tạo được, kết quả có thể chưa đầy đủ.",
+    "bySection": "Điểm theo phần",
+    "byCriterion": "Theo tiêu chí",
+    "criteria": {
+      "technical_accuracy": "Độ chính xác kỹ thuật",
+      "completeness": "Độ đầy đủ",
+      "extensibility": "Khả năng mở rộng vấn đề",
+      "relevance": "Bám sát câu hỏi"
+    },
+    "strengths": "Điểm mạnh",
+    "improvements": "Cần cải thiện",
+    "studyPlan": "Lộ trình ôn tập",
+    "priority": {
+      "high": "Ưu tiên cao",
+      "medium": "Nên ôn"
+    },
+    "resources": "Tài liệu:",
+    "requirements": "Mức đáp ứng yêu cầu công việc",
+    "notAsked": "Chưa được hỏi",
+    "turnDetails": "Chi tiết từng câu hỏi ({{total}})"
+  },
+  "voiceSummary": {
+    "title": "Cách trình bày khi nói",
+    "none": "Bạn chưa trả lời câu nào bằng giọng nói.",
+    "stats": {
+      "thinking_time_s": { "label": "Thời gian suy nghĩ", "unit": "giây" },
+      "answer_duration_s": { "label": "Độ dài câu trả lời", "unit": "giây" },
+      "speech_rate_spm": { "label": "Tốc độ nói", "unit": "âm tiết/phút" },
+      "filler_ratio": { "label": "Tỉ lệ từ đệm", "unit": "%" }
+    },
+    "range": "từ {{min}} đến {{max}} • {{n}} câu",
+    "disclaimer": "Các chỉ số này chỉ để bạn tự luyện cách nói, không tính vào điểm kiến thức."
+  },
+  "agentNotes": {
+    "title": "AI đã lưu ý gì trong buổi",
+    "kind": {
+      "hypothesis": "Giả thuyết",
+      "to_verify": "Cần kiểm chứng",
+      "strength": "Điểm mạnh",
+      "risk": "Rủi ro"
+    },
+    "status": {
+      "open": "Còn mở",
+      "confirmed": "Đã xác nhận",
+      "rejected": "Đã bác bỏ"
+    },
+    "turn": "câu {{turn}}"
+  },
+  "errors": {
+    "sessionExpired": "Phiên đăng nhập đã hết hạn. Bạn đăng nhập lại để tiếp tục nhé.",
+    "quotaExceeded": "Bạn đã dùng hết lượt luyện phỏng vấn hôm nay. Mai bạn quay lại nhé.",
+    "voiceDown": "Dịch vụ giọng nói đang gặp sự cố. Bạn thử lại, hoặc bấm “Gõ thay vì nói”.",
+    "codes": {
+      "session_not_found": "Buổi phỏng vấn đã hết hạn trên máy chủ. Bạn bắt đầu buổi mới nhé.",
+      "audio_too_long": "Câu trả lời quá dài. Hãy trả lời gọn hơn (dưới 3 phút).",
+      "invalid_audio": "Không đọc được bản ghi âm. Bạn thử ghi lại nhé.",
+      "unauthorized": "Phiên làm việc không hợp lệ. Hãy tải lại trang.",
+      "misconfigured": "Hệ thống chưa sẵn sàng. Vui lòng thử lại sau.",
+      "cv_invalid_format": "Không đọc được CV này. Hãy dùng tệp PDF hoặc DOCX (không đặt mật khẩu).",
+      "cv_too_large": "CV quá dài hoặc quá nặng. Hãy thử tệp dưới 10 MB.",
+      "cv_unreadable": "Không đọc được nội dung trong CV (có thể là bản scan). Hãy thử tệp PDF hoặc DOCX có chữ."
+    },
+    "network": "Mất kết nối. Kiểm tra mạng rồi thử lại.",
+    "streamCut": "AI chưa phản hồi xong. Bạn thử lại nhé.",
+    "timeout": "AI phản hồi quá lâu. Bạn thử lại sau ít phút.",
+    "upstream": "Dịch vụ AI tạm thời chưa phản hồi. Vui lòng thử lại sau ít phút.",
+    "rejected": "Yêu cầu chưa được chấp nhận. Bạn kiểm tra lại thông tin rồi thử lại.",
+    "busy": "Hệ thống đang bận. Vui lòng thử lại sau ít phút."
+  },
+  "forbidden": {
+    "title": "Tính năng dành cho ứng viên",
+    "text": "Luyện phỏng vấn cùng AI chỉ dành cho tài khoản ứng viên. Bạn có thể quay lại trang chủ để tiếp tục.",
+    "home": "Về trang chủ"
+  }
+}

@@ -26,6 +26,7 @@ const Login = lazy(() => import("./pages/auth/Login"));
 const Register = lazy(() => import("./pages/auth/Register"));
 const NotFoundPage = lazy(() => import("./pages/public/NotFoundPage"));
 const UserDashboard = lazy(() => import("./pages/UserDashboard"));
+const InterviewPage = lazy(() => import("./pages/interview/InterviewPage"));
 
 // Lazy-loaded Admin routes
 const AdminLayout = lazy(() => import("./pages/admin/AdminLayout"));
@@ -129,6 +130,15 @@ function App() {
                                 element={
                                   <ProtectedRoute>
                                     <UserDashboard />
+                                  </ProtectedRoute>
+                                }
+                              />
+                              {/* AI mock interview: signed-in candidates and admins (role gate lives in the page) */}
+                              <Route
+                                path="/interview"
+                                element={
+                                  <ProtectedRoute>
+                                    <InterviewPage />
                                   </ProtectedRoute>
                                 }
                               />

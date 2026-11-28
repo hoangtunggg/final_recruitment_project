@@ -1,1 +1,239 @@
-{}
+{
+  "page": {
+    "title": "Practise interviews with AI",
+    "lead": "Answer out loud like in a real interview, then get detailed feedback.",
+    "documentTitle": "AI interview practice | JobPortal"
+  },
+  "header": {
+    "backHome": "Back to home",
+    "timerTitle": "Time left in the interview"
+  },
+  "setup": {
+    "title": "Set up your interview",
+    "track": "Role",
+    "trackPlaceholder": "Choose a role…",
+    "level": "Level",
+    "duration": "Duration",
+    "durationOption": "{{minutes}} minutes",
+    "cv": "Your CV",
+    "cvChoose": "Choose file",
+    "cvNone": "No file chosen",
+    "cvRemove": "Remove CV file",
+    "cvHint": "Optional, PDF or DOCX. Questions will follow your experience.",
+    "jd": "Job description",
+    "jdHint": "Optional: paste the job description (JD) of the role you are applying for.",
+    "jdPlaceholder": "Paste the job description here",
+    "continue": "Continue",
+    "pickTrack": "Please choose the role you want to practise for first.",
+    "parsingCv": "Reading your CV…",
+    "parsingJd": "Reading the job description…",
+    "startFailed": "The interview could not start.",
+    "quotaRemaining": "You have {{remaining}}/{{limit}} practice interviews left today",
+    "jobLoading": "Loading the job…",
+    "jobFailed": "This job could not be loaded. You can paste the job description in the box below instead.",
+    "jobBadge": "Practising for a job",
+    "jobRequirements": "Requirements:"
+  },
+  "tracks": {
+    "python_backend": "Python Backend",
+    "nodejs_backend": "Node.js Backend",
+    "java_backend": "Java Backend",
+    "frontend_react": "React Frontend",
+    "devops_engineer": "DevOps Engineer",
+    "ai_engineer": "AI Engineer"
+  },
+  "levels": {
+    "fresher": "Fresher – entry level",
+    "junior": "Junior – some experience",
+    "middle": "Middle – solid experience",
+    "senior": "Senior – extensive experience"
+  },
+  "permission": {
+    "title": "Get your microphone ready",
+    "lead": "The AI reads each question aloud and you answer with your microphone. Speech is turned into text for the AI to assess; the audio is not stored.",
+    "micTitle": "Allow microphone",
+    "micText": "Agree so your voice can be turned into text",
+    "micSwitch": "Turn on microphone",
+    "serviceTitle": "Voice service",
+    "serviceUnchecked": "Not checked yet",
+    "serviceChecking": "Checking…",
+    "serviceReady": "Ready",
+    "serviceDown": "Not ready. Use the switch to check again.",
+    "serviceSwitch": "Check the voice service again",
+    "back": "Back",
+    "startVoice": "Start the interview",
+    "startTyping": "Start (answer by typing)",
+    "micDenied": "The browser has not allowed the microphone. Click the padlock icon in the address bar to allow it, or start and answer by typing."
+  },
+  "question": {
+    "region": "Interview",
+    "end": "End & see feedback",
+    "progress": "Topic {{index}}/{{total}}",
+    "progressWithTurn": "Topic {{index}}/{{total}} • question {{turn}}/{{cap}}",
+    "progressLabel": "Progress by topic",
+    "answerLabel": "Your answer",
+    "answerPlaceholder": "Type your answer, then press Send (Ctrl/⌘ + Enter)",
+    "replay": "Hear the question again",
+    "useVoice": "Answer by voice",
+    "useTyping": "Type instead of speaking",
+    "send": "Send and continue",
+    "retry": "Send again",
+    "note": "Note: do not reload the page during the interview or you will lose the session."
+  },
+  "chat": {
+    "aiTag": "AI interviewer",
+    "meText": "You • typed",
+    "meVoice": "You • voice",
+    "transcribing": "Turning your speech into text…",
+    "preparing": "The AI is preparing your interview…",
+    "listening": "The AI is listening to your answer…",
+    "emptyAnswer": "You have not typed an answer yet.",
+    "notCounted": "This answer was not recorded, please answer again.",
+    "notSent": "This answer could not be sent.",
+    "stopped": "You stopped the interview.",
+    "delivery": {
+      "thinking": "Thought for {{value}} s",
+      "speaking": "spoke for {{value}} s",
+      "rate": "{{value}} syllables/min",
+      "pauses": "{{value}} long pauses",
+      "fillers": "filler words {{value}}%"
+    }
+  },
+  "rec": {
+    "recording": "Recording {{time}} • press the mic again to stop and send",
+    "transcribing": "Turning your speech into text…",
+    "reading": "The AI is reading the question…",
+    "pressMic": "Press the mic to answer",
+    "voiceUnavailable": "Voice is not available right now. Read the question above and type your answer below.",
+    "speakFailed": "The question could not be played. Read it above, then press the mic to answer.",
+    "noSpeech": "No speech was heard. Check your microphone and record again, or type your answer.",
+    "noSpeechCounted": "We could not hear your answer clearly, so it was not counted. Please answer again.",
+    "micOffTyping": "The microphone is off, please type your answer below.",
+    "serviceDownTyping": "The voice service is having problems, please type your answer below.",
+    "startLabel": "Press to record your answer",
+    "stopLabel": "Stop recording and send your answer"
+  },
+  "meters": {
+    "label": "Microphone level and voice service status",
+    "mic": "Microphone",
+    "service": "Voice service"
+  },
+  "phase": {
+    "intro": "Introduction",
+    "technical": "Technical knowledge",
+    "scenario": "Scenario"
+  },
+  "action": {
+    "hint": "Hint",
+    "clarify": "Clarification",
+    "follow_up": "Follow-up",
+    "wrap_up": "Wrap-up"
+  },
+  "stop": {
+    "title": "Do you want to stop the interview?",
+    "text": "It sounds like you want to finish. You can stop now and see feedback for the questions you answered.",
+    "ok": "End & see feedback",
+    "cancel": "No, that was my answer"
+  },
+  "end": {
+    "title": "End the interview?",
+    "textWithAnswers": "The AI will summarise feedback for the questions you answered.",
+    "textNoAnswers": "You have not answered any question, so there will be no feedback.",
+    "ok": "End & see feedback",
+    "cancel": "Keep going"
+  },
+  "result": {
+    "region": "Interview results",
+    "title": "All done",
+    "lead": "Thank you for taking part in the interview.",
+    "loading": "The AI is putting your feedback together…",
+    "empty": "You ended before answering any question, so there is no feedback. Press “New session” to try again.",
+    "done": "Your interview lasted {{minutes}} min with {{answers}} answers. Detailed feedback is below.",
+    "retry": "Try again",
+    "restart": "New session",
+    "reportFailed": "The feedback could not be created."
+  },
+  "report": {
+    "verdict": {
+      "exceeds": "Exceeds expectations",
+      "meets": "Meets expectations",
+      "near": "Almost there",
+      "below": "Below expectations"
+    },
+    "verdictUnknown": "Not enough data",
+    "levelSignal": "You could try the {{level}} level.",
+    "partial": "Part of the feedback could not be generated, so this result may be incomplete.",
+    "bySection": "Score by section",
+    "byCriterion": "By criterion",
+    "criteria": {
+      "technical_accuracy": "Technical accuracy",
+      "completeness": "Completeness",
+      "extensibility": "Extending the problem",
+      "relevance": "Staying on the question"
+    },
+    "strengths": "Strengths",
+    "improvements": "To improve",
+    "studyPlan": "Study plan",
+    "priority": {
+      "high": "High priority",
+      "medium": "Worth reviewing"
+    },
+    "resources": "Resources:",
+    "requirements": "Fit with the job requirements",
+    "notAsked": "Not asked",
+    "turnDetails": "Question details ({{total}})"
+  },
+  "voiceSummary": {
+    "title": "How you came across when speaking",
+    "none": "You have not answered any question by voice.",
+    "stats": {
+      "thinking_time_s": { "label": "Thinking time", "unit": "s" },
+      "answer_duration_s": { "label": "Answer length", "unit": "s" },
+      "speech_rate_spm": { "label": "Speaking pace", "unit": "syllables/min" },
+      "filler_ratio": { "label": "Filler word share", "unit": "%" }
+    },
+    "range": "from {{min}} to {{max}} • {{n}} answers",
+    "disclaimer": "These figures are only to help you practise how you speak; they do not count towards your knowledge score."
+  },
+  "agentNotes": {
+    "title": "What the AI noticed during the session",
+    "kind": {
+      "hypothesis": "Hypothesis",
+      "to_verify": "To verify",
+      "strength": "Strength",
+      "risk": "Risk"
+    },
+    "status": {
+      "open": "Open",
+      "confirmed": "Confirmed",
+      "rejected": "Rejected"
+    },
+    "turn": "question {{turn}}"
+  },
+  "errors": {
+    "sessionExpired": "Your session has expired. Please sign in again to continue.",
+    "quotaExceeded": "You have used all your practice interviews for today. Come back tomorrow.",
+    "voiceDown": "The voice service is having problems. Try again, or press “Type instead of speaking”.",
+    "codes": {
+      "session_not_found": "The interview has expired on the server. Please start a new one.",
+      "audio_too_long": "That answer was too long. Please keep it shorter (under 3 minutes).",
+      "invalid_audio": "The recording could not be read. Please record again.",
+      "unauthorized": "Your session is not valid. Please reload the page.",
+      "misconfigured": "The system is not ready yet. Please try again later.",
+      "cv_invalid_format": "This CV could not be read. Please use a PDF or DOCX file (without a password).",
+      "cv_too_large": "The CV is too long or too large. Please try a file under 10 MB.",
+      "cv_unreadable": "No text could be read from the CV (it may be a scan). Please try a PDF or DOCX with real text."
+    },
+    "network": "Connection lost. Check your network and try again.",
+    "streamCut": "The AI did not finish responding. Please try again.",
+    "timeout": "The AI took too long to respond. Please try again in a few minutes.",
+    "upstream": "The AI service is temporarily unavailable. Please try again in a few minutes.",
+    "rejected": "The request was not accepted. Please check your details and try again.",
+    "busy": "The system is busy. Please try again in a few minutes."
+  },
+  "forbidden": {
+    "title": "This feature is for candidates",
+    "text": "AI interview practice is only available to candidate accounts. You can go back to the home page to continue.",
+    "home": "Back to home"
+  }
+}
