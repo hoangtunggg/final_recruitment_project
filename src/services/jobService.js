@@ -106,4 +106,18 @@ export const jobService = {
       throw error;
     }
   },
+
+  uploadJobImage: async (id, file) => {
+    try {
+      const data = new FormData();
+      data.append("image", file);
+      const response = await axios.post(`${API_BASE_URL}/jobs/${id}/image`, data, {
+        headers: getAuthHeaders(),
+      });
+      return response.data;
+    } catch (error) {
+      console.error("Error uploading job image:", error);
+      throw error;
+    }
+  },
 };

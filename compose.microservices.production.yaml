@@ -1,0 +1,12 @@
+services:
+  postgres:
+    deploy: { resources: { limits: { cpus: "2.0", memory: 2G }, reservations: { memory: 512M } } }
+  redis:
+    command: ["redis-server","--appendonly","yes","--maxmemory","256mb","--maxmemory-policy","noeviction"]
+  api-gateway:
+    ports: !override ["80:8080", "443:8443"]
+    volumes:
+      - ./microservices/gateway/nginx.production.conf:/etc/nginx/nginx.conf:ro
+      - ${TLS_CERT_DIR:?set TLS_CERT_DIR}:/run/tls:ro
+  frontend:
+    profiles: ["disabled-in-production-use-static-build"]

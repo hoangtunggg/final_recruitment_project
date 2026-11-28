@@ -1,5 +1,7 @@
 # JobPortal
 
+**Tác giả:** Tôi
+
 JobPortal là nền tảng tuyển dụng full-stack dành cho ba nhóm người dùng: **Ứng viên**, **Nhà tuyển dụng** và **Quản trị viên**. Dự án gồm frontend React, REST API Express, MySQL, xác thực JWT, phân quyền theo vai trò và bộ dữ liệu demo lớn để có thể trải nghiệm gần như toàn bộ quy trình tuyển dụng.
 
 ## Mục lục
@@ -8,6 +10,7 @@ JobPortal là nền tảng tuyển dụng full-stack dành cho ba nhóm người
 - [Tài khoản demo](#tài-khoản-demo)
 - [Dữ liệu hiện có trong database](#dữ-liệu-hiện-có-trong-database)
 - [Kiến trúc và công nghệ](#kiến-trúc-và-công-nghệ)
+- [Kiến trúc Microservices mới](#kiến-trúc-microservices-mới)
 - [Chạy nhanh bằng Docker](#chạy-nhanh-bằng-docker)
 - [Các lệnh sử dụng hằng ngày](#các-lệnh-sử-dụng-hằng-ngày)
 - [Chạy trực tiếp bằng Node.js](#chạy-trực-tiếp-bằng-nodejs)
@@ -173,7 +176,21 @@ Các khóa ngoại trong MySQL:
 - `audit_logs.targetUserId → users.id`
 - `system_settings.updatedBy → users.id`
 
+## Kiến trúc Microservices mới
+
+Phiên bản mới gồm 8 service độc lập, NGINX API Gateway, PostgreSQL (database/role riêng cho từng service), Redis Streams, S3-compatible private storage và pgvector. Chạy nhanh:
+
+```bash
+cp microservices/.env.example microservices/.env
+set -a; . microservices/.env; set +a
+docker compose -f compose.microservices.yaml --profile ml up -d --build
+```
+
+Gateway mặc định: `http://127.0.0.1:8088`. Xem hướng dẫn triển khai, migration và kết quả kiểm thử tại [báo cáo microservices](docs/MICROSERVICES_MIGRATION_VI.md).
+
 ## Kiến trúc và công nghệ
+
+Phần bên dưới mô tả stack legacy vẫn được giữ để rollback. Kiến trúc microservices mới chạy song song và chưa tự động cutover production.
 
 ### Stack
 

@@ -1,0 +1,5 @@
+{
+  "name":"@jobportal/data-migration","version":"1.0.0","private":true,
+  "scripts":{"dry-run":"node migrate.js","apply":"node migrate.js --apply","verify":"node migrate.js --verify-only"},
+  "dependencies":{"mysql2":"3.24.6","pg":"8.13.3","uuid":"11.1.1"}
+}

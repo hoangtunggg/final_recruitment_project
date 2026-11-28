@@ -23,6 +23,9 @@ import useAuth from "../../hooks/useAuth";
 import { jobService } from "../../services/jobService";
 import { applicationService } from "../../services/applicationService";
 import JobMatchAnalysis from "../../components/candidate/JobMatchAnalysis";
+import CompanyLogo from "../../components/common/CompanyLogo";
+import { companyService } from "../../services/companyService";
+import { resolveMediaUrl } from "../../utils/mediaUrl";
 
 const formatTimeAgo = (dateString) => {
   if (!dateString) return "Recently posted";
@@ -100,6 +103,8 @@ const JobDetailPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [copied, setCopied] = useState(false);
+  const [companyProfile, setCompanyProfile] = useState(null);
+  const [failedDetailImageUrl, setFailedDetailImageUrl] = useState(null);
 
   // Application modal state
   const [showApplicationModal, setShowApplicationModal] = useState(false);
@@ -124,7 +129,7 @@ const JobDetailPage = () => {
       try {
         // Check in-memory context first
         const published = getPublishedJobs();
-        const found = published.find((j) => j.id === parseInt(id));
+        const found = published.find((j) => String(j.id) === String(id));
         if (found) {
           if (isMounted) {
             setJob(found);
@@ -159,6 +164,26 @@ const JobDetailPage = () => {
       isMounted = false;
     };
   }, [id, getPublishedJobs]);
+
+  useEffect(() => {
+    if (!job?.company) return;
+    let active = true;
+    companyService
+      .getAll({ limit: 100 })
+      .then((response) => {
+        if (!active) return;
+        const match = (response.data || []).find(
+          (company) =>
+            company.id === job.companyId ||
+            company.name.toLowerCase() === job.company.toLowerCase()
+        );
+        setCompanyProfile(match || null);
+      })
+      .catch(() => setCompanyProfile(null));
+    return () => {
+      active = false;
+    };
+  }, [job?.company, job?.companyId]);
 
   const handleApplyClick = () => {
     if (!isAuthenticated) {
@@ -238,7 +263,7 @@ const JobDetailPage = () => {
     setIsSubmitting(true);
     try {
       const applicationPayload = {
-        jobId: parseInt(id),
+        jobId: id,
         applicantPhone: applicationData.phone,
         experience: applicationData.experience,
         education: applicationData.education,
@@ -262,7 +287,7 @@ const JobDetailPage = () => {
         });
 
         // Trigger global and storage events for real-time dashboard sync
-        const eventData = { jobId: parseInt(id), timestamp: Date.now() };
+        const eventData = { jobId: id, timestamp: Date.now() };
         window.dispatchEvent(
           new CustomEvent("applicationSubmitted", { detail: eventData })
         );
@@ -406,11 +431,24 @@ const JobDetailPage = () => {
         {/* Hero Card */}
         {import.meta.env.VITE_CVJD_MATCHING_ENABLED === "true" && isAuthenticated && user?.role === "jobseeker" && <JobMatchAnalysis jobId={id} />}
         <div className="bg-white dark:bg-gray-800 rounded-xl border border-slate-300 dark:border-gray-600 p-5 sm:p-6 mb-5">
+          {resolveMediaUrl(job.imageUrl) && failedDetailImageUrl !== resolveMediaUrl(job.imageUrl) && (
+            <div className="mb-5 aspect-[16/6] overflow-hidden rounded-xl bg-slate-100 dark:bg-gray-700">
+              <img
+                src={resolveMediaUrl(job.imageUrl)}
+                alt={`${job.title} at ${job.company}`}
+                className="h-full w-full object-cover"
+                decoding="async"
+                onError={() => setFailedDetailImageUrl(resolveMediaUrl(job.imageUrl))}
+              />
+            </div>
+          )}
           <div className="flex flex-col md:flex-row md:items-start justify-between gap-5 pb-5 border-b border-slate-200 dark:border-gray-700">
             <div className="flex items-start gap-3 sm:gap-4 min-w-0">
-              <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-lg bg-blue-50 dark:bg-blue-900/40 border border-blue-200 dark:border-blue-800 flex items-center justify-center flex-shrink-0 text-blue-700 dark:text-blue-300 text-xl sm:text-2xl">
-                <FaBuilding />
-              </div>
+              <CompanyLogo
+                name={job.company}
+                src={companyProfile?.logoUrl}
+                className="h-12 w-12 sm:h-14 sm:w-14"
+              />
               <div className="min-w-0">
                 <div className="flex flex-wrap items-center gap-2 mb-2">
                   {job.type && (

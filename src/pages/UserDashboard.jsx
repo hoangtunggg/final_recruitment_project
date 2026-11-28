@@ -1091,7 +1091,15 @@ const UserDashboard = () => {
                   onRetry={fetchResumes}
                 />
 
-                <ProfileIntegrityCard user={user} />
+                <ProfileIntegrityCard
+                  user={{
+                    ...user,
+                    resumePath:
+                      resumes.find((resume) => resume.isDefault)?.filePath ||
+                      resumes.find((resume) => resume.isDefault)?.fileName ||
+                      user.resumePath,
+                  }}
+                />
               </div>
             )}
           </div>

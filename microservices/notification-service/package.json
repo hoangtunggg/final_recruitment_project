@@ -1,0 +1,1 @@
+{"name":"@jobportal/notification-service","version":"1.0.0","private":true,"scripts":{"start":"node src/server.js","migrate":"SERVICE_NAME=notification-service node node_modules/@jobportal/service-kit/src/migrate.js","test":"node --test"},"dependencies":{"@jobportal/service-kit":"file:../shared","express":"5.1.0"}}

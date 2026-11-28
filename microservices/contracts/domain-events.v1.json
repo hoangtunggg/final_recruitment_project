@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://jobportal.local/contracts/domain-events.v1.json",
+  "title": "JobPortal domain event v1",
+  "type": "object",
+  "required": ["id", "type", "version", "source", "aggregateId", "occurredAt", "payload"],
+  "properties": {
+    "id": { "type": "string", "format": "uuid" },
+    "type": { "enum": ["user.registered", "user.deleted", "job.created", "job.updated", "job.deleted", "resume.created", "resume.updated", "resume.deleted", "application.submitted", "application.status_changed"] },
+    "version": { "const": "1" },
+    "source": { "type": "string", "pattern": "^[a-z-]+-service$" },
+    "aggregateId": { "type": "string", "format": "uuid" },
+    "occurredAt": { "type": "string", "format": "date-time" },
+    "payload": { "type": "object" }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,257 @@
+x-node-service: &node-service
+  restart: unless-stopped
+  networks: [internal]
+  environment: &service-env
+    NODE_ENV: development
+    PORT: 3000
+    JWT_SECRET: ${JWT_SECRET:?set JWT_SECRET in microservices/.env}
+    INTERNAL_SERVICE_TOKEN: ${INTERNAL_SERVICE_TOKEN:?set INTERNAL_SERVICE_TOKEN}
+    REDIS_URL: redis://redis:6379
+    EVENT_STREAM: jobportal.events.v1
+    ALLOWED_ORIGINS: http://localhost:5173,http://localhost:8080
+    DB_POOL_MAX: 8
+  deploy:
+    resources:
+      limits: { cpus: "0.50", memory: 256M }
+
+services:
+  postgres:
+    image: pgvector/pgvector:pg16-bookworm
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_ADMIN_PASSWORD:?set POSTGRES_ADMIN_PASSWORD}
+      IDENTITY_DB_PASSWORD: ${IDENTITY_DB_PASSWORD:?set IDENTITY_DB_PASSWORD}
+      USER_DB_PASSWORD: ${USER_DB_PASSWORD:?set USER_DB_PASSWORD}
+      COMPANY_DB_PASSWORD: ${COMPANY_DB_PASSWORD:?set COMPANY_DB_PASSWORD}
+      JOB_DB_PASSWORD: ${JOB_DB_PASSWORD:?set JOB_DB_PASSWORD}
+      RESUME_DB_PASSWORD: ${RESUME_DB_PASSWORD:?set RESUME_DB_PASSWORD}
+      APPLICATION_DB_PASSWORD: ${APPLICATION_DB_PASSWORD:?set APPLICATION_DB_PASSWORD}
+      MATCHING_DB_PASSWORD: ${MATCHING_DB_PASSWORD:?set MATCHING_DB_PASSWORD}
+      NOTIFICATION_DB_PASSWORD: ${NOTIFICATION_DB_PASSWORD:?set NOTIFICATION_DB_PASSWORD}
+    volumes:
+      - postgres_microservices_data:/var/lib/postgresql/data
+      - ./microservices/postgres/init-databases.sh:/docker-entrypoint-initdb.d/10-databases.sh:ro
+    networks: [internal]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits: { cpus: "1.00", memory: 768M }
+
+  redis:
+    image: redis:7.4.2-alpine3.21
+    command: ["redis-server", "--appendonly", "yes", "--maxmemory", "128mb", "--maxmemory-policy", "noeviction"]
+    volumes: [redis_microservices_data:/data]
+    networks: [internal]
+    healthcheck: { test: ["CMD", "redis-cli", "ping"], interval: 5s, timeout: 3s, retries: 10 }
+    restart: unless-stopped
+    deploy: { resources: { limits: { cpus: "0.25", memory: 192M } } }
+
+  minio:
+    build:
+      context: ./microservices/object-storage
+      dockerfile: Dockerfile
+    image: jobportal/minio:RELEASE.2025-10-15T17-29-55Z
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: ${S3_ACCESS_KEY:?set S3_ACCESS_KEY}
+      MINIO_ROOT_PASSWORD: ${S3_SECRET_KEY:?set S3_SECRET_KEY}
+    volumes: [minio_microservices_data:/data]
+    networks: [internal]
+    healthcheck: { test: ["CMD", "wget", "-qO-", "http://127.0.0.1:9000/minio/health/live"], interval: 10s, timeout: 5s, retries: 10 }
+    restart: unless-stopped
+    deploy: { resources: { limits: { cpus: "0.50", memory: 384M } } }
+
+  identity-migrate:
+    build: { context: ./microservices, dockerfile: identity-service/Dockerfile }
+    command: ["npm", "run", "migrate"]
+    environment: { DATABASE_URL: "postgresql://identity_service:${IDENTITY_DB_PASSWORD}@postgres:5432/identity_db", DB_POOL_MAX: 2 }
+    depends_on: { postgres: { condition: service_healthy } }
+    networks: [internal]
+    restart: "no"
+  identity-service:
+    <<: *node-service
+    build: { context: ./microservices, dockerfile: identity-service/Dockerfile }
+    environment:
+      <<: *service-env
+      DATABASE_URL: postgresql://identity_service:${IDENTITY_DB_PASSWORD}@postgres:5432/identity_db
+    depends_on: { identity-migrate: { condition: service_completed_successfully }, redis: { condition: service_healthy } }
+    healthcheck: { test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"], interval: 10s, timeout: 4s, retries: 8 }
+
+  user-migrate:
+    build: { context: ./microservices, dockerfile: user-service/Dockerfile }
+    command: ["npm", "run", "migrate"]
+    environment: { DATABASE_URL: "postgresql://user_service:${USER_DB_PASSWORD}@postgres:5432/user_db", DB_POOL_MAX: 2 }
+    depends_on: { postgres: { condition: service_healthy } }
+    networks: [internal]
+    restart: "no"
+  user-service:
+    <<: *node-service
+    build: { context: ./microservices, dockerfile: user-service/Dockerfile }
+    environment:
+      <<: *service-env
+      DATABASE_URL: postgresql://user_service:${USER_DB_PASSWORD}@postgres:5432/user_db
+      IDENTITY_SERVICE_URL: http://identity-service:3000
+    depends_on: { user-migrate: { condition: service_completed_successfully }, identity-service: { condition: service_healthy } }
+
+  company-migrate:
+    build: { context: ./microservices, dockerfile: company-service/Dockerfile }
+    command: ["npm", "run", "migrate"]
+    environment: { DATABASE_URL: "postgresql://company_service:${COMPANY_DB_PASSWORD}@postgres:5432/company_db", DB_POOL_MAX: 2 }
+    depends_on: { postgres: { condition: service_healthy } }
+    networks: [internal]
+    restart: "no"
+  company-service:
+    <<: *node-service
+    build: { context: ./microservices, dockerfile: company-service/Dockerfile }
+    environment:
+      <<: *service-env
+      DATABASE_URL: postgresql://company_service:${COMPANY_DB_PASSWORD}@postgres:5432/company_db
+      S3_ENDPOINT: minio
+      S3_PORT: 9000
+      S3_ACCESS_KEY: ${S3_ACCESS_KEY}
+      S3_SECRET_KEY: ${S3_SECRET_KEY}
+      MEDIA_BUCKET: jobportal-public-media
+    depends_on: { company-migrate: { condition: service_completed_successfully }, minio: { condition: service_healthy } }
+
+  job-migrate:
+    build: { context: ./microservices, dockerfile: job-service/Dockerfile }
+    command: ["npm", "run", "migrate"]
+    environment: { DATABASE_URL: "postgresql://job_service:${JOB_DB_PASSWORD}@postgres:5432/job_db", DB_POOL_MAX: 2 }
+    depends_on: { postgres: { condition: service_healthy } }
+    networks: [internal]
+    restart: "no"
+  job-service:
+    <<: *node-service
+    build: { context: ./microservices, dockerfile: job-service/Dockerfile }
+    environment:
+      <<: *service-env
+      DATABASE_URL: postgresql://job_service:${JOB_DB_PASSWORD}@postgres:5432/job_db
+      S3_ENDPOINT: minio
+      S3_PORT: 9000
+      S3_ACCESS_KEY: ${S3_ACCESS_KEY}
+      S3_SECRET_KEY: ${S3_SECRET_KEY}
+      MEDIA_BUCKET: jobportal-public-media
+    depends_on: { job-migrate: { condition: service_completed_successfully }, minio: { condition: service_healthy }, redis: { condition: service_healthy } }
+
+  resume-migrate:
+    build: { context: ./microservices, dockerfile: resume-service/Dockerfile }
+    command: ["npm", "run", "migrate"]
+    environment: { DATABASE_URL: "postgresql://resume_service:${RESUME_DB_PASSWORD}@postgres:5432/resume_db", DB_POOL_MAX: 2 }
+    depends_on: { postgres: { condition: service_healthy } }
+    networks: [internal]
+    restart: "no"
+  resume-service:
+    <<: *node-service
+    build: { context: ./microservices, dockerfile: resume-service/Dockerfile }
+    environment:
+      <<: *service-env
+      DATABASE_URL: postgresql://resume_service:${RESUME_DB_PASSWORD}@postgres:5432/resume_db
+      S3_ENDPOINT: minio
+      S3_PORT: 9000
+      S3_ACCESS_KEY: ${S3_ACCESS_KEY}
+      S3_SECRET_KEY: ${S3_SECRET_KEY}
+      RESUME_BUCKET: jobportal-private-resumes
+      JSON_LIMIT: 6mb
+    depends_on: { resume-migrate: { condition: service_completed_successfully }, minio: { condition: service_healthy }, redis: { condition: service_healthy } }
+
+  application-migrate:
+    build: { context: ./microservices, dockerfile: application-service/Dockerfile }
+    command: ["npm", "run", "migrate"]
+    environment: { DATABASE_URL: "postgresql://application_service:${APPLICATION_DB_PASSWORD}@postgres:5432/application_db", DB_POOL_MAX: 2 }
+    depends_on: { postgres: { condition: service_healthy } }
+    networks: [internal]
+    restart: "no"
+  application-service:
+    <<: *node-service
+    build: { context: ./microservices, dockerfile: application-service/Dockerfile }
+    environment:
+      <<: *service-env
+      DATABASE_URL: postgresql://application_service:${APPLICATION_DB_PASSWORD}@postgres:5432/application_db
+      JOB_SERVICE_URL: http://job-service:3000
+      S3_ENDPOINT: minio
+      S3_PORT: 9000
+      S3_ACCESS_KEY: ${S3_ACCESS_KEY}
+      S3_SECRET_KEY: ${S3_SECRET_KEY}
+      RESUME_BUCKET: jobportal-private-resumes
+    depends_on: { application-migrate: { condition: service_completed_successfully }, job-service: { condition: service_healthy }, minio: { condition: service_healthy }, redis: { condition: service_healthy } }
+
+  notification-migrate:
+    build: { context: ./microservices, dockerfile: notification-service/Dockerfile }
+    command: ["npm", "run", "migrate"]
+    environment: { DATABASE_URL: "postgresql://notification_service:${NOTIFICATION_DB_PASSWORD}@postgres:5432/notification_db", DB_POOL_MAX: 2 }
+    depends_on: { postgres: { condition: service_healthy } }
+    networks: [internal]
+    restart: "no"
+  notification-service:
+    <<: *node-service
+    build: { context: ./microservices, dockerfile: notification-service/Dockerfile }
+    environment:
+      <<: *service-env
+      DATABASE_URL: postgresql://notification_service:${NOTIFICATION_DB_PASSWORD}@postgres:5432/notification_db
+    depends_on: { notification-migrate: { condition: service_completed_successfully }, redis: { condition: service_healthy } }
+
+  matching-migrate:
+    profiles: ["ml"]
+    build: { context: ., dockerfile: microservices/matching-service/Dockerfile }
+    command: ["python", "migrate.py"]
+    environment: { DATABASE_URL: "postgresql://matching_service:${MATCHING_DB_PASSWORD}@postgres:5432/matching_db" }
+    depends_on: { postgres: { condition: service_healthy } }
+    networks: [internal]
+    restart: "no"
+  matching-service:
+    profiles: ["ml"]
+    build: { context: ., dockerfile: microservices/matching-service/Dockerfile }
+    environment:
+      DATABASE_URL: postgresql://matching_service:${MATCHING_DB_PASSWORD}@postgres:5432/matching_db
+      JWT_SECRET: ${JWT_SECRET}
+      INTERNAL_SERVICE_TOKEN: ${INTERNAL_SERVICE_TOKEN}
+      JOB_SERVICE_URL: http://job-service:3000
+      RESUME_SERVICE_URL: http://resume-service:3000
+      MATCHER_ARTIFACTS: /app/artifacts
+      CVJD_MATCHING_ENABLED: ${CVJD_MATCHING_ENABLED:-false}
+      CVJD_MODEL_VERSION: ${CVJD_MODEL_VERSION:-experimental-v1}
+      DB_POOL_MAX: 3
+      REDIS_URL: redis://redis:6379
+      EVENT_STREAM: jobportal.events.v1
+    volumes: [./ml-service/artifacts:/app/artifacts:ro]
+    depends_on: { matching-migrate: { condition: service_completed_successfully }, job-service: { condition: service_healthy }, resume-service: { condition: service_healthy } }
+    networks: [internal]
+    restart: unless-stopped
+    deploy: { resources: { limits: { cpus: "1.50", memory: 2G } } }
+
+  api-gateway:
+    build: { context: ./microservices, dockerfile: gateway/Dockerfile }
+    ports: ["127.0.0.1:${MICROSERVICES_GATEWAY_PORT:-8088}:8080"]
+    networks: [public, internal]
+    depends_on:
+      identity-service: { condition: service_healthy }
+      user-service: { condition: service_started }
+      company-service: { condition: service_started }
+      job-service: { condition: service_started }
+      resume-service: { condition: service_started }
+      application-service: { condition: service_started }
+      notification-service: { condition: service_started }
+    restart: unless-stopped
+    deploy: { resources: { limits: { cpus: "0.25", memory: 128M } } }
+
+  frontend:
+    profiles: ["frontend"]
+    build: { context: ., dockerfile: Dockerfile }
+    environment: { VITE_API_URL: "http://localhost:${MICROSERVICES_GATEWAY_PORT:-8088}", VITE_CVJD_MATCHING_ENABLED: "${CVJD_MATCHING_ENABLED:-false}" }
+    ports: ["127.0.0.1:5173:5173"]
+    networks: [public]
+    depends_on: { api-gateway: { condition: service_started } }
+
+networks:
+  public:
+  internal:
+    internal: true
+volumes:
+  postgres_microservices_data:
+  redis_microservices_data:
+  minio_microservices_data:

@@ -1,0 +1,5 @@
+services:
+  api-gateway:
+    ports: !override ["${TEAM_GATEWAY_BIND:-0.0.0.0}:${MICROSERVICES_GATEWAY_PORT:-8088}:8080"]
+  frontend:
+    ports: !override ["${TEAM_FRONTEND_BIND:-0.0.0.0}:5173:5173"]

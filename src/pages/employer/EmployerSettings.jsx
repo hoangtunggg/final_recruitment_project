@@ -14,6 +14,7 @@ import {
   FiLayers,
 } from "react-icons/fi";
 import useAuth from "../../hooks/useAuth";
+import CompanyProfileEditor from "../../components/employer/CompanyProfileEditor";
 
 const EmployerSettings = () => {
   const { user } = useAuth();
@@ -54,13 +55,12 @@ const EmployerSettings = () => {
         </p>
       </div>
 
-      {/* Honest Backend Disclaimer */}
+      {/* Company media guidance */}
       <div className="p-4 rounded-xl bg-blue-50/60 dark:bg-blue-950/30 border border-blue-200/60 dark:border-blue-900/40 flex items-start space-x-3 text-sm text-blue-800 dark:text-blue-300">
         <FiInfo className="w-5 h-5 shrink-0 mt-0.5 text-blue-600 dark:text-blue-400" />
         <div>
-          <strong className="font-semibold">Account Profile Status:</strong> Your employer
-          identity is linked to your authenticated session. Direct editing of employer profile
-          attributes is managed through organization administration to maintain system integrity.
+          <strong className="font-semibold">Public company presence:</strong> Add a logo and
+          cover image in Workspace &amp; Role. They will be reused consistently on company and job cards.
         </div>
       </div>
 
@@ -167,7 +167,10 @@ const EmployerSettings = () => {
 
           {/* Organization Tab */}
           {activeTab === "organization" && (
-            <div className="space-y-6 max-w-2xl">
+            <div className="space-y-8 max-w-3xl">
+              <CompanyProfileEditor user={user} />
+
+              <div className="border-t border-slate-200 pt-7 dark:border-gray-700">
               <div>
                 <h2 className="text-base font-bold text-gray-900 dark:text-white">
                   Organization & Workspace Access
@@ -219,6 +222,7 @@ const EmployerSettings = () => {
                     Enforced
                   </span>
                 </div>
+              </div>
               </div>
             </div>
           )}

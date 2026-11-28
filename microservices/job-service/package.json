@@ -1,0 +1,1 @@
+{"name":"@jobportal/job-service","version":"1.0.0","private":true,"scripts":{"start":"node src/server.js","migrate":"SERVICE_NAME=job-service node node_modules/@jobportal/service-kit/src/migrate.js","test":"node --test"},"dependencies":{"@aws-sdk/client-s3":"3.1179.0","@jobportal/service-kit":"file:../shared","express":"5.1.0","multer":"2.5.0"}}

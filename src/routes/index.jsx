@@ -27,6 +27,7 @@ import ManageJobs from "../pages/employer/ManageJobs";
 import EditJob from "../pages/employer/EditJob";
 import JobApplicants from "../pages/employer/JobApplicants";
 import ApplicantTracking from "../pages/employer/ApplicantTracking";
+import EmployerSettings from "../pages/employer/EmployerSettings";
 
 const AppRoutes = () => {
   const { user, loading } = useAuth();
@@ -101,6 +102,7 @@ const AppRoutes = () => {
         <Route path="jobs/:id/edit" element={<EditJob />} />
         <Route path="jobs/:jobId/applicants" element={<JobApplicants />} />
         <Route path="applicants" element={<ApplicantTracking />} />
+        <Route path="settings" element={<EmployerSettings />} />
         <Route path="*" element={<Navigate to="/employer" replace />} />
       </Route>
 

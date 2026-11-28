@@ -26,6 +26,8 @@ import { useJobs } from "../../context/JobContext";
 import useAuth from "../../hooks/useAuth";
 import JobCard from "../../components/jobs/JobCard";
 import JobSkeleton from "../../components/jobs/JobSkeleton";
+import CompanyCard from "../../components/companies/CompanyCard";
+import { companyService } from "../../services/companyService";
 
 const CATEGORIES_CONFIG = [
   {
@@ -120,6 +122,22 @@ const HomePage = () => {
   const [keywordInput, setKeywordInput] = useState(search);
   const [locationInput, setLocationInput] = useState(location);
   const [sortBy, setSortBy] = useState("newest");
+  const [companies, setCompanies] = useState([]);
+
+  useEffect(() => {
+    let active = true;
+    companyService
+      .getAll({ limit: 100 })
+      .then((response) => {
+        if (active) setCompanies(response.data || []);
+      })
+      .catch(() => {
+        if (active) setCompanies([]);
+      });
+    return () => {
+      active = false;
+    };
+  }, []);
 
   // Keep search bar inputs synced with URL search params
   useEffect(() => {
@@ -366,21 +384,28 @@ const HomePage = () => {
 
   // Presentation-only grouping from the already loaded job collection.
   // Counts are explicitly scoped to the current listings, not platform totals.
+  const companyByName = useMemo(
+    () => new Map(companies.map((company) => [company.name.toLowerCase(), company])),
+    [companies]
+  );
+
   const hiringOrganizations = useMemo(() => {
     const organizations = new Map();
     publishedJobs.forEach((job) => {
       if (!job.company || organizations.has(job.company)) return;
+      const companyProfile = companyByName.get(job.company.toLowerCase());
       organizations.set(job.company, {
+        ...(companyProfile || {}),
         name: job.company,
         jobId: job.id,
-        location: job.location,
+        location: companyProfile?.location || job.location,
         rolesInCurrentListings: publishedJobs.filter(
           (item) => item.company === job.company
         ).length,
       });
     });
-    return Array.from(organizations.values()).slice(0, 5);
-  }, [publishedJobs]);
+    return Array.from(organizations.values()).slice(0, 6);
+  }, [publishedJobs, companyByName]);
 
   return (
     <div className="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors">
@@ -764,7 +789,13 @@ const HomePage = () => {
           ) : sortedJobs.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
               {sortedJobs.map((job) => (
-                <JobCard key={job.id} job={job} />
+                <JobCard
+                  key={job.id}
+                  job={{
+                    ...job,
+                    companyLogoUrl: companyByName.get(job.company?.toLowerCase())?.logoUrl,
+                  }}
+                />
               ))}
             </div>
           ) : (
@@ -895,31 +926,14 @@ const HomePage = () => {
               </button>
             </div>
 
-            <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-3 sm:gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
               {hiringOrganizations.map((organization) => (
-                <Link
+                <CompanyCard
                   key={organization.name}
-                  to={`/jobs/${organization.jobId}`}
-                  className="group min-w-0 rounded-xl border border-slate-300 bg-white p-4 dark:border-gray-600 dark:bg-gray-800 hover:border-blue-600 dark:hover:border-blue-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700"
-                >
-                  <div className="w-11 h-11 rounded-lg bg-blue-50 text-blue-700 dark:bg-blue-950/60 dark:text-blue-300 flex items-center justify-center font-bold text-sm border border-blue-100 dark:border-blue-900">
-                    {organization.name
-                      .split(/\s+/)
-                      .slice(0, 2)
-                      .map((part) => part[0])
-                      .join("")
-                      .toUpperCase()}
-                  </div>
-                  <h3 className="mt-3 text-sm font-bold leading-snug text-slate-900 dark:text-white line-clamp-2 group-hover:text-blue-700 dark:group-hover:text-blue-300">
-                    {organization.name}
-                  </h3>
-                  <p className="mt-1 text-xs text-slate-500 dark:text-gray-400 truncate">
-                    {organization.location || "Multiple locations"}
-                  </p>
-                  <div className="mt-3 pt-3 border-t border-slate-200 dark:border-gray-700 text-xs font-semibold text-blue-700 dark:text-blue-300">
-                    {organization.rolesInCurrentListings} role{organization.rolesInCurrentListings === 1 ? "" : "s"} in current listings
-                  </div>
-                </Link>
+                  company={organization}
+                  fallbackJobId={organization.jobId}
+                  roleCount={organization.rolesInCurrentListings}
+                />
               ))}
             </div>
           </div>

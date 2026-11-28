@@ -1,0 +1,19 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+scrape_configs:
+  - job_name: jobportal-microservices
+    metrics_path: /metrics
+    static_configs:
+      - targets:
+          - identity-service:3000
+          - user-service:3000
+          - company-service:3000
+          - job-service:3000
+          - resume-service:3000
+          - application-service:3000
+          - notification-service:3000
+          - matching-service:8000
+  - job_name: redis
+    static_configs:
+      - targets: [redis-exporter:9121]

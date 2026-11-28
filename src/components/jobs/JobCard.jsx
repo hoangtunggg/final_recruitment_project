@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   FaMapMarkerAlt,
@@ -6,6 +7,8 @@ import {
   FaArrowRight,
   FaShieldAlt,
 } from "react-icons/fa";
+import CompanyLogo from "../common/CompanyLogo";
+import { resolveMediaUrl } from "../../utils/mediaUrl";
 
 const formatTimeAgo = (dateString) => {
   if (!dateString) return "Recently";
@@ -41,32 +44,12 @@ const getTypeBadgeClass = (type) => {
   return "bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-950/40 dark:text-blue-300 dark:border-blue-800";
 };
 
-const getCompanyInitials = (name) => {
-  if (!name) return "CO";
-  const parts = name.trim().split(/\s+/);
-  if (parts.length >= 2) {
-    return (parts[0][0] + parts[1][0]).toUpperCase();
-  }
-  return name.slice(0, 2).toUpperCase();
-};
-
-const getAvatarGradient = (name = "") => {
-  const charCode = name.charCodeAt(0) || 0;
-  const gradients = [
-    "from-blue-600 to-indigo-600",
-    "from-indigo-600 to-purple-600",
-    "from-violet-600 to-fuchsia-600",
-    "from-teal-600 to-emerald-600",
-  ];
-  return gradients[charCode % gradients.length];
-};
-
 const JobCard = ({ job }) => {
-  if (!job) return null;
+  const imageUrl = resolveMediaUrl(job?.imageUrl);
+  const [failedImageUrl, setFailedImageUrl] = useState(null);
+  const postedText = formatTimeAgo(job?.createdAt || job?.posted);
 
-  const initials = getCompanyInitials(job.company);
-  const avatarGradient = getAvatarGradient(job.company);
-  const postedText = formatTimeAgo(job.createdAt || job.posted);
+  if (!job) return null;
 
   const skillsList = job.skills
     ? job.skills
@@ -78,18 +61,31 @@ const JobCard = ({ job }) => {
   return (
     <Link
       to={`/jobs/${job.id}`}
-      className="group flex min-h-56 min-w-0 flex-col justify-between rounded-xl border border-slate-300 bg-white p-4 transition-colors hover:border-blue-600 dark:border-gray-600 dark:bg-gray-800 dark:hover:border-blue-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700"
+      className="group flex min-h-80 min-w-0 flex-col overflow-hidden rounded-xl border border-slate-300 bg-white transition-colors hover:border-blue-600 dark:border-gray-600 dark:bg-gray-800 dark:hover:border-blue-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700"
     >
+      <div className="relative aspect-[16/7] overflow-hidden bg-gradient-to-br from-blue-100 via-indigo-50 to-slate-100 dark:from-blue-950 dark:via-indigo-950/60 dark:to-gray-800">
+        {imageUrl && failedImageUrl !== imageUrl && (
+          <img
+            src={imageUrl}
+            alt={`${job.title} at ${job.company}`}
+            className="h-full w-full object-cover transition-transform duration-300 motion-reduce:transition-none group-hover:scale-[1.02]"
+            loading="lazy"
+            decoding="async"
+            onError={() => setFailedImageUrl(imageUrl)}
+          />
+        )}
+        <div className="absolute inset-x-0 bottom-0 h-14 bg-gradient-to-t from-slate-950/35 to-transparent" aria-hidden="true" />
+        <CompanyLogo
+          name={job.company}
+          src={job.companyLogoUrl}
+          className="absolute bottom-3 left-4 h-12 w-12"
+        />
+      </div>
+
+      <div className="flex flex-1 flex-col justify-between p-4">
       <div>
         <div className="flex items-start justify-between gap-3">
-          <div className="flex items-center gap-3 min-w-0">
-            <div
-              className={`w-12 h-12 rounded-lg bg-gradient-to-br ${avatarGradient} text-white flex items-center justify-center font-bold text-sm flex-shrink-0`}
-              aria-hidden="true"
-            >
-              {initials}
-            </div>
-            <div className="min-w-0">
+          <div className="min-w-0">
               <div className="flex items-center gap-1.5 font-semibold text-slate-900 dark:text-white text-sm min-w-0">
                 <span className="truncate">{job.company}</span>
                 <FaShieldAlt
@@ -101,7 +97,6 @@ const JobCard = ({ job }) => {
                 <FaMapMarkerAlt className="text-gray-400 text-[10px]" />
                 <span className="truncate">{job.location || "Remote"}</span>
               </div>
-            </div>
           </div>
 
           <div className="flex flex-col items-end gap-1.5 shrink-0">
@@ -160,6 +155,7 @@ const JobCard = ({ job }) => {
           <span>View job</span>
           <FaArrowRight className="text-xs" />
         </span>
+      </div>
       </div>
     </Link>
   );

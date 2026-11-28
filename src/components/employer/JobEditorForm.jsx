@@ -15,9 +15,13 @@ import {
   FiCalendar,
   FiArrowLeft,
   FiRefreshCw,
+  FiImage,
+  FiUpload,
 } from "react-icons/fi";
 import { jobService } from "../../services/jobService";
 import useAuth from "../../hooks/useAuth";
+import { resolveMediaUrl } from "../../utils/mediaUrl";
+import { companyService } from "../../services/companyService";
 
 const JOB_TYPES = [
   "Full-time",
@@ -69,6 +73,33 @@ const JobEditorForm = ({ initialData = null, isEdit = false, jobId = null }) => 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState(null);
   const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [imageFile, setImageFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
+  const [companyProfile, setCompanyProfile] = useState(null);
+
+  useEffect(() => {
+    let active = true;
+    companyService
+      .getMine()
+      .then((response) => {
+        if (!active || !response.data) return;
+        setCompanyProfile(response.data);
+        if (!initialData) {
+          setFormData((current) => ({ ...current, company: response.data.name }));
+        }
+      })
+      .catch(() => {});
+    return () => {
+      active = false;
+    };
+  }, [initialData]);
+
+  useEffect(
+    () => () => {
+      if (imagePreview?.startsWith("blob:")) URL.revokeObjectURL(imagePreview);
+    },
+    [imagePreview]
+  );
 
   // Populate form if initialData exists or pre-fill from user profile
   useEffect(() => {
@@ -197,6 +228,22 @@ const JobEditorForm = ({ initialData = null, isEdit = false, jobId = null }) => 
     }
   };
 
+  const handleImageChange = (event) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+    if (!["image/jpeg", "image/png", "image/webp"].includes(file.type)) {
+      setErrors((prev) => ({ ...prev, image: "Choose a JPG, PNG, or WebP image." }));
+      return;
+    }
+    if (file.size > 3 * 1024 * 1024) {
+      setErrors((prev) => ({ ...prev, image: "Image size must not exceed 3 MB." }));
+      return;
+    }
+    setImageFile(file);
+    setImagePreview(URL.createObjectURL(file));
+    setErrors((prev) => ({ ...prev, image: null }));
+  };
+
   const handleSubmit = async (overrideStatus) => {
     const currentStatus = overrideStatus || formData.status;
 
@@ -228,6 +275,7 @@ const JobEditorForm = ({ initialData = null, isEdit = false, jobId = null }) => 
     const payload = {
       title: formData.title.trim(),
       company: formData.company.trim(),
+      companyId: companyProfile?.id || initialData?.companyId || null,
       location: formData.location.trim(),
       type: formData.type,
       experience: formData.experience,
@@ -252,6 +300,10 @@ const JobEditorForm = ({ initialData = null, isEdit = false, jobId = null }) => 
       }
 
       if (response && response.success) {
+        const savedJob = response.data || response;
+        if (imageFile && savedJob.id) {
+          await jobService.uploadJobImage(savedJob.id, imageFile);
+        }
         setSubmitSuccess(true);
         setTimeout(() => {
           navigate("/employer/jobs");
@@ -502,6 +554,63 @@ const JobEditorForm = ({ initialData = null, isEdit = false, jobId = null }) => 
                   </button>
                 ))}
               </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Position image */}
+        <div className="overflow-hidden rounded-xl border border-slate-300 bg-white dark:border-gray-600 dark:bg-gray-800">
+          <div className="border-b border-slate-200 p-5 dark:border-gray-700 sm:p-6">
+            <h2 className="flex items-center gap-2 text-lg font-bold text-gray-900 dark:text-white">
+              <FiImage className="text-blue-600 dark:text-blue-400" aria-hidden="true" />
+              Position Image
+            </h2>
+            <p className="mt-1 text-sm text-slate-600 dark:text-gray-300">
+              Add a workplace, team, or role image. It appears on job cards and the job detail page.
+            </p>
+          </div>
+          <div className="grid gap-5 p-5 sm:p-6 md:grid-cols-[minmax(0,1.2fr)_minmax(220px,0.8fr)] md:items-center">
+            <div>
+              <label
+                htmlFor="job-image"
+                className="inline-flex min-h-11 cursor-pointer items-center justify-center gap-2 rounded-lg bg-blue-700 px-4 text-sm font-semibold text-white transition-colors hover:bg-blue-800 focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-blue-700"
+              >
+                <FiUpload aria-hidden="true" />
+                {imageFile || initialData?.imageUrl ? "Replace image" : "Choose image"}
+                <input
+                  id="job-image"
+                  type="file"
+                  accept="image/jpeg,image/png,image/webp"
+                  className="sr-only"
+                  onChange={handleImageChange}
+                />
+              </label>
+              <p className="mt-2 text-xs text-slate-600 dark:text-gray-300">
+                JPG, PNG, or WebP · Maximum 3 MB · Recommended 1200 × 525 px.
+              </p>
+              {imageFile && (
+                <p className="mt-2 break-all text-sm font-medium text-slate-800 dark:text-gray-100">
+                  {imageFile.name}
+                </p>
+              )}
+              {errors.image && (
+                <p className="mt-2 text-sm text-rose-600 dark:text-rose-400" role="alert">
+                  {errors.image}
+                </p>
+              )}
+            </div>
+            <div className="aspect-[16/7] overflow-hidden rounded-xl border border-slate-200 bg-gradient-to-br from-blue-100 via-indigo-50 to-slate-100 dark:border-gray-700 dark:from-blue-950 dark:via-indigo-950/60 dark:to-gray-800">
+              {(imagePreview || resolveMediaUrl(initialData?.imageUrl)) ? (
+                <img
+                  src={imagePreview || resolveMediaUrl(initialData?.imageUrl)}
+                  alt="Position image preview"
+                  className="h-full w-full object-cover"
+                />
+              ) : (
+                <div className="flex h-full items-center justify-center text-sm font-medium text-slate-600 dark:text-gray-300">
+                  Image preview
+                </div>
+              )}
             </div>
           </div>
         </div>
