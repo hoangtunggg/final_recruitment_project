@@ -1,5 +1,7 @@
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useNotifications } from "../../context/NotificationContext";
+import { useLocale } from "../../i18n/helpers";
 import {
   FiBell,
   FiCheck,
@@ -10,6 +12,8 @@ import {
 } from "react-icons/fi";
 
 const NotificationDropdown = () => {
+  const { t } = useTranslation("common");
+  const locale = useLocale();
   const {
     notifications,
     unreadCount,
@@ -46,12 +50,12 @@ const NotificationDropdown = () => {
     const now = new Date();
     const diffInMinutes = Math.floor((now - date) / (1000 * 60));
 
-    if (diffInMinutes < 1) return "Just now";
-    if (diffInMinutes < 60) return `${diffInMinutes}m ago`;
-    if (diffInMinutes < 120) return "1h ago";
-    if (diffInMinutes < 1440) return `${Math.floor(diffInMinutes / 60)}h ago`;
-    if (diffInMinutes < 2880) return "Yesterday";
-    return date.toLocaleDateString();
+    if (diffInMinutes < 1) return t("notifications.justNow");
+    if (diffInMinutes < 60) return t("notifications.minutesAgo", { n: diffInMinutes });
+    if (diffInMinutes < 1440)
+      return t("notifications.hoursAgo", { n: Math.floor(diffInMinutes / 60) });
+    if (diffInMinutes < 2880) return t("notifications.yesterday");
+    return date.toLocaleDateString(locale);
   };
 
   const handleNotificationClick = (notification) => {
@@ -71,13 +75,13 @@ const NotificationDropdown = () => {
       {/* Notification Bell */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="relative inline-flex h-11 w-11 items-center justify-center rounded-lg text-slate-700 dark:text-gray-200 hover:bg-slate-100 dark:hover:bg-gray-700 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-700"
-        aria-label="Notifications"
+        className="relative inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-control text-ink transition-colors hover:bg-tint"
+        aria-label={t("notifications.title")}
         aria-expanded={isOpen}
       >
-        <FiBell className="h-5 w-5" />
+        <FiBell className="h-5 w-5" aria-hidden="true" />
         {unreadCount > 0 && (
-          <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+          <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-brand-red text-xs font-bold text-white">
             {unreadCount > 9 ? "9+" : unreadCount}
           </span>
         )}
@@ -93,25 +97,25 @@ const NotificationDropdown = () => {
           />
 
           {/* Dropdown Content */}
-          <div className="absolute right-0 mt-2 w-80 max-w-[calc(100vw-2rem)] bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-slate-300 dark:border-gray-600 z-20">
+          <div className="absolute right-0 z-20 mt-2 w-80 max-w-[calc(100vw-2rem)] rounded-card border border-tint-line bg-surface shadow-card">
             {/* Header */}
-            <div className="flex items-center justify-between p-4 border-b border-slate-200 dark:border-gray-700">
-              <h3 className="font-semibold text-slate-900 dark:text-white">Notifications</h3>
+            <div className="flex items-center justify-between border-b border-line p-4">
+              <h3 className="font-semibold text-ink">{t("notifications.title")}</h3>
               <div className="flex items-center gap-2">
                 {unreadCount > 0 && (
                   <button
                     onClick={markAllAsRead}
-                    className="min-h-11 text-sm text-blue-700 dark:text-blue-300 hover:text-blue-800 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-700"
+                    className="min-h-11 cursor-pointer text-sm font-medium text-primary-text transition-colors hover:underline"
                   >
-                    Mark all read
+                    {t("notifications.markAllRead")}
                   </button>
                 )}
                 <button
                   onClick={() => setIsOpen(false)}
-                  className="inline-flex h-11 w-11 items-center justify-center text-slate-600 dark:text-gray-300 hover:text-slate-900 dark:hover:text-white rounded-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-700"
-                  aria-label="Close notifications"
+                  className="inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-control text-muted hover:text-ink"
+                  aria-label={t("notifications.close")}
                 >
-                  <FiX className="h-4 w-4" />
+                  <FiX className="h-4 w-4" aria-hidden="true" />
                 </button>
               </div>
             </div>
@@ -119,9 +123,9 @@ const NotificationDropdown = () => {
             {/* Notifications List */}
             <div className="max-h-96 overflow-y-auto">
               {notifications.length === 0 ? (
-                <div className="p-8 text-center text-slate-600 dark:text-gray-300">
-                  <FiBell className="h-8 w-8 mx-auto mb-2 text-gray-300" />
-                  <p>No notifications yet</p>
+                <div className="p-8 text-center text-muted">
+                  <FiBell className="mx-auto mb-2 h-8 w-8 text-line-strong" aria-hidden="true" />
+                  <p>{t("notifications.empty")}</p>
                 </div>
               ) : (
                 notifications.map((notification) => (
@@ -137,12 +141,12 @@ const NotificationDropdown = () => {
                     }}
                     role="button"
                     tabIndex={0}
-                    aria-label={`Open notification: ${notification.title}`}
+                    aria-label={t("notifications.open", { title: notification.title })}
                     className={`border-l-4 ${getPriorityColor(
                       notification.priority
                     )} ${
-                      !notification.read ? "bg-blue-50 dark:bg-blue-950/40" : "bg-white dark:bg-gray-800"
-                    } hover:bg-slate-50 dark:hover:bg-gray-700 transition-colors cursor-pointer`}
+                      !notification.read ? "bg-primary-50 dark:bg-primary-900/30" : "bg-surface"
+                    } cursor-pointer transition-colors hover:bg-tint`}
                   >
                     <div className="p-4">
                       <div className="flex items-start gap-3">
@@ -152,21 +156,21 @@ const NotificationDropdown = () => {
                         <div className="flex-1 min-w-0">
                           <div className="flex items-start justify-between">
                             <div className="flex-1">
-                              <p className="text-sm font-medium text-slate-900 dark:text-white">
+                              <p className="text-sm font-medium text-ink">
                                 {notification.title}
                               </p>
-                              <p className="text-sm text-slate-600 dark:text-gray-300 mt-1">
+                              <p className="mt-1 text-sm text-muted">
                                 {notification.message}
                               </p>
-                              <div className="flex items-center gap-2 mt-2">
-                                <FiClock className="h-3 w-3 text-gray-400" />
-                                <span className="text-xs text-gray-500">
+                              <div className="mt-2 flex items-center gap-2">
+                                <FiClock className="h-3 w-3 text-muted" aria-hidden="true" />
+                                <span className="text-xs text-muted">
                                   {formatTime(notification.timestamp)}
                                 </span>
                                 {!notification.read && (
-                                  <span className="inline-flex items-center gap-1 text-xs text-blue-600">
-                                    <span className="w-2 h-2 bg-blue-600 rounded-full"></span>
-                                    New
+                                  <span className="inline-flex items-center gap-1 text-xs font-semibold text-primary-text">
+                                    <span className="h-2 w-2 rounded-full bg-primary-500"></span>
+                                    {t("notifications.new")}
                                   </span>
                                 )}
                               </div>
@@ -176,10 +180,10 @@ const NotificationDropdown = () => {
                                 e.stopPropagation();
                                 deleteNotification(notification.id);
                               }}
-                              aria-label={`Delete notification: ${notification.title}`}
-                              className="flex-shrink-0 p-1 text-gray-400 hover:text-red-600 transition-colors"
+                              aria-label={t("notifications.delete", { title: notification.title })}
+                              className="flex-shrink-0 cursor-pointer p-1 text-muted transition-colors hover:text-danger"
                             >
-                              <FiX className="h-3 w-3" />
+                              <FiX className="h-3 w-3" aria-hidden="true" />
                             </button>
                           </div>
                           {!notification.read && (
@@ -188,11 +192,11 @@ const NotificationDropdown = () => {
                                 e.stopPropagation();
                                 markAsRead(notification.id);
                               }}
-                              aria-label={`Mark notification as read: ${notification.title}`}
-                              className="mt-2 text-xs text-blue-600 hover:text-blue-800 transition-colors flex items-center gap-1"
+                              aria-label={t("notifications.markReadAria", { title: notification.title })}
+                              className="mt-2 flex cursor-pointer items-center gap-1 text-xs font-medium text-primary-text transition-colors hover:underline"
                             >
-                              <FiCheck className="h-3 w-3" />
-                              Mark as read
+                              <FiCheck className="h-3 w-3" aria-hidden="true" />
+                              {t("notifications.markRead")}
                             </button>
                           )}
                         </div>
@@ -205,16 +209,16 @@ const NotificationDropdown = () => {
 
             {/* Footer */}
             {notifications.length > 0 && (
-              <div className="p-3 border-t border-slate-200 dark:border-gray-700 bg-slate-50 dark:bg-gray-800">
+              <div className="border-t border-line bg-tint p-3">
                 <button
                   onClick={() => {
                     // Navigate to notifications page
                     console.log("Navigate to all notifications");
                     setIsOpen(false);
                   }}
-                  className="text-sm text-blue-600 hover:text-blue-800 transition-colors"
+                  className="cursor-pointer text-sm font-medium text-primary-text transition-colors hover:underline"
                 >
-                  View all notifications
+                  {t("notifications.viewAll")}
                 </button>
               </div>
             )}

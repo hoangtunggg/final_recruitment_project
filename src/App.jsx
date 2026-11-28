@@ -14,6 +14,8 @@ import AdminRoute from "./components/auth/AdminRoute";
 import EmployerRoute from "./components/auth/EmployerRoute";
 import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
+import { Spinner } from "./components/ui";
+import { useTranslation } from "react-i18next";
 
 // Keep core landing page eager for instantaneous first contentful paint
 import HomePage from "./pages/public/HomePage";
@@ -59,18 +61,21 @@ const ReactQueryDevtools = import.meta.env.DEV
   : null;
 
 // Accessible, lightweight page loading fallback
-const PageLoadingFallback = () => (
-  <div
-    className="flex items-center justify-center min-h-[50vh] w-full"
-    role="status"
-    aria-label="Loading page content"
-  >
-    <div className="flex flex-col items-center gap-3">
-      <div className="w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
-      <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Loading...</p>
+const PageLoadingFallback = () => {
+  const { t } = useTranslation("common");
+  return (
+    <div
+      className="flex items-center justify-center min-h-[50vh] w-full"
+      role="status"
+      aria-label={t("states.loadingPage")}
+    >
+      <div className="flex flex-col items-center gap-3 text-primary-500">
+        <Spinner size="lg" />
+        <p className="text-sm font-medium text-muted">{t("states.loading")}</p>
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 // Create a client with optimal caching defaults
 const queryClient = new QueryClient({
