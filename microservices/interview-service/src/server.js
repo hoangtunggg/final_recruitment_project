@@ -47,7 +47,11 @@ function router(pool) {
     }
     const { job_id: _ignored, ...upstreamBody } = req.body; // job_id is ours; ai-service rejects unknown fields
     req.body = upstreamBody;
-    await forward(req, res, "ai", "/api/start");
+    const response = await forward(req, res, "ai", "/api/start");
+    // Rejected start (bad track, ai-service down...): give the quota back so a typo does not cost a session.
+    if (!existing && !response?.ok) {
+      await pool.query("DELETE FROM interview_sessions WHERE session_id=$1 AND user_id=$2", [sessionId, req.user.id]);
+    }
   }));
 
   // Later turns: only the owner of the session may continue or finalize it.
