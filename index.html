@@ -1,11 +1,19 @@
 <!doctype html>
-<html lang="en">
+<html lang="vi">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="JobPortal - A transparent, production-ready recruitment hub connecting verified companies with exceptional talent." />
+    <meta name="theme-color" content="#00a398" />
+    <meta name="description" content="JobPortal - Nền tảng tuyển dụng minh bạch kết nối doanh nghiệp đã xác minh với ứng viên chất lượng, kèm phỏng vấn thử bằng AI." />
     <title>JobPortal</title>
+    <!-- Overpass: Latin + Vietnamese subsets are served automatically by Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Overpass:wght@400;500;600;700;800&display=swap"
+    />
     <script>
       (function () {
         try {
@@ -15,6 +23,8 @@
           } else {
             document.documentElement.classList.remove("dark");
           }
+          // Keep <html lang> correct before React mounts (i18n/index.js owns it afterwards)
+          document.documentElement.lang = localStorage.getItem("lang") === "en" ? "en" : "vi";
         } catch (e) {}
       })();
     </script>

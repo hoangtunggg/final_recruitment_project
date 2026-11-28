@@ -1,44 +1,62 @@
 # JobPortal design system
 
-Approved visual direction for the existing React recruitment platform. Preserve its routes, behavior, data, and light/dark themes.
+Visual direction taken from the Figma "AI Video Interview App" (the AI interview page): teal brand, Overpass type, pill buttons, 5-colour top bar, soft offset card shadows, generous whitespace. The whole app follows it. Preserve routes, behavior, data, and the light/dark themes. UI text is Vietnamese first with an English toggle (see Language below).
 
 ## Tokens
 
-| Role | Light | Dark |
-| --- | --- | --- |
-| Primary / focus | `#1D4ED8` | `#93C5FD` |
-| Background | `#F8FAFC` | `#111827` |
-| Surface | `#FFFFFF` | `#1F2937` |
-| Primary text | `#0F172A` | `#F9FAFB` |
-| Secondary text | `#475569` | `#D1D5DB` |
-| Border | `#CBD5E1` | `#4B5563` |
-| Success | `#15803D` | `#86EFAC` |
-| Warning | `#B45309` | `#FCD34D` |
-| Error | `#DC2626` | `#FCA5A5` |
+Defined in `tailwind.config.js` (static scales) and `src/index.css` (theme variables, `:root` / `.dark`). Prefer the semantic classes: they flip with the theme, so no `dark:` variant is needed.
 
-Primary actions use blue with white text. Semantic colors communicate status alongside text or an icon. Do not use a semantic color as decoration. Evaluate every foreground/background pair in both themes; body text targets at least 4.5:1 contrast.
+| Role | Tailwind class | Light | Dark |
+| --- | --- | --- | --- |
+| Brand teal (fills without text, rings, top bar, icons) | `primary-500` / `brand-teal` | `#00A398` | `#00A398` |
+| Filled button, link on white | `primary-600` (`bg-primary` default) | `#008077` (white text 4.8:1) | `#008077` |
+| Teal text / hover | `text-primary-text` | `#006B64` | `#4DBDB5` |
+| Teal tint (cards, hover rows) | `bg-tint` / `primary-50` | `#F7FCFC` | `#172A29` |
+| Teal line (card border) | `border-tint-line` | `#D1EEEC` | `#1F4A47` |
+| Page background | `bg-canvas` | `#FFFFFF` | `#0E1717` |
+| Surface (cards, inputs, menus) | `bg-surface` | `#FFFFFF` | `#142121` |
+| Primary text | `text-ink` | `#1A1A1A` | `#F2F5F5` |
+| Secondary text | `text-muted` | `#5F5F5F` (6.4:1) | `#A9B8B7` |
+| Border (inputs, dividers) | `border-line` / `border-line-strong` | `#E4E4E4` / `#D6D6D6` | `#2C3F3E` / `#3D5251` |
+| Success text | `text-success` | `#2F7A1A` | `#8AC43F` |
+| Warning text | `text-warning` | `#9A5205` | `#F5901D` |
+| Error text / field border | `text-danger` / `border-danger` | `#C5221F` | `#FF7A77` |
+| Focus ring | global `:focus-visible` outline, `shadow-focus` on controls | `#00A398` | `#4DBDB5` |
+
+Top-bar / accent colours (decorative, never the only signal): `brand-red #E0302D`, `brand-orange #F5901D`, `brand-parrot #D5DE23`, `brand-green #8AC43F`, `brand-teal #00A398`. `brand-red` with white text is 4.5:1, so it is used for the danger button fill.
+
+Legacy: `blue-*` utilities are aliased to the teal scale so untouched pages follow the palette; write new code with `primary-*` and the semantic tokens. `bg-primary` is the filled-button teal (`primary-600`).
+
+Never put white text on `primary-500` (3.1:1). Evaluate every foreground/background pair in both themes; body text targets at least 4.5:1 contrast.
 
 ## Typography and spacing
 
-Use Inter with Vietnamese glyph support, then system sans-serif fallback. Body text is 16px with approximately 1.5 line-height. Use 14px for secondary labels, 18–20px for card titles, and 24–32px for page headings. Avoid tiny status labels and truncated job titles where wrapping is possible.
+Overpass (weights 400-800, loaded from Google Fonts with the Vietnamese subset in `index.html`), then system sans-serif. Body is 16px / 1.5. Page titles 30-40px weight 800, card titles 20-28px bold, secondary labels 14px. Avoid tiny status labels and truncated titles where wrapping is possible.
 
-Use a 4px base spacing scale: 4, 8, 12, 16, 24, 32, 48. Page gutters are 16px on mobile, 24px on tablet, and 32px on desktop. Keep a consistent desktop maximum width near 1280px. Radius is 8px for controls and 12px for cards; prefer borders over heavy shadows.
+4px spacing scale: 4, 8, 12, 16, 24, 32, 40, 48. Page gutters 16px mobile, 24px tablet, 32px desktop; content max width `max-w-7xl` (1280px). Radii: controls `rounded-control` 6px, cards `rounded-card` (12px 12px 6px 12px, the Figma soft corner), buttons and badges `rounded-pill` (70px). Cards use the offset shadow `shadow-card` (5px solid offset in teal-line, dark: teal-dark); the hover lift is `shadow-card-hover`.
 
-## Component standards
+## Components (`src/components/ui`)
 
-- Buttons: one clear primary action per region; visible hover, pressed, disabled, and keyboard focus states; 44px minimum height where practical.
-- Inputs and filters: persistent accessible names, clear selected state, readable labels, 44px minimum height, and errors adjacent to their field.
-- Job cards: prioritize title, company, location, employment type and salary; keep date and skills secondary; the entire card may remain a single link.
-- Tables: readable headers, clear row boundaries, responsive overflow strategy, and explicit loading, empty and error states.
-- Navigation: stable active state and predictable paths; mobile controls stay discoverable without relying on hover.
-- Dashboards: reuse a compact KPI card pattern, status badges, tables and section headings; avoid nested cards and decorative effects.
-- Feedback: skeletons while loading, a specific recovery action on errors, an actionable empty state, and restrained success confirmation.
-- Icons: reuse the installed `react-icons` package with consistent size and visual weight; decorative icons are hidden from assistive technology.
+Import from `src/components/ui`: `Button`, `Card`, `Badge`, `StatusBadge`, `TopBar`, `PageHeader`, `Input`, `Textarea`, `Select`, `Spinner`, `EmptyState`, `Brand`, `cx`. Also `LanguageToggle` and `ThemeToggle` in `src/components/common`.
+
+- Buttons: pill, 44px (`md`), one clear primary action per region; visible hover, pressed, disabled, loading and keyboard focus states. Variants: primary, outline, ghost, danger, link.
+- Inputs: persistent visible label, 44px height, error text adjacent to the field (`role="alert"`), hint text, teal border and soft ring on focus.
+- Cards: `Card` with tone default / tint / grey; whole-card links use `interactive`.
+- Badges: pill, text always accompanies colour; `StatusBadge` translates and colours API enum values without changing them.
+- Navigation: sticky header with the 5-colour `TopBar`; the active link has a tint pill plus `aria-current`; mobile controls (language, bell, menu) stay one tap away.
+- Tables: readable headers, clear row boundaries, responsive overflow, explicit loading/empty/error states (`Spinner`, `EmptyState`).
+- Dashboards: compact KPI cards, status badges, tables, section headings; avoid nested cards and decorative effects.
+- Feedback: skeletons while loading, a specific recovery action on errors, an actionable empty state, restrained success confirmation.
+- Icons: reuse `react-icons` with consistent size; decorative icons are `aria-hidden`.
 
 ## Responsive and accessibility
 
-Review at 390, 768, 1024 and 1440px widths. On mobile, place search and job results early; allow filters to wrap or stack, and prevent horizontal page overflow. At tablet widths, avoid cramped multi-column job cards. Preserve keyboard tab order and visible focus rings; do not depend on color alone or hover-only interaction. Respect reduced motion preferences and keep interactions usable without animation.
+Review at 390, 768, 1024 and 1440px widths. On mobile, place search and job results early; allow filters to wrap or stack; no horizontal page overflow. Touch targets are at least 44px where practical (40px for compact `sm` controls). Preserve keyboard tab order and visible focus rings; do not depend on colour alone or hover-only interaction. `prefers-reduced-motion` is honored globally in `index.css`.
+
+## Language (i18n)
+
+`react-i18next`, default `vi`, fallback `en`, stored in `localStorage.lang`, mirrored on `<html lang>`. Dictionaries live in `src/i18n/locales/{vi,en}/<namespace>.json`: common, public, auth, candidate, interview, employer, admin. Use `useTranslation("<ns>")`; API enum values are translated for display only (`useEnumLabel`, `StatusBadge`), never changed in requests. Vietnamese copy is natural, with diacritics. Dates and numbers use `useLocale()` (`vi-VN` / `en-US`).
 
 ## Theme rules
 
-The light theme is the visual baseline. Maintain the existing class-based dark mode and theme switch. Map all core surfaces, borders, text, control and feedback states to a dark equivalent. Do not invert images, reuse light shadows blindly, or assume light-mode contrast holds in dark mode.
+The light theme is the visual baseline. Class-based dark mode via `ThemeContext` stays. Every semantic token has a dark value; do not invert images, reuse light shadows blindly, or assume light-mode contrast holds in dark mode.
