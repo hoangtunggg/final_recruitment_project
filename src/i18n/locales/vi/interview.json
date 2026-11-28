@@ -187,10 +187,22 @@
     "title": "Cách trình bày khi nói",
     "none": "Bạn chưa trả lời câu nào bằng giọng nói.",
     "stats": {
-      "thinking_time_s": { "label": "Thời gian suy nghĩ", "unit": "giây" },
-      "answer_duration_s": { "label": "Độ dài câu trả lời", "unit": "giây" },
-      "speech_rate_spm": { "label": "Tốc độ nói", "unit": "âm tiết/phút" },
-      "filler_ratio": { "label": "Tỉ lệ từ đệm", "unit": "%" }
+      "thinking_time_s": {
+        "label": "Thời gian suy nghĩ",
+        "unit": "giây"
+      },
+      "answer_duration_s": {
+        "label": "Độ dài câu trả lời",
+        "unit": "giây"
+      },
+      "speech_rate_spm": {
+        "label": "Tốc độ nói",
+        "unit": "âm tiết/phút"
+      },
+      "filler_ratio": {
+        "label": "Tỉ lệ từ đệm",
+        "unit": "%"
+      }
     },
     "range": "từ {{min}} đến {{max}} • {{n}} câu",
     "disclaimer": "Các chỉ số này chỉ để bạn tự luyện cách nói, không tính vào điểm kiến thức."
@@ -222,7 +234,10 @@
       "misconfigured": "Hệ thống chưa sẵn sàng. Vui lòng thử lại sau.",
       "cv_invalid_format": "Không đọc được CV này. Hãy dùng tệp PDF hoặc DOCX (không đặt mật khẩu).",
       "cv_too_large": "CV quá dài hoặc quá nặng. Hãy thử tệp dưới 10 MB.",
-      "cv_unreadable": "Không đọc được nội dung trong CV (có thể là bản scan). Hãy thử tệp PDF hoặc DOCX có chữ."
+      "cv_unreadable": "Không đọc được nội dung trong CV (có thể là bản scan). Hãy thử tệp PDF hoặc DOCX có chữ.",
+      "session_id_reused": "Buổi phỏng vấn này đã kết thúc. Bạn bắt đầu buổi mới nhé.",
+      "interview_helper_quota_exceeded": "Bạn đã dùng hết lượt xử lý giọng nói và CV hôm nay. Bạn vẫn có thể trả lời bằng cách gõ.",
+      "upstream_misconfigured": "Dịch vụ AI đang được cấu hình lại. Vui lòng thử lại sau ít phút."
     },
     "network": "Mất kết nối. Kiểm tra mạng rồi thử lại.",
     "streamCut": "AI chưa phản hồi xong. Bạn thử lại nhé.",

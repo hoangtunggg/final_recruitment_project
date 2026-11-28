@@ -24,6 +24,9 @@ const TRANSLATED_CODES = new Set([
   "cv_invalid_format",
   "cv_too_large",
   "cv_unreadable",
+  "session_id_reused", // interview-service: the same session id was started again after the retry window
+  "interview_helper_quota_exceeded", // interview-service: daily budget of paid helper calls (TTS / STT / parsing)
+  "upstream_misconfigured", // interview-service: an AI service rejected the gateway credentials
 ]);
 
 // Temporary conditions where re-sending the very same turn body is safe (ai-service replays finished turns).

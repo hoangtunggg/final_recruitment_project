@@ -187,10 +187,22 @@
     "title": "How you came across when speaking",
     "none": "You have not answered any question by voice.",
     "stats": {
-      "thinking_time_s": { "label": "Thinking time", "unit": "s" },
-      "answer_duration_s": { "label": "Answer length", "unit": "s" },
-      "speech_rate_spm": { "label": "Speaking pace", "unit": "syllables/min" },
-      "filler_ratio": { "label": "Filler word share", "unit": "%" }
+      "thinking_time_s": {
+        "label": "Thinking time",
+        "unit": "s"
+      },
+      "answer_duration_s": {
+        "label": "Answer length",
+        "unit": "s"
+      },
+      "speech_rate_spm": {
+        "label": "Speaking pace",
+        "unit": "syllables/min"
+      },
+      "filler_ratio": {
+        "label": "Filler word share",
+        "unit": "%"
+      }
     },
     "range": "from {{min}} to {{max}} • {{n}} answers",
     "disclaimer": "These figures are only to help you practise how you speak; they do not count towards your knowledge score."
@@ -222,7 +234,10 @@
       "misconfigured": "The system is not ready yet. Please try again later.",
       "cv_invalid_format": "This CV could not be read. Please use a PDF or DOCX file (without a password).",
       "cv_too_large": "The CV is too long or too large. Please try a file under 10 MB.",
-      "cv_unreadable": "No text could be read from the CV (it may be a scan). Please try a PDF or DOCX with real text."
+      "cv_unreadable": "No text could be read from the CV (it may be a scan). Please try a PDF or DOCX with real text.",
+      "session_id_reused": "This interview has already ended. Please start a new session.",
+      "interview_helper_quota_exceeded": "You have used today's voice and CV processing allowance. You can still answer by typing.",
+      "upstream_misconfigured": "The AI service is being reconfigured. Please try again in a few minutes."
     },
     "network": "Connection lost. Check your network and try again.",
     "streamCut": "The AI did not finish responding. Please try again.",
